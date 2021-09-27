@@ -1,0 +1,5 @@
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.csproj.AssemblyReference.cache
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.GeneratedMSBuildEditorConfig.editorconfig
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.AssemblyInfoInputs.cache
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.AssemblyInfo.cs
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.csproj.CoreCompileInputs.cache
