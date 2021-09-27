@@ -1,0 +1,6 @@
+D:\CODE\C#\Test\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+D:\CODE\C#\Test\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+D:\CODE\C#\Test\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojAssemblyReference.cache
+D:\CODE\C#\Test\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.csproj.CoreCompileInputs.cache
+D:\CODE\C#\Test\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+D:\CODE\C#\Test\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
