@@ -3,3 +3,14 @@ D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.G
 D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.AssemblyInfoInputs.cache
 D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.AssemblyInfo.cs
 D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.csproj.CoreCompileInputs.cache
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\bin\Debug\net5.0\graph-sandbox.exe
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\bin\Debug\net5.0\graph-sandbox.deps.json
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\bin\Debug\net5.0\graph-sandbox.runtimeconfig.json
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\bin\Debug\net5.0\graph-sandbox.runtimeconfig.dev.json
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\bin\Debug\net5.0\graph-sandbox.dll
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\bin\Debug\net5.0\ref\graph-sandbox.dll
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\bin\Debug\net5.0\graph-sandbox.pdb
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.dll
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\ref\graph-sandbox.dll
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.pdb
+D:\CODE\C#\Quoridor\graph-sandbox\graph-sandbox\obj\Debug\net5.0\graph-sandbox.genruntimeconfig.cache
