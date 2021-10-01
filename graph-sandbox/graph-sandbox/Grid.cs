@@ -24,7 +24,11 @@ public class Grid
                 .ToArray();
         }
 
-
+        //            Neighbor[1]
+        //                 |
+        // Neighbor[0] - Cell - Neighbor[2]
+        //                 |
+        //            Neighbor[3]
         for (int row = 0; row < _rowsAmount; ++row)
         {
             for (int cell = 0; cell < _rowCapacity; ++cell)
@@ -50,7 +54,8 @@ public class Grid
         }
     }
 
-    private List<Cell> retrievePath(Cell sourceCell, Cell destinationCell)
+
+    private List<Cell> RetrievePath(Cell sourceCell, Cell destinationCell)
     {
         List<Cell> path = new List<Cell>();
 
@@ -75,17 +80,158 @@ public class Grid
         return null;
     }
 
-    private int calculateHCost(Cell sourceCell, Cell destinationCell)
+    private int CalculateHCost(Cell sourceCell, Cell destinationCell)
     {
         return Math.Abs(destinationCell.GridX - sourceCell.GridX) +
                Math.Abs(destinationCell.GridY - sourceCell.GridY);
     }
 
-    private bool compareCells(Cell a, Cell b)
+    private bool CompareCells(Cell a, Cell b)
     {
         return a.GridX == b.GridX && a.GridY == b.GridY;
     }
-    
+
+    private Cell[] ShallowCopyNeighbors(Cell[] oldNeighbors)
+    {
+        Cell[] neighborsCopy = new Cell[oldNeighbors.Length];
+        oldNeighbors.CopyTo(neighborsCopy, 0);
+        return neighborsCopy;
+    }
+
+    private bool isCellOnGrid(Cell cell)
+    {
+        return cell.GridX < _rowsAmount &&
+               cell.GridX >= 0 &&
+               cell.GridY >= 0 &&
+               cell.GridY < _rowCapacity;
+    }
+
+    private bool ValidateNeighbors(List<Cell> neighbors)
+        => !neighbors.Exists(neighbor => neighbor is null);
+
+    public bool PlaceWall(
+        Cell cell1Pair1,
+        Cell cell2Pair1,
+        Cell cell1Pair2,
+        Cell cell2Pair2,
+        bool isVertical,
+        Cell player1Position,
+        Cell player2Position
+    )
+    {
+        if (!(isCellOnGrid(cell1Pair1) &&
+              isCellOnGrid(cell2Pair1) &&
+              isCellOnGrid(cell1Pair2) &&
+              isCellOnGrid(cell2Pair2))
+        )
+            return false;
+
+        // pair cells aligned vertically close to each other
+        // are couple placed close to each other
+        bool isVerticallyAligned = Math.Abs(cell1Pair1.GridX - cell2Pair1.GridX) == 1 &&
+                                   Math.Abs(cell1Pair2.GridX - cell2Pair2.GridX) == 1 &&
+                                   cell1Pair1.GridY == cell2Pair1.GridY &&
+                                   cell1Pair2.GridY == cell2Pair2.GridY &&
+                                   Math.Abs(cell1Pair1.GridY - cell1Pair2.GridY) == 1;
+
+        // pair cells aligned horizontally close to each other
+        // are couple placed close to each other
+        bool isHorizontallyAligned = Math.Abs(cell1Pair1.GridY - cell2Pair1.GridY) == 1 &&
+                                     Math.Abs(cell1Pair2.GridY - cell2Pair2.GridY) == 1 &&
+                                     cell1Pair1.GridX == cell2Pair1.GridX &&
+                                     cell1Pair2.GridX == cell2Pair2.GridX &&
+                                     Math.Abs(cell1Pair1.GridY - cell1Pair2.GridY) == 1;
+
+        Cell gridCell1Pair1 = _grid[cell1Pair1.GridX][cell1Pair1.GridY];
+        Cell gridCell2Pair1 = _grid[cell2Pair1.GridX][cell2Pair1.GridY];
+        Cell gridCell1Pair2 = _grid[cell1Pair2.GridX][cell1Pair2.GridY];
+        Cell gridCell2Pair2 = _grid[cell2Pair2.GridX][cell2Pair2.GridY];
+
+
+        // these "backup" will be used in case placing the wall ruins the path for one of the players 
+        Cell[] neighborsBackupCell1Pair1 = ShallowCopyNeighbors(gridCell1Pair1.Neighbors);
+        Cell[] neighborsBackupCell2Pair1 = ShallowCopyNeighbors(gridCell2Pair1.Neighbors);
+        Cell[] neighborsBackupCell1Pair2 = ShallowCopyNeighbors(gridCell1Pair2.Neighbors);
+        Cell[] neighborsBackupCell2Pair2 = ShallowCopyNeighbors(gridCell2Pair2.Neighbors);
+
+        if (isVertical && isVerticallyAligned)
+        {
+            // * | * 
+            // * | *
+            List<Cell> neighborsToCheck = new List<Cell>();
+            neighborsToCheck.AddRange(new List<Cell>
+            {
+                gridCell1Pair1.Neighbors[3],
+                gridCell1Pair2.Neighbors[3],
+                gridCell1Pair1.Neighbors[2],
+                gridCell2Pair1.Neighbors[2],
+                gridCell2Pair1.Neighbors[1],
+                gridCell2Pair2.Neighbors[1],
+                gridCell1Pair2.Neighbors[0],
+                gridCell2Pair2.Neighbors[0]
+            });
+
+            if (!ValidateNeighbors(neighborsToCheck))
+                return false;
+
+            gridCell1Pair1.Neighbors[2] = null;
+            gridCell2Pair1.Neighbors[2] = null;
+
+            gridCell1Pair2.Neighbors[0] = null;
+            gridCell2Pair2.Neighbors[0] = null;
+        }
+        else if (isHorizontallyAligned)
+        {
+            // * *
+            // ---
+            // * *
+            List<Cell> neighborsToCheck = new List<Cell>();
+            neighborsToCheck.AddRange(new List<Cell>
+            {
+                gridCell1Pair1.Neighbors[3],
+                gridCell2Pair1.Neighbors[3],
+                gridCell1Pair1.Neighbors[2],
+                gridCell1Pair2.Neighbors[2],
+                gridCell1Pair2.Neighbors[1],
+                gridCell2Pair2.Neighbors[1],
+                gridCell2Pair1.Neighbors[0],
+                gridCell2Pair2.Neighbors[0]
+            });
+
+            if (!ValidateNeighbors(neighborsToCheck))
+                return false;
+
+            gridCell1Pair1.Neighbors[3] = null;
+            gridCell2Pair1.Neighbors[3] = null;
+
+            gridCell1Pair2.Neighbors[1] = null;
+            gridCell2Pair2.Neighbors[1] = null;
+        }
+
+        if (FindPathWithAStar(
+                player1Position.GridX,
+                player1Position.GridY,
+                _rowCapacity - 1,
+                _rowsAmount - 1
+            ).Item2 &&
+            FindPathWithAStar(
+                player2Position.GridX,
+                player2Position.GridY,
+                0,
+                0
+            ).Item2)
+        {
+            return true;
+        }
+        
+        gridCell1Pair1.Neighbors = neighborsBackupCell1Pair1;
+        gridCell2Pair1.Neighbors = neighborsBackupCell2Pair1;
+        gridCell1Pair2.Neighbors = neighborsBackupCell1Pair2;
+        gridCell2Pair2.Neighbors = neighborsBackupCell2Pair2;
+        
+        return false;
+    }
+
     public (List<Cell>, bool) FindPathWithAStar(int sourceX, int sourceY, int destinationX, int destinationY)
     {
         List<Cell> openCells = new List<Cell>();
@@ -106,20 +252,20 @@ public class Grid
             openCells.Remove(current);
             closedCells.Add(current);
 
-            if (compareCells(current, destinationCell))
-                return (retrievePath(sourceCell, destinationCell), true);
+            if (CompareCells(current, destinationCell))
+                return (RetrievePath(sourceCell, destinationCell), true);
 
             foreach (Cell neighbor in current.Neighbors)
             {
                 if (neighbor == null)
                     continue;
 
-                if (closedCells.Exists(cell => compareCells(cell, neighbor)))
+                if (closedCells.Exists(cell => CompareCells(cell, neighbor)))
                     continue;
 
-                if (!openCells.Exists(cell => compareCells(cell, neighbor)))
+                if (!openCells.Exists(cell => CompareCells(cell, neighbor)))
                 {
-                    neighbor.HScore = calculateHCost(neighbor, destinationCell);
+                    neighbor.HScore = CalculateHCost(neighbor, destinationCell);
                     neighbor.GScore = current.GScore + 1;
                     neighbor.Parent = current;
 

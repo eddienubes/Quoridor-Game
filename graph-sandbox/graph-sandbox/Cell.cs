@@ -10,7 +10,7 @@ public class Cell
     public int GridX { get; }
     public int GridY { get; }
 
-    public readonly Cell[] Neighbors = new Cell[4];
+    public Cell[] Neighbors = new Cell[4];
     
     /// <summary>
     /// Be aware of row & column segregation

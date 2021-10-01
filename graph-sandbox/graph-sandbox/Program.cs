@@ -16,9 +16,21 @@ internal class Program
         //     {8, 11, 0, 0, 0, 0, 1, 0, 7},
         //     {0, 0, 2, 0, 0, 0, 6, 7, 0}
         // };
-        
+
         Grid grid = new Grid(81);
         // Console.WriteLine(grid.ToString());
+        grid.FindPathWithAStar(4, 0, 4, 8);
+        
+        grid.PlaceWall(
+            new Cell(3, 1),
+            new Cell(4, 1),
+            new Cell(3, 2),
+            new Cell(4, 2),
+            true, 
+            new Cell(4, 0),
+            new Cell(4, 8)
+        );
+        
         grid.FindPathWithAStar(4, 0, 4, 8);
         // Console.WriteLine((int.MaxValue + 32).ToString());
     }
