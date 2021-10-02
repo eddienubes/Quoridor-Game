@@ -26,9 +26,7 @@ internal class Program
             new Cell(4, 1),
             new Cell(3, 2),
             new Cell(4, 2),
-            true, 
-            new Cell(4, 0),
-            new Cell(4, 8)
+            true
         );
         
         grid.FindPathWithAStar(4, 0, 4, 8);
