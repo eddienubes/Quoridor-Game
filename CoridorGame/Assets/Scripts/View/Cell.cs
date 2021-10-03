@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 
@@ -9,6 +8,23 @@ namespace View
     {
         public Vector3 Size { get; private set; }
         public Transform Transform { get; private set; }
+
+        public Action OnClicked;
+        private void OnMouseEnter()
+        {
+            GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+        }
+
+        private void OnMouseExit()
+        {
+            GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+        }
+
+        private void OnMouseDown()
+        {
+            GetComponent<Renderer>().material.SetColor("_Color", Color.yellow);
+            OnClicked?.Invoke();
+        }
 
         private void Awake()
         {
@@ -21,6 +37,5 @@ namespace View
                 colliderSize.z * transformSize.z
             );
         }
-        
     }
 }
