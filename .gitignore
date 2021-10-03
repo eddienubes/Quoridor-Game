@@ -1,3 +1,10 @@
+CoridorGame/[Ll]ibrary/
+CoridorGame/[Tt]emp/
+CoridorGame/[Oo]bj/
+CoridorGame/[Bb]uild/
+CoridorGame/[Bb]uilds/
+CoridorGame/Assets/AssetStoreTools*
+
 # useless stuff
 .idea
 
