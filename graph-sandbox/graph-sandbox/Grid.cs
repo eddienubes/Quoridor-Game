@@ -5,23 +5,27 @@ using System.Runtime;
 
 public class Grid
 {
-    private Cell[][] _grid;
+    private Cell[,] _grid;
     private int _rowCapacity;
     private int _rowsAmount;
 
-    public Grid(int verticesAmount)
+    public Grid(int cellsAmount) : this((int) Math.Sqrt(cellsAmount), (int) Math.Sqrt(cellsAmount))
     {
-        _rowCapacity = (int) Math.Sqrt(verticesAmount);
-        _rowsAmount = _rowCapacity;
+    }
 
-        _grid = new Cell[_rowsAmount][];
+    public Grid(int width, int height)
+    {
+        _rowCapacity = width;
+        _rowsAmount = height;
+
+        _grid = new Cell[_rowsAmount, _rowCapacity];
 
         for (int row = 0; row < _rowsAmount; ++row)
         {
-            _grid[row] = Enumerable
-                .Range(0, _rowCapacity)
-                .Select(i => new Cell(row, i))
-                .ToArray();
+            for (int cell = 0; cell < _rowCapacity; cell++)
+            {
+                _grid[row, cell] = new Cell(row, cell);
+            }
         }
 
         //            Neighbor[1]
@@ -40,16 +44,16 @@ public class Grid
                 int bottomRowConnectedNodeIndex = row + 1;
 
                 if (leftNodeIndex >= 0)
-                    _grid[row][cell].Neighbors[0] = _grid[row][leftNodeIndex];
+                    _grid[row, cell].Neighbors[0] = _grid[row, leftNodeIndex];
 
                 if (upperRowConnectedNodeIndex >= 0)
-                    _grid[row][cell].Neighbors[1] = _grid[upperRowConnectedNodeIndex][cell];
+                    _grid[row, cell].Neighbors[1] = _grid[upperRowConnectedNodeIndex, cell];
 
                 if (rightNodeIndex < _rowCapacity)
-                    _grid[row][cell].Neighbors[2] = _grid[row][rightNodeIndex];
+                    _grid[row, cell].Neighbors[2] = _grid[row, rightNodeIndex];
 
                 if (bottomRowConnectedNodeIndex < _rowsAmount)
-                    _grid[row][cell].Neighbors[3] = _grid[bottomRowConnectedNodeIndex][cell];
+                    _grid[row, cell].Neighbors[3] = _grid[bottomRowConnectedNodeIndex, cell];
             }
         }
     }
@@ -59,25 +63,20 @@ public class Grid
     {
         List<Cell> path = new List<Cell>();
 
-        Queue<Cell> queue = new Queue<Cell>();
-
-        queue.Enqueue(destinationCell);
-
-        while (queue.Count > 0)
+        var currentCell = destinationCell;
+        while (currentCell != sourceCell)
         {
-            Cell current = queue.Dequeue();
-            path.Add(current);
-
-            if (current == sourceCell)
-                return path;
-
-            if (current.Parent == null)
+            path.Add(currentCell);
+            if (currentCell.Parent == null)
+            {
                 return null;
+            }
 
-            queue.Enqueue(current.Parent);
+            currentCell = currentCell.Parent;
         }
 
-        return null;
+        path.Add(sourceCell);
+        return path;
     }
 
     private int CalculateHCost(Cell sourceCell, Cell destinationCell)
@@ -108,7 +107,9 @@ public class Grid
 
     private List<Cell> GetNeighbors(
         Cell gridCell1Pair1,
+        
         Cell gridCell2Pair1,
+        
         Cell gridCell1Pair2,
         Cell gridCell2Pair2,
         bool isVertical
@@ -205,13 +206,13 @@ public class Grid
             cell2Pair2
         );
 
-        if (!(isVertical && isVertical || !isVertical && !isVerticallyAligned))
+        if (!(isVertical && isVerticallyAligned || !isVertical && !isVerticallyAligned))
             throw new Exception("Cells are not aligned!");
 
-        Cell gridCell1Pair1 = _grid[cell1Pair1.GridX][cell1Pair1.GridY];
-        Cell gridCell2Pair1 = _grid[cell2Pair1.GridX][cell2Pair1.GridY];
-        Cell gridCell1Pair2 = _grid[cell1Pair2.GridX][cell1Pair2.GridY];
-        Cell gridCell2Pair2 = _grid[cell2Pair2.GridX][cell2Pair2.GridY];
+        Cell gridCell1Pair1 = _grid[cell1Pair1.GridX, cell1Pair1.GridY];
+        Cell gridCell2Pair1 = _grid[cell2Pair1.GridX, cell2Pair1.GridY];
+        Cell gridCell1Pair2 = _grid[cell1Pair2.GridX, cell1Pair2.GridY];
+        Cell gridCell2Pair2 = _grid[cell2Pair2.GridX, cell2Pair2.GridY];
 
         List<Cell> neighborsToCheck = GetNeighbors(
             gridCell1Pair1,
@@ -224,7 +225,7 @@ public class Grid
         if (CheckNeighborsForNull(neighborsToCheck))
             return false;
 
-        if (isVertical && isVerticallyAligned)
+        if (isVertical)
         {
             // * | * 
             // * | *
@@ -248,7 +249,7 @@ public class Grid
 
         return true;
     }
-    
+
     public bool RemoveWall(
         Cell cell1Pair1,
         Cell cell2Pair1,
@@ -273,11 +274,11 @@ public class Grid
 
         if (!(isVertical && isVertical || !isVertical && !isVerticallyAligned))
             throw new Exception("Cells are not aligned!");
-        
-        Cell gridCell1Pair1 = _grid[cell1Pair1.GridX][cell1Pair1.GridY];
-        Cell gridCell2Pair1 = _grid[cell2Pair1.GridX][cell2Pair1.GridY];
-        Cell gridCell1Pair2 = _grid[cell1Pair2.GridX][cell1Pair2.GridY];
-        Cell gridCell2Pair2 = _grid[cell2Pair2.GridX][cell2Pair2.GridY];
+
+        Cell gridCell1Pair1 = _grid[cell1Pair1.GridX, cell1Pair1.GridY];
+        Cell gridCell2Pair1 = _grid[cell2Pair1.GridX, cell2Pair1.GridY];
+        Cell gridCell1Pair2 = _grid[cell1Pair2.GridX, cell1Pair2.GridY];
+        Cell gridCell2Pair2 = _grid[cell2Pair2.GridX, cell2Pair2.GridY];
 
         List<Cell> neighborsToCheck = GetNeighbors(
             gridCell1Pair1,
@@ -289,17 +290,17 @@ public class Grid
 
         if (CheckNeighborsForNotNull(neighborsToCheck))
             return false;
-        
+
         if (isVertical && isVerticallyAligned)
         {
             // * | * 
             // * | *
             gridCell1Pair1.Neighbors[2] = gridCell1Pair2;
             gridCell1Pair2.Neighbors[0] = gridCell1Pair1;
-            
+
             gridCell2Pair1.Neighbors[2] = gridCell2Pair2;
             gridCell2Pair2.Neighbors[0] = gridCell2Pair1;
-            
+
             return true;
         }
 
@@ -323,8 +324,8 @@ public class Grid
 
         // y = columns
         // x = rows
-        Cell sourceCell = _grid[sourceX][sourceY];
-        Cell destinationCell = _grid[destinationX][destinationY];
+        Cell sourceCell = _grid[sourceX, sourceY];
+        Cell destinationCell = _grid[destinationX, destinationY];
 
         openCells.Add(sourceCell);
 
@@ -372,12 +373,12 @@ public class Grid
 
         for (int i = 0; i < _grid.GetLength(0); i++)
         {
-            for (int j = 0; j < _grid[i].GetLength(0); j++)
+            for (int j = 0; j < _grid.GetLength(1); j++)
             {
-                result += $" ( Left: {_grid[i][j].Neighbors[0]} |";
-                result += $" Right: {_grid[i][j].Neighbors[2]} |";
-                result += $" Upper: {_grid[i][j].Neighbors[1]} |";
-                result += $" Bottom: {_grid[i][j].Neighbors[3]} |";
+                result += $" ( Left: {_grid[i, j].Neighbors[0]} |";
+                result += $" Right: {_grid[i, j].Neighbors[2]} |";
+                result += $" Upper: {_grid[i, j].Neighbors[1]} |";
+                result += $" Bottom: {_grid[i, j].Neighbors[3]} |";
             }
 
             result += "\n";
