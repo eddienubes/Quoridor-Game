@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace View
@@ -11,15 +12,25 @@ namespace View
         [SerializeField] private Cell _cellPrefab;
         [SerializeField] private Wall _wallPrefab;
         [SerializeField] private Transform _fieldGoRoot;
-        private Cell[,] _cells;
+        private Cell[,] _cells = new Cell[0, 0];
 
         private void Start()
         {
-            CreateField(8, 8);
+            CreateField(9, 9);
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+             
+            }
+        }
+        
         public void CreateField(int xSize, int ySize)
         {
+            foreach (var cell in _cells)
+                Destroy(cell.gameObject);
             _cells = new Cell[xSize, ySize];
 
             var wallSample = Instantiate(_wallPrefab, _root);
@@ -77,6 +88,10 @@ namespace View
             }
 
             _fieldGoRoot.transform.localPosition = new Vector3(fieldRootXPos, -2, fieldRootZPos);
+
+            var position = Camera.main.transform.position;
+            Camera.main.transform.position = new Vector3(position.x,
+                position.y * Mathf.Max(fieldRootZSize, fieldRootXSize), position.z);
         }
     }
 }
