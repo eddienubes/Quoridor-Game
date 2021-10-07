@@ -184,6 +184,21 @@ public class Grid
         return neighborsCopy;
     }
 
+    public bool ReplaceNeighbors(Cell cell, Cell[] neighbors)
+    {
+        if (!isCellOnGrid(cell))
+            return false;
+
+        if (neighbors.Length < 4)
+            throw new Exception("Invalid neighbors array has been passed. Length is less than 4");
+
+        Cell gridCell = _grid[cell.GridX, cell.GridY];
+        
+        gridCell.Neighbors = neighbors;
+        
+        return true;
+    }
+    
     public bool PlaceWall(
         Cell cell1Pair1,
         Cell cell2Pair1,
