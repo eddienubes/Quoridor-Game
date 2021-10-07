@@ -12,18 +12,21 @@ namespace View
         [SerializeField] private Cell _cellPrefab;
         [SerializeField] private Wall _wallPrefab;
         [SerializeField] private Transform _fieldGoRoot;
+
+        [SerializeField] private CameraRotatorBase _cameraRotator;
         private Cell[,] _cells = new Cell[0, 0];
 
         private void Start()
         {
             CreateField(9, 9);
+            _cameraRotator.Init();
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-             
+                _cameraRotator.RotateCamera();
             }
         }
         

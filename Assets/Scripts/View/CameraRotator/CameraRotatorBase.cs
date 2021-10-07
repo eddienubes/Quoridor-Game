@@ -11,7 +11,7 @@ public abstract class CameraRotatorBase : MonoBehaviour
     {
         public Vector3 rotation { get; private set; }
         public Vector3 position { get; private set; }
-        public CameraMoveData(Vector3 rot, Vector3 pos) => (rotation, position) = (rot, pos);
+        public CameraMoveData(Vector3 pos, Vector3 rot) => (rotation, position) = (rot, pos);
     }
 
     [SerializeField, MinAttribute(0)] protected float _cameraTransitionTime = 5;
@@ -19,16 +19,16 @@ public abstract class CameraRotatorBase : MonoBehaviour
     private IEnumerator<CameraMoveData> _cameraMoveDatas;
 
     protected abstract List<CameraMoveData> CameraMoveDatas { get; }
-    private void Awake()
+    public virtual void Init()
     {
         _mainCameraTransform = Camera.main.transform;
         _cameraMoveDatas = new LoopedList<CameraMoveData>(CameraMoveDatas).GetEnumerator();
     }
 
-    public void RotateCamera()
+    public void RotateCamera() 
     {
-        SetData(_cameraMoveDatas.Current);
         _cameraMoveDatas.MoveNext();
+        SetData(_cameraMoveDatas.Current);
     }
 
     protected void SetData(CameraMoveData cameraMoveData)

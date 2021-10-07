@@ -22,20 +22,25 @@ namespace LoopedList
         /// </code>
         /// </example>
         public bool CancellationToken { get; set; }
+
         /// <value> means current position in list</value>
         int counter;
+
         public LoopedList()
         {
             Reset();
         }
+
         public LoopedList(IEnumerable<T> y) : base(y)
         {
             Reset();
         }
+
         public LoopedList(int size) : base(size)
         {
             Reset();
         }
+
         /// <summary>
         /// Resets counter and Token, used in
         /// <list type="uses">
@@ -54,6 +59,7 @@ namespace LoopedList
             counter = 0;
             CancellationToken = false;
         }
+
         /// <summary>
         /// An infinite indexator, uses for "for" cycles
         /// </summary>
@@ -65,6 +71,7 @@ namespace LoopedList
             get { return base[GetLoopedIndex(index)]; }
             set { base[GetLoopedIndex(index)] = value; }
         }
+
         /// <summary>
         /// Get the real index, which displays real index of list in RepeatedList
         /// <para>actually just trims it down to the desired boundaries
@@ -83,25 +90,23 @@ namespace LoopedList
                 return index % Count;
             }
         }
+
         /// <summary>
         /// Returns enumerator, used in foreach cycle
         /// </summary>
         /// <returns>looped enumerator</returns>
         public new IEnumerator<T> GetEnumerator()
         {
-            while (counter != Capacity)
+            while (!CancellationToken)
             {
-                if (CancellationToken)
-                {
-                    Reset();
-                    yield break;
-                }
                 if (counter == Count)
-                {
                     counter = 0;
-                }
+
                 yield return base[GetLoopedIndex(counter++)];
             }
+
+            Reset();
+            yield break;
         }
     }
 }

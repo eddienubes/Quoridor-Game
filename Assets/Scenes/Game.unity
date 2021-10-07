@@ -226,6 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 731416691}
   - component: {fileID: 731416690}
+  - component: {fileID: 731416692}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -249,6 +250,7 @@ MonoBehaviour:
   _cellPrefab: {fileID: 1606581905146747921, guid: 035a385179e742343a55e80d771ce35d, type: 3}
   _wallPrefab: {fileID: 3844340651347755659, guid: 7f4584be8ce48ba4bb74ec9c400ca5a9, type: 3}
   _fieldGoRoot: {fileID: 2023272554}
+  _cameraRotator: {fileID: 731416692}
 --- !u!4 &731416691
 Transform:
   m_ObjectHideFlags: 0
@@ -264,6 +266,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &731416692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731416689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50d8dca49da198f4795c1636668c9f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraTransitionTime: 2
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
