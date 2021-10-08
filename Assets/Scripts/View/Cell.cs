@@ -7,9 +7,11 @@ namespace View
 {
     public class Cell : MonoBehaviour
     {
+        [SerializeField] private Transform _spawnPoint;
+        
         public Vector3 Size { get; private set; }
         public Transform Transform { get; private set; }
-
+        public Transform SpawnPoint => _spawnPoint;
         public event Action OnClicked;
 
         private Material _material;

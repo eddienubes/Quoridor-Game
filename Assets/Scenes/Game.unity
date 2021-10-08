@@ -249,6 +249,7 @@ MonoBehaviour:
   _root: {fileID: 731416691}
   _cellPrefab: {fileID: 1606581905146747921, guid: 035a385179e742343a55e80d771ce35d, type: 3}
   _wallPrefab: {fileID: 3844340651347755659, guid: 7f4584be8ce48ba4bb74ec9c400ca5a9, type: 3}
+  _pawnPrefab: {fileID: 5618200082348144030, guid: 3a46ec56955207e429a710695c5f22b6, type: 3}
   _fieldGoRoot: {fileID: 2023272554}
   _cameraRotator: {fileID: 731416692}
 --- !u!4 &731416691

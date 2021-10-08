@@ -11,6 +11,7 @@ namespace View
         [SerializeField] private Transform _root;
         [SerializeField] private Cell _cellPrefab;
         [SerializeField] private Wall _wallPrefab;
+        [SerializeField] private Pawn _pawnPrefab;
         [SerializeField] private Transform _fieldGoRoot;
 
         [SerializeField] private CameraRotatorBase _cameraRotator;
@@ -20,8 +21,9 @@ namespace View
         {
             CreateField(9, 9);
             _cameraRotator.Init();
+            SpawnPawn(4, 0);
+            SpawnPawn(4, 8);
         }
-
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -29,7 +31,7 @@ namespace View
                 _cameraRotator.RotateCamera();
             }
         }
-        
+
         public void CreateField(int xSize, int ySize)
         {
             foreach (var cell in _cells)
@@ -54,6 +56,19 @@ namespace View
             }
 
             RecalculateFieldSize(xSize, ySize, wallWidth);
+        }
+
+        public Pawn SpawnPawn(int x, int y)
+        {
+            if (_cells.GetLength(1) <= y || _cells.GetLength(0) <= x || x < 0 || y < 0)
+                throw new ArgumentException("Pawn coordinates are incorrect!");
+
+            var parentCell = _cells[x, y];
+            var pawnGo = Instantiate(_pawnPrefab, parentCell.SpawnPoint, true);
+            var pos = parentCell.SpawnPoint.position;
+            pos.y += pawnGo.GetComponent<CapsuleCollider>().height / 2;
+            pawnGo.transform.position = pos;
+            return pawnGo;
         }
 
         /// <summary>
