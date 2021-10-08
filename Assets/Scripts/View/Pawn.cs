@@ -4,16 +4,8 @@ using UnityEngine;
 
 namespace View
 {
-    public class Pawn : MonoBehaviour
+    public class Pawn : HighlightedSelectable
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
-        }
     }
 }
