@@ -8,7 +8,6 @@ public class Cell
 
     public int GridX { get; }
     public int GridY { get; }
-    public int PlayerId { get; set; }
 
     public Cell[] Neighbors = new Cell[4];
 
@@ -21,7 +20,6 @@ public class Cell
     {
         GridX = gridX;
         GridY = gridY;
-        PlayerId = 0;
     }
 
     public int FScore => GScore + HScore;

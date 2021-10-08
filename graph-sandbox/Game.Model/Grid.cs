@@ -9,7 +9,22 @@ public class Grid
     private int _rowCapacity;
     private int _rowsAmount;
 
-    public Grid(int cellsAmount) : this((int) Math.Sqrt(cellsAmount), (int) Math.Sqrt(cellsAmount))
+    public List<Cell> Cells
+    {
+        get
+        {
+            var cells = new List<Cell>();
+            foreach (var cell in _grid)
+            {
+                cells.Add(cell);
+            }
+
+            return cells;
+        }
+    }
+
+    public Grid(int cellsAmount) :
+        this((int) Math.Sqrt(cellsAmount), (int) Math.Sqrt(cellsAmount))
     {
     }
 
@@ -56,26 +71,6 @@ public class Grid
                     _grid[row, cell].Neighbors[3] = _grid[bottomRowConnectedNodeIndex, cell];
             }
         }
-
-        SpawnPlayers();
-    }
-
-    private void SpawnPlayers()
-    {
-        _grid[0, _rowCapacity / 2].PlayerId = 1;
-        _grid[_rowsAmount - 1, _rowCapacity / 2].PlayerId = 1;
-    }
-
-    public void MovePlayer(Cell startCell, Cell targetCell)
-    {
-        if (GetAvailableMovesFrom(startCell).Contains(targetCell))
-        {
-            targetCell.PlayerId = startCell.PlayerId;
-            startCell.PlayerId = 0;
-            return;
-        }
-
-        throw new Exception("Target cell is unavailable from start cell");
     }
 
     private List<Cell> RetrievePath(Cell sourceCell, Cell destinationCell)
@@ -108,7 +103,6 @@ public class Grid
     {
         return a.GridX == b.GridX && a.GridY == b.GridY;
     }
-
 
     private bool isCellOnGrid(Cell cell)
     {
@@ -399,44 +393,6 @@ public class Grid
         return (null, false);
     }
 
-    private List<Cell> GetAvailableMovesFrom(Cell sourceCell)
-    {
-        var result = sourceCell.Neighbors.Where(c => c != null && c.PlayerId == 0).ToList();
-
-        if (sourceCell.Neighbors.FirstOrDefault(c => c.PlayerId != 0) != null)
-        {
-            var occupiedCell = sourceCell.Neighbors.FirstOrDefault(c => c.PlayerId != 0);
-            var indexOfOccupiedCell = sourceCell.Neighbors.ToList().IndexOf(occupiedCell);
-
-
-            // Check for jumping over another player when 2 players are on neighbour cells.
-            if (occupiedCell.Neighbors[indexOfOccupiedCell] != null &&
-                occupiedCell.Neighbors[indexOfOccupiedCell].PlayerId == 0)
-            {
-                result.Add(occupiedCell.Neighbors[indexOfOccupiedCell]);
-            }
-            else
-            {
-                // Check for diagonal moving when 2 players are on neighbour cells and jumping is unavailable.
-                if (occupiedCell.Neighbors[(indexOfOccupiedCell + 1) % occupiedCell.Neighbors.Length] != null &&
-                    occupiedCell.Neighbors[(indexOfOccupiedCell + 1) % occupiedCell.Neighbors.Length].PlayerId == 0)
-
-                {
-                    result.Add(occupiedCell.Neighbors[(indexOfOccupiedCell + 1) % occupiedCell.Neighbors.Length]);
-                }
-
-                if (occupiedCell.Neighbors[(indexOfOccupiedCell + 5) % occupiedCell.Neighbors.Length] != null &&
-                    occupiedCell.Neighbors[(indexOfOccupiedCell + 5) % occupiedCell.Neighbors.Length].PlayerId == 0)
-                {
-                    result.Add(occupiedCell.Neighbors[(indexOfOccupiedCell + 1) % occupiedCell.Neighbors.Length]);
-                }
-            }
-        }
-
-        return result;
-    }
-
-
     public string ToString()
     {
         string result = "";
@@ -458,59 +414,59 @@ public class Grid
     }
 
 
-    // public (string[], bool) FindShortestPathDijkstra(int[,] graph, int src, int destination)
-    // {
-    //     int[] distances = new int[_verticesAmount];
-    //     
-    //     bool[] visitedNodes = new bool[_verticesAmount];
-    //     
-    //     for (int i = 0; i < _verticesAmount; ++i)
-    //     {
-    //         distances[i] = int.MaxValue;
-    //         visitedNodes[i] = false;
-    //     }
-    //     
-    //     distances[src] = 0;
-    //
-    //     for (int count = 0; count < _verticesAmount - 1; ++count)
-    //     {
-    //         int currentMinNode = _FindMinDistance(distances, visitedNodes);
-    //
-    //         visitedNodes[currentMinNode] = true;
-    //         
-    //         for (int neighbor = 0; neighbor < graph.GetLength(1); ++neighbor)
-    //         {
-    //             int distanceFromCurrentToNeighbor = graph[currentMinNode, neighbor];
-    //             int completeDistanceToNeighbor = distances[currentMinNode] + distanceFromCurrentToNeighbor;
-    //             
-    //             // has edge?
-    //             // is new distance suitable?
-    //             // has this neighbor been already visited?
-    //             if (distanceFromCurrentToNeighbor != 0 
-    //                 && completeDistanceToNeighbor < distances[neighbor] 
-    //                 && !visitedNodes[neighbor])
-    //             {
-    //                 distances[neighbor] = completeDistanceToNeighbor;
-    //             }
-    //         }
-    //     }
-    //     
-    //     return distances;
-    // }
+// public (string[], bool) FindShortestPathDijkstra(int[,] graph, int src, int destination)
+// {
+//     int[] distances = new int[_verticesAmount];
+//     
+//     bool[] visitedNodes = new bool[_verticesAmount];
+//     
+//     for (int i = 0; i < _verticesAmount; ++i)
+//     {
+//         distances[i] = int.MaxValue;
+//         visitedNodes[i] = false;
+//     }
+//     
+//     distances[src] = 0;
+//
+//     for (int count = 0; count < _verticesAmount - 1; ++count)
+//     {
+//         int currentMinNode = _FindMinDistance(distances, visitedNodes);
+//
+//         visitedNodes[currentMinNode] = true;
+//         
+//         for (int neighbor = 0; neighbor < graph.GetLength(1); ++neighbor)
+//         {
+//             int distanceFromCurrentToNeighbor = graph[currentMinNode, neighbor];
+//             int completeDistanceToNeighbor = distances[currentMinNode] + distanceFromCurrentToNeighbor;
+//             
+//             // has edge?
+//             // is new distance suitable?
+//             // has this neighbor been already visited?
+//             if (distanceFromCurrentToNeighbor != 0 
+//                 && completeDistanceToNeighbor < distances[neighbor] 
+//                 && !visitedNodes[neighbor])
+//             {
+//                 distances[neighbor] = completeDistanceToNeighbor;
+//             }
+//         }
+//     }
+//     
+//     return distances;
+// }
 
-    // private int _FindMinDistance(int[] distances, bool[] visitedNodes)
-    // {
-    //     int currentMinDistance = int.MaxValue, minIndex = -1;
-    //
-    //     for (int v = 0; v < _verticesAmount; ++v)
-    //     {
-    //         if (!visitedNodes[v] && distances[v] < currentMinDistance)
-    //         {
-    //             currentMinDistance = distances[v];
-    //             minIndex = v;
-    //         }
-    //     }
-    //
-    //     return minIndex;
-    // }
+// private int _FindMinDistance(int[] distances, bool[] visitedNodes)
+// {
+//     int currentMinDistance = int.MaxValue, minIndex = -1;
+//
+//     for (int v = 0; v < _verticesAmount; ++v)
+//     {
+//         if (!visitedNodes[v] && distances[v] < currentMinDistance)
+//         {
+//             currentMinDistance = distances[v];
+//             minIndex = v;
+//         }
+//     }
+//
+//     return minIndex;
+// }
 }
