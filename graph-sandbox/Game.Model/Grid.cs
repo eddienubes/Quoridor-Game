@@ -56,8 +56,27 @@ public class Grid
                     _grid[row, cell].Neighbors[3] = _grid[bottomRowConnectedNodeIndex, cell];
             }
         }
+
+        SpawnPlayers();
     }
 
+    private void SpawnPlayers()
+    {
+        _grid[0, _rowCapacity / 2].PlayerId = 1;
+        _grid[_rowsAmount - 1, _rowCapacity / 2].PlayerId = 1;
+    }
+
+    public void MovePlayer(Cell startCell, Cell targetCell)
+    {
+        if (GetAvailableMovesFrom(startCell).Contains(targetCell))
+        {
+            targetCell.PlayerId = startCell.PlayerId;
+            startCell.PlayerId = 0;
+            return;
+        }
+
+        throw new Exception("Target cell is unavailable from start cell");
+    }
 
     private List<Cell> RetrievePath(Cell sourceCell, Cell destinationCell)
     {
@@ -107,9 +126,7 @@ public class Grid
 
     private List<Cell> GetNeighbors(
         Cell gridCell1Pair1,
-        
         Cell gridCell2Pair1,
-        
         Cell gridCell1Pair2,
         Cell gridCell2Pair2,
         bool isVertical
@@ -193,12 +210,12 @@ public class Grid
             throw new Exception("Invalid neighbors array has been passed. Length is less than 4");
 
         Cell gridCell = _grid[cell.GridX, cell.GridY];
-        
+
         gridCell.Neighbors = neighbors;
-        
+
         return true;
     }
-    
+
     public bool PlaceWall(
         Cell cell1Pair1,
         Cell cell2Pair1,
@@ -381,6 +398,44 @@ public class Grid
 
         return (null, false);
     }
+
+    private List<Cell> GetAvailableMovesFrom(Cell sourceCell)
+    {
+        var result = sourceCell.Neighbors.Where(c => c != null && c.PlayerId == 0).ToList();
+
+        if (sourceCell.Neighbors.FirstOrDefault(c => c.PlayerId != 0) != null)
+        {
+            var occupiedCell = sourceCell.Neighbors.FirstOrDefault(c => c.PlayerId != 0);
+            var indexOfOccupiedCell = sourceCell.Neighbors.ToList().IndexOf(occupiedCell);
+
+
+            // Check for jumping over another player when 2 players are on neighbour cells.
+            if (occupiedCell.Neighbors[indexOfOccupiedCell] != null &&
+                occupiedCell.Neighbors[indexOfOccupiedCell].PlayerId == 0)
+            {
+                result.Add(occupiedCell.Neighbors[indexOfOccupiedCell]);
+            }
+            else
+            {
+                // Check for diagonal moving when 2 players are on neighbour cells and jumping is unavailable.
+                if (occupiedCell.Neighbors[(indexOfOccupiedCell + 1) % occupiedCell.Neighbors.Length] != null &&
+                    occupiedCell.Neighbors[(indexOfOccupiedCell + 1) % occupiedCell.Neighbors.Length].PlayerId == 0)
+
+                {
+                    result.Add(occupiedCell.Neighbors[(indexOfOccupiedCell + 1) % occupiedCell.Neighbors.Length]);
+                }
+
+                if (occupiedCell.Neighbors[(indexOfOccupiedCell + 5) % occupiedCell.Neighbors.Length] != null &&
+                    occupiedCell.Neighbors[(indexOfOccupiedCell + 5) % occupiedCell.Neighbors.Length].PlayerId == 0)
+                {
+                    result.Add(occupiedCell.Neighbors[(indexOfOccupiedCell + 1) % occupiedCell.Neighbors.Length]);
+                }
+            }
+        }
+
+        return result;
+    }
+
 
     public string ToString()
     {

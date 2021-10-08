@@ -5,12 +5,13 @@ public class Cell
     public Cell Parent { get; set; }
     public int GScore { get; set; }
     public int HScore { get; set; }
-    
+
     public int GridX { get; }
     public int GridY { get; }
+    public int PlayerId { get; set; }
 
     public Cell[] Neighbors = new Cell[4];
-    
+
     /// <summary>
     /// Be aware of row & column segregation
     /// </summary>
@@ -20,7 +21,8 @@ public class Cell
     {
         GridX = gridX;
         GridY = gridY;
+        PlayerId = 0;
     }
-    
+
     public int FScore => GScore + HScore;
 }
