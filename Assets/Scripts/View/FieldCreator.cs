@@ -23,7 +23,10 @@ namespace View
             _cameraRotator.Init();
             SpawnPawn(4, 0);
             SpawnPawn(4, 8);
+            SpawnWall(1, 2, 2, 3, true);
+            SpawnWall(4, 2, 5, 3, false);
         }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -58,17 +61,50 @@ namespace View
             RecalculateFieldSize(xSize, ySize, wallWidth);
         }
 
+        private bool IsCoordsValid(int x, int y) =>
+            _cells.GetLength(1) > y && _cells.GetLength(0) > x && x >= 0 && y >= 0;
+
         public Pawn SpawnPawn(int x, int y)
         {
-            if (_cells.GetLength(1) <= y || _cells.GetLength(0) <= x || x < 0 || y < 0)
+            if (!IsCoordsValid(x, y))
                 throw new ArgumentException("Pawn coordinates are incorrect!");
 
-            var parentCell = _cells[x, y];
-            var pawnGo = Instantiate(_pawnPrefab, parentCell.SpawnPoint, true);
-            var pos = parentCell.SpawnPoint.position;
-            pos.y += pawnGo.GetComponent<CapsuleCollider>().height / 2;
-            pawnGo.transform.position = pos;
+            var pawnGo = Instantiate(_pawnPrefab, _cells[x, y].SpawnPoint, true);
+            pawnGo.transform.localPosition = Vector3.zero;
             return pawnGo;
+        }
+
+        /// <summary>
+        /// Спавнит стенку по выбранным координатам клетки
+        /// </summary>
+        /// <param name="x1">Координата Х первой клетки</param>
+        /// <param name="y1">Координата У первой клетки</param>
+        /// <param name="x2">Координата Х второй клетки</param>
+        /// <param name="y2">Координата У второй клетки</param>
+        /// <param name="vertical">true если стенка должна стоять вертикально</param>
+        /// <returns>Заспавненную стенку</returns>
+        /// <remarks>
+        /// <para>Клетки нужно задавать "по диагонали" </para>
+        /// <para> .|О     0|.    .||О     0||. </para>
+        /// <para> ===     ===    ---      ---  </para>
+        /// <para> О|.     .|0    О||.     .||0 </para>
+        ///
+        /// <para>где . - клетка, 0 - клетка, координату которой нужно указать, == || стенка, - | просто разделение между сеткой   </para>
+        /// </remarks>
+        /// <exception cref="ArgumentException">Бросается, если координаты сетки были заданы неверно</exception>
+        public Wall SpawnWall(int x1, int y1, int x2, int y2, bool vertical)
+        {
+            if (!IsCoordsValid(x1, y1) || !IsCoordsValid(x2, y2))
+                throw new ArgumentException("Pawn coordinates are incorrect!");
+
+            var wallGo = Instantiate(_wallPrefab, _fieldGoRoot, true);
+
+            var cell1Transform = _cells[x1, y1].SpawnPoint.position;
+            var cell2Transform = _cells[x2, y2].SpawnPoint.position;
+
+            wallGo.Transform.position = (cell1Transform + cell2Transform) / 2;
+            wallGo.Vertical = vertical;
+            return wallGo;
         }
 
         /// <summary>

@@ -108,4 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9813c242302a794281184c18c0da3d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderTarget: {fileID: 1606581905146747923}
   _spawnPoint: {fileID: 1606581905146747917}
