@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "graph-sandbox", "graph-sandbox\graph-sandbox.csproj", "{6443FA19-8721-4318-9E8F-02362CE4E846}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Model", "Game.Model\Game.Model.csproj", "{6443FA19-8721-4318-9E8F-02362CE4E846}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,25 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CODE\\C#\\Quoridor\\graph-sandbox\\graph-sandbox\\graph-sandbox.csproj": {}
+    "D:\\Reps\\KPI_5\\Korotenko\\Quoridor-Game\\graph-sandbox\\graph-sandbox\\graph-sandbox.csproj": {}
   },
   "projects": {
-    "D:\\CODE\\C#\\Quoridor\\graph-sandbox\\graph-sandbox\\graph-sandbox.csproj": {
+    "D:\\Reps\\KPI_5\\Korotenko\\Quoridor-Game\\graph-sandbox\\graph-sandbox\\graph-sandbox.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CODE\\C#\\Quoridor\\graph-sandbox\\graph-sandbox\\graph-sandbox.csproj",
+        "projectUniqueName": "D:\\Reps\\KPI_5\\Korotenko\\Quoridor-Game\\graph-sandbox\\graph-sandbox\\graph-sandbox.csproj",
         "projectName": "graph-sandbox",
-        "projectPath": "D:\\CODE\\C#\\Quoridor\\graph-sandbox\\graph-sandbox\\graph-sandbox.csproj",
-        "packagesPath": "C:\\Users\\Eddie\\.nuget\\packages\\",
-        "outputPath": "D:\\CODE\\C#\\Quoridor\\graph-sandbox\\graph-sandbox\\obj\\",
+        "projectPath": "D:\\Reps\\KPI_5\\Korotenko\\Quoridor-Game\\graph-sandbox\\graph-sandbox\\graph-sandbox.csproj",
+        "packagesPath": "C:\\Users\\Богдан\\.nuget\\packages\\",
+        "outputPath": "D:\\Reps\\KPI_5\\Korotenko\\Quoridor-Game\\graph-sandbox\\graph-sandbox\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Eddie\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Богдан\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -52,7 +57,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
