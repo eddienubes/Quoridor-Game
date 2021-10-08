@@ -1,26 +1,27 @@
 namespace graph_sandbox.Commands
 {
-    public class IMovePlayerCommand : ITurnCommand
+    public class MovePlayerCommand : ITurnCommand
     {
-        private Grid _grid;
-
+        private Game _game;
+        private Pawn _player;
         private Cell _startCell, _targetCell;
 
-        public IMovePlayerCommand(Grid grid, Cell startCell, Cell targetCell)
+        public MovePlayerCommand(Game game, Pawn player, Cell startCell, Cell targetCell)
         {
+            _game = game;
+            _player = player;
             _startCell = startCell;
             _targetCell = targetCell;
-            _grid = grid;
         }
 
         public void Execute()
         {
-            _grid.MovePlayer(_startCell, _targetCell);
+            _game.MovePlayer(_player, _startCell, _targetCell);
         }
 
         public void Undo()
         {
-            _grid.MovePlayer(_targetCell, _startCell);
+            _game.MovePlayer(_player, _targetCell, _startCell);
         }
     }
 }
