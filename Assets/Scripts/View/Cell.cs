@@ -3,7 +3,7 @@ using Codice.Client.BaseCommands;
 using UnityEngine;
 
 
-namespace View
+namespace Quoridorgame.View
 {
     /// <summary>
     /// Отображение игровой клетки на сцене

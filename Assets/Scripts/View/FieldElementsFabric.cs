@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace View
+namespace Quoridorgame.View
 {
     public class FieldElementsFabric : MonoBehaviour
     {

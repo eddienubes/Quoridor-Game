@@ -5,7 +5,7 @@ using UnityEngine;
 using LoopedList;
 
 
-namespace View
+namespace Quoridorgame.View
 {
     public class CameraRotator2Players : CameraRotatorBase
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace View
+namespace Quoridorgame.View
 {
     /// <summary>
     /// Монобех, отлавливающий наведение мыши и клик по нему

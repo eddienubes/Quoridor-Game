@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace View
+namespace Quoridorgame.View
 {
     public class MainMenu : MonoBehaviour
     {
