@@ -5,12 +5,20 @@ using UnityEngine;
 
 namespace View
 {
+    /// <summary>
+    /// Отображение игровой клетки на сцене
+    /// </summary>
     public class Cell : HighlightedSelectable
     {
-        [SerializeField] private Transform _spawnPoint;
+        [SerializeField , Tooltip("Точка, на которой будут спавниться другие обьекты, \"Находящиеся\" на клетке")] 
+        private Transform _spawnPoint;
 
         public Vector3 Size { get; private set; }
         public Transform Transform { get; private set; }
+        
+        /// <summary>
+        /// Точка, на которой будут спавниться другие обьекты, "Находящиеся" на клетке
+        /// </summary>
         public Transform SpawnPoint => _spawnPoint;
 
         #region UnityEvents

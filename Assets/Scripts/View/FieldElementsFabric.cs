@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 namespace View
 {
-    public class FieldCreator : MonoBehaviour
+    public class FieldElementsFabric : MonoBehaviour
     {
         [SerializeField] private Transform _root;
         [SerializeField] private Cell _cellPrefab;
@@ -17,6 +14,7 @@ namespace View
         [SerializeField] private CameraRotatorBase _cameraRotator;
         private Cell[,] _cells = new Cell[0, 0];
 
+        //TODO: сделано для стартовой демки, выпилить после создания контроллера
         private void Start()
         {
             CreateField(9, 9);
@@ -26,7 +24,7 @@ namespace View
             SpawnWall(1, 2, 2, 3, true);
             SpawnWall(4, 2, 5, 3, false);
         }
-
+        //TODO: сделано для стартовой демки, выпилить после создания контроллера
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -34,8 +32,14 @@ namespace View
                 _cameraRotator.RotateCamera();
             }
         }
-
-        public void CreateField(int xSize, int ySize)
+        
+        /// <summary>
+        /// Создания игрового поля 
+        /// </summary>
+        /// <param name="xSize">кол-во клеток по оси Х</param>
+        /// <param name="ySize">кол-во клеток по оси У</param>
+        /// <returns>Сгенерированное поле</returns>
+        public Cell[,] CreateField(int xSize, int ySize)
         {
             foreach (var cell in _cells)
                 Destroy(cell.gameObject);
@@ -59,11 +63,15 @@ namespace View
             }
 
             RecalculateFieldSize(xSize, ySize, wallWidth);
+            return _cells;
         }
-
-        private bool IsCoordsValid(int x, int y) =>
-            _cells.GetLength(1) > y && _cells.GetLength(0) > x && x >= 0 && y >= 0;
-
+        /// <summary>
+        /// Спавн пешки
+        /// </summary>
+        /// <param name="x">Координата клетки, на которой нужно заспавнить пешку по оси Х</param>
+        /// <param name="y">Координата клетки, на которой нужно заспавнить пешку по оси У</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Бросается при невалидных координатах</exception>
         public Pawn SpawnPawn(int x, int y)
         {
             if (!IsCoordsValid(x, y))
@@ -73,7 +81,7 @@ namespace View
             pawnGo.transform.localPosition = Vector3.zero;
             return pawnGo;
         }
-
+        
         /// <summary>
         /// Спавнит стенку по выбранным координатам клетки
         /// </summary>
@@ -107,6 +115,9 @@ namespace View
             return wallGo;
         }
 
+        private bool IsCoordsValid(int x, int y) =>
+            _cells.GetLength(1) > y && _cells.GetLength(0) > x && x >= 0 && y >= 0;
+        
         /// <summary>
         /// Перерасчитывает размеры игрового поля
         /// </summary>

@@ -9,6 +9,11 @@ namespace View
     public class SelectableMonoBehaviour : MonoBehaviour
     {
         /// <summary>
+        /// True, если компонент реагирует на события наведения\выбора
+        /// </summary>
+        public bool Interactable { get; set; }
+
+        /// <summary>
         /// Событие нажания на обьект, для подписки извне
         /// </summary>
         public event Action OnClicked;
@@ -25,6 +30,7 @@ namespace View
         protected virtual void OnGetHighlighted(bool isHighlighted)
         {
         }
+
         /// <summary>
         /// Вызывается при клике на обьект, переопределяется в наследниках, чтоб не засорять события лишней логикой
         /// </summary>
@@ -34,18 +40,21 @@ namespace View
 
         private void OnMouseEnter()
         {
+            if (!Interactable) return;
             OnGetHighlighted(true);
             OnHighlighted?.Invoke(true);
         }
 
         private void OnMouseExit()
         {
+            if (!Interactable) return;
             OnGetHighlighted(false);
             OnHighlighted?.Invoke(false);
         }
 
         private void OnMouseDown()
         {
+            if (!Interactable) return;
             OnGetSelected();
             OnClicked?.Invoke();
         }
