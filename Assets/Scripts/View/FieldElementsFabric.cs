@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Quoridorgame.View
@@ -8,11 +10,14 @@ namespace Quoridorgame.View
         [SerializeField] private Transform _root;
         [SerializeField] private Cell _cellPrefab;
         [SerializeField] private Wall _wallPrefab;
+        [SerializeField] private WallDeck _wallDeckPrefab;
         [SerializeField] private Pawn _pawnPrefab;
         [SerializeField] private Transform _fieldGoRoot;
-
+        [SerializeField] private List<Transform> _wallDecksRoots;
         [SerializeField] private CameraRotatorBase _cameraRotator;
         private Cell[,] _cells = new Cell[0, 0];
+        private List<WallDeck> _wallDecks = new List<WallDeck>();
+
 
         //TODO: сделано для стартовой демки, выпилить после создания контроллера
         private void Start()
@@ -21,9 +26,9 @@ namespace Quoridorgame.View
             _cameraRotator.Init();
             SpawnPawn(4, 0);
             SpawnPawn(4, 8);
-            SpawnWall(1, 2, 2, 3, true);
-            SpawnWall(4, 2, 5, 3, false);
+            CreateWallDecks(4).ForEach(x => x.AddWalls(9));
         }
+
         //TODO: сделано для стартовой демки, выпилить после создания контроллера
         private void Update()
         {
@@ -32,7 +37,7 @@ namespace Quoridorgame.View
                 _cameraRotator.RotateCamera();
             }
         }
-        
+
         /// <summary>
         /// Создания игрового поля 
         /// </summary>
@@ -65,6 +70,22 @@ namespace Quoridorgame.View
             RecalculateFieldSize(xSize, ySize, wallWidth);
             return _cells;
         }
+
+        public List<WallDeck> CreateWallDecks(int count)
+        {
+            if (count > _wallDecksRoots.Count)
+                throw new ArgumentException(
+                    $"decks count ({count}) cannot be greater then deck`s roots count ({_wallDecksRoots.Count})");
+
+            _wallDecks.ForEach(x => Destroy(x.gameObject));
+            _wallDecks.Clear();
+
+            for (int i = 0; i < count; i++)
+                _wallDecks.Add(Instantiate(_wallDeckPrefab, _wallDecksRoots[i]));
+
+            return _wallDecks;
+        }
+
         /// <summary>
         /// Спавн пешки
         /// </summary>
@@ -81,15 +102,14 @@ namespace Quoridorgame.View
             pawnGo.transform.localPosition = Vector3.zero;
             return pawnGo;
         }
-        
+
         /// <summary>
-        /// Спавнит стенку по выбранным координатам клетки
+        /// Расчитывает мировую координату стенки по выбранным координатам клетки
         /// </summary>
         /// <param name="x1">Координата Х первой клетки</param>
         /// <param name="y1">Координата У первой клетки</param>
         /// <param name="x2">Координата Х второй клетки</param>
         /// <param name="y2">Координата У второй клетки</param>
-        /// <param name="vertical">true если стенка должна стоять вертикально</param>
         /// <returns>Заспавненную стенку</returns>
         /// <remarks>
         /// <para>Клетки нужно задавать "по диагонали" </para>
@@ -100,24 +120,20 @@ namespace Quoridorgame.View
         /// <para>где . - клетка, 0 - клетка, координату которой нужно указать, == || стенка, - | просто разделение между сеткой   </para>
         /// </remarks>
         /// <exception cref="ArgumentException">Бросается, если координаты сетки были заданы неверно</exception>
-        public Wall SpawnWall(int x1, int y1, int x2, int y2, bool vertical)
+        public Vector3 GetWallPosition(int x1, int y1, int x2, int y2)
         {
             if (!IsCoordsValid(x1, y1) || !IsCoordsValid(x2, y2))
                 throw new ArgumentException("Pawn coordinates are incorrect!");
 
-            var wallGo = Instantiate(_wallPrefab, _fieldGoRoot, true);
-
             var cell1Transform = _cells[x1, y1].SpawnPoint.position;
             var cell2Transform = _cells[x2, y2].SpawnPoint.position;
 
-            wallGo.Transform.position = (cell1Transform + cell2Transform) / 2;
-            wallGo.Vertical = vertical;
-            return wallGo;
+            return (cell1Transform + cell2Transform) / 2;
         }
 
         private bool IsCoordsValid(int x, int y) =>
             _cells.GetLength(1) > y && _cells.GetLength(0) > x && x >= 0 && y >= 0;
-        
+
         /// <summary>
         /// Перерасчитывает размеры игрового поля
         /// </summary>
@@ -134,7 +150,7 @@ namespace Quoridorgame.View
 
             var fieldRootXPos = 0f;
             if (xSize % 2 != 0)
-                fieldRootXPos = _cells[Mathf.CeilToInt(xSize / 2), 0].Transform.position.x;
+                fieldRootXPos = _cells[xSize / 2, 0].Transform.position.x;
             else
             {
                 var pos1 = _cells[xSize / 2, 0].Transform.position.x;
@@ -144,7 +160,7 @@ namespace Quoridorgame.View
 
             var fieldRootZPos = 0f;
             if (ySize % 2 != 0)
-                fieldRootZPos = _cells[0, Mathf.CeilToInt(ySize / 2)].Transform.position.z;
+                fieldRootZPos = _cells[0, ySize / 2].Transform.position.z;
             else
             {
                 var pos1 = _cells[0, ySize / 2].Transform.position.z;
