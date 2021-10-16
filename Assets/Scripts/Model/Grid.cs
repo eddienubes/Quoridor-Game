@@ -103,7 +103,7 @@ public class Grid
         => neighbors.Exists(neighbor => neighbor is null);
 
     private bool CheckNeighborsForNotNull(List<Cell> neighbors)
-        => neighbors.Exists(neighbor => neighbor is not null);
+        => neighbors.Exists(neighbor => !(neighbor is null));
 
     private List<Cell> GetNeighbors(
         Cell gridCell1Pair1,
@@ -184,7 +184,7 @@ public class Grid
 
     public bool ReplaceNeighbors(Cell cell, Cell[] neighbors)
     {
-        if (!isCellOnGrid(cell))
+        if (!IsCellOnGrid(cell))
             return false;
 
         if (neighbors.Length < 4)
