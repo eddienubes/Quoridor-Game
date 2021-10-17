@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Quoridorgame.View
 {
@@ -8,6 +9,21 @@ namespace Quoridorgame.View
     /// </summary>
     public class SelectableMonoBehaviour : MonoBehaviour
     {
+        private EventSystem _cachedEventSystem;
+        /// <summary>
+        /// EventSystem, который ищется в сцене только один раз
+        /// Обернул в свойство для того, чтобы не прописывать Awake (и перегружать) его в каждом наследнике
+        /// </summary>
+        private EventSystem _eventSystem
+        {
+            get
+            {
+                if (_cachedEventSystem == null)
+                    _cachedEventSystem = FindObjectOfType<EventSystem>();
+                return _cachedEventSystem;
+            }
+        }
+
         /// <summary>
         /// True, если компонент реагирует на события наведения\выбора
         /// </summary>
@@ -41,6 +57,8 @@ namespace Quoridorgame.View
         private void OnMouseEnter()
         {
             if (!Interactable) return;
+            if (_eventSystem.IsPointerOverGameObject()) return;
+
             OnGetHighlighted(true);
             OnHighlighted?.Invoke(true);
         }
@@ -48,6 +66,8 @@ namespace Quoridorgame.View
         private void OnMouseExit()
         {
             if (!Interactable) return;
+            if (_eventSystem.IsPointerOverGameObject()) return;
+
             OnGetHighlighted(false);
             OnHighlighted?.Invoke(false);
         }
@@ -55,6 +75,8 @@ namespace Quoridorgame.View
         private void OnMouseDown()
         {
             if (!Interactable) return;
+            if (_eventSystem.IsPointerOverGameObject()) return;
+
             OnGetSelected();
             OnClicked?.Invoke();
         }
