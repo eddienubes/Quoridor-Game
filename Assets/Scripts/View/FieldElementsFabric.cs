@@ -42,7 +42,7 @@ namespace Quoridorgame.View
         private void Start()
         {
             Instance = this;
-            // CreateField(9, 9);
+            CreateField(9, 9);
             _cameraRotator.Init();
             // SpawnPawn(4, 0);
             // SpawnPawn(4, 8);
@@ -95,6 +95,18 @@ namespace Quoridorgame.View
                     _cells[x, y] = cellGo;
                 }
             }
+
+            for (int x = 0; x < xSize; x++)
+            {
+                Destroy(_cells[x, 0].VerticalPlaceholder.gameObject);
+                Destroy(_cells[x, 0].HorizontalPlaceholder.gameObject);
+            }
+            for (int y = 0; y < ySize; y++)
+            {
+                Destroy(_cells[xSize - 1, y].HorizontalPlaceholder.gameObject);
+                Destroy(_cells[xSize - 1, y].VerticalPlaceholder.gameObject);
+            }
+              
 
             RecalculateFieldSize(xSize, ySize, wallWidth);
             return _cells;

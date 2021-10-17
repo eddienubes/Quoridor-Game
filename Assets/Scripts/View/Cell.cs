@@ -1,13 +1,8 @@
-using System;
-using Codice.Client.BaseCommands;
 using UnityEngine;
 
 
 namespace Quoridorgame.View
 {
-    using System.Xml.Serialization;
-    using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer.Explorer;
-
     /// <summary>
     /// Отображение игровой клетки на сцене
     /// </summary>
@@ -16,8 +11,12 @@ namespace Quoridorgame.View
         [SerializeField, Tooltip("Точка, на которой будут спавниться другие обьекты, \"Находящиеся\" на клетке")]
         private Transform _spawnPoint;
 
+        [SerializeField] private WallPlaceHolder _verticalPlaceholder;
+        [SerializeField] private WallPlaceHolder _horizontalPlaceholder;
         public Vector3 Size { get; private set; }
         public Transform Transform { get; private set; }
+        public WallPlaceHolder VerticalPlaceholder => _verticalPlaceholder;
+        public WallPlaceHolder HorizontalPlaceholder => _horizontalPlaceholder;
 
         /// <summary>
         /// Точка, на которой будут спавниться другие обьекты, "Находящиеся" на клетке
