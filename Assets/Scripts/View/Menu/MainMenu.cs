@@ -9,19 +9,12 @@ namespace Quoridorgame.View
     {
         public void PlayAgainstPlayer()
         {
-            SceneManager.LoadScene(3);
         }
 
         public void PlayAgainstAI()
         {
-            SceneManager.LoadScene(1);
         }
 
-        public void QuitGame()
-        {
-            Debug.Log("Quit successfully!");
-            Application.Quit();
-        }
+        public void QuitGame() => Application.Quit();
     }
-
 }
