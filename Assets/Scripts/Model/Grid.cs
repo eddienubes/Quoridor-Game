@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Runtime;
+using graph_sandbox;
 
 public class Grid
 {
@@ -58,6 +59,10 @@ public class Grid
         }
     }
 
+    public Cell GetCellByCoordinates(int x, int y)
+    {
+        return _grid[x, y];
+    }
 
     private List<Cell> RetrievePath(Cell sourceCell, Cell destinationCell)
     {
@@ -191,12 +196,12 @@ public class Grid
             throw new Exception("Invalid neighbors array has been passed. Length is less than 4");
 
         Cell gridCell = _grid[cell.GridX, cell.GridY];
-        
+
         gridCell.Neighbors = neighbors;
-        
+
         return true;
     }
-    
+
     public bool PlaceWall(
         Cell cell1Pair1,
         Cell cell2Pair1,
@@ -379,25 +384,29 @@ public class Grid
 
         return (null, false);
     }
-    
-    public void MovePlayer(Cell targetCell, Cell startCell)
+
+    public void MovePlayer(Cell targetCell, Cell startCell, Pawn player)
     {
         if (startCell.PlayerId == 0)
         {
             throw new Exception("There is no player on this cell");
         }
 
+        if (startCell.PlayerId == player.PlayerId)
+        {
+            throw new Exception("There is player with another Id on this cell");
+        }
+
         targetCell.PlayerId = startCell.PlayerId;
         startCell.PlayerId = 0;
     }
 
-    public void SpawnPlayers(int playersCount = 2)
+    public void SpawnPlayers(params Player[] players)
     {
-        if (playersCount == 2)
+        if (players.Length == 2)
         {
-            _grid[0, _rowCapacity / 2].PlayerId = 1;
-            _grid[_rowsAmount - 1, _rowCapacity / 2].PlayerId = 2;
-
+            _grid[0, _rowCapacity / 2].PlayerId = players[0].Pawn.PlayerId;
+            _grid[_rowsAmount - 1, _rowCapacity / 2].PlayerId = players[1].Pawn.PlayerId;
             return;
         }
 
@@ -480,5 +489,24 @@ public class Grid
     //
     //     return minIndex;
     // }
- 
+
+
+    public bool CheckIsPawnOnTheWinLine(Pawn pawn)
+    {
+        if (pawn.WinLineY > _grid.GetLength(1) || pawn.WinLineY < 0)
+        {
+            throw new Exception(
+                $"Pawn winLine is not on the grid. Pawn id is {pawn.PlayerId}, pawn winline is {pawn.WinLineY}");
+        }
+
+        for (int i = 0; i < _grid.GetLength(1); i++)
+        {
+            if (_grid[pawn.WinLineY, i].PlayerId == pawn.PlayerId)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
