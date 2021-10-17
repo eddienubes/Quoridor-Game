@@ -9,14 +9,14 @@ namespace graph_sandbox
 
         private IPlayer playerA, playerB;
 
-        private Stack<MakeTurnCommand> _gameLog;
+        private Stack<IMakeTurnCommand> _gameLog;
 
         public Game(IPlayer playerA, IPlayer playerB, Grid grid)
         {
             this.playerA = playerA;
             this.playerB = playerB;
             _grid = grid;
-            _gameLog = new Stack<MakeTurnCommand>();
+            _gameLog = new Stack<IMakeTurnCommand>();
         }
     }
 }
