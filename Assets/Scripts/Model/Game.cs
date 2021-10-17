@@ -3,6 +3,7 @@ namespace graph_sandbox
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Codice.Client.BaseCommands;
     using Commands;
     using UnityEngine;
     using Grid = Grid;
@@ -16,6 +17,8 @@ namespace graph_sandbox
         private Stack<IMakeTurnCommand> _gameLog;
 
         public event Action<Player> GameEnded;
+        public event Action<bool, (int, int), (int, int), (int, int), (int, int)> OnWallPlaced;
+        public event Action<Player, (int, int), (int, int)> OnPlayerMoved;
 
         public Game(Grid grid, params Player[] players)
         {
@@ -25,13 +28,28 @@ namespace graph_sandbox
         }
 
 
-        public void MovingPlayer(Pawn playerPawn, int startX, int startY, int targetX, int targetY)
+        public void PlacingWall(Player player, bool isVertical, (int, int) cell1Pair1, (int, int) cell2Pair1,
+            (int, int) cell1Pair2, (int, int) cell2Pair2)
         {
-            var player = _players.FirstOrDefault(p => p.Pawn == playerPawn);
+            if (!player.IsActiveTurn)
+            {
+                return;
+            }
 
+            IMakeTurnCommand turnCommand =
+                new PlaceWallCommand(_grid, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2, isVertical);
+            _gameLog.Push(turnCommand);
+            turnCommand.Execute();
+
+            OnWallPlaced?.Invoke(isVertical, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
+            SwitchTurn(player);
+        }
+
+        public void MovingPlayer(Player player, int startX, int startY, int targetX, int targetY)
+        {
             if (player == null)
             {
-                throw new Exception($"There is no player for this Pawn. Pawn id is {playerPawn.PlayerId}");
+                throw new Exception($"There is no player.");
             }
 
             if (!player.IsActiveTurn)
@@ -39,11 +57,21 @@ namespace graph_sandbox
                 return;
             }
 
-            IMakeTurnCommand turnCommand = new MovePawnCommand(playerPawn, _grid, startX, startY, targetX, targetY);
+            IMakeTurnCommand turnCommand = new MovePawnCommand(player.Pawn, _grid, startX, startY, targetX, targetY);
             turnCommand.Execute();
             _gameLog.Push(turnCommand);
-
             CheckGameForFinishing(player);
+
+            OnPlayerMoved?.Invoke(player, (startX, startY), (targetX, targetY));
+
+            SwitchTurn(player);
+        }
+
+        private void SwitchTurn(Player player)
+        {
+            var nextPlayerIndex = Array.IndexOf(_players, player) % _players.Length;
+            player.EndTurn();
+            _players[nextPlayerIndex].StartTurn();
         }
 
         private void CheckGameForFinishing(Player p)

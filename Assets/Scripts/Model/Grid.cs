@@ -401,7 +401,7 @@ public class Grid
         startCell.PlayerId = 0;
     }
 
-    public void SpawnPlayers(params Player[] players)
+    public void SetPlayersOnGrid(params Player[] players)
     {
         if (players.Length == 2)
         {
