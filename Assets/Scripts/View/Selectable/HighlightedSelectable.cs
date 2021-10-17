@@ -7,11 +7,12 @@ namespace Quoridorgame.View
     /// Монобех, меняющий подсветку при наведении или клике 
     /// Работает с шейдером Custom/SelectableShader
     /// </summary>
+    [RequireComponent(typeof(Collider))]
     public class HighlightedSelectable : SelectableMonoBehaviour
     {
         private static readonly int IsSelected = Shader.PropertyToID("_isSelected");
         private static readonly int IsHighlighted = Shader.PropertyToID("_isHighlighted");
-
+        
         [SerializeField] private Renderer renderTarget;
 
         protected override void OnGetHighlighted(bool isHighlighted) => SetHighlighted(isHighlighted);

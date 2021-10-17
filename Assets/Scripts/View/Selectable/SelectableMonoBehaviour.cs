@@ -11,7 +11,7 @@ namespace Quoridorgame.View
         /// <summary>
         /// True, если компонент реагирует на события наведения\выбора
         /// </summary>
-        public bool Interactable { get; set; }
+        public bool Interactable { get; set; } = true;
 
         /// <summary>
         /// Событие нажания на обьект, для подписки извне

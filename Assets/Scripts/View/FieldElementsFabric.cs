@@ -26,7 +26,7 @@ namespace Quoridorgame.View
             _cameraRotator.Init();
             SpawnPawn(4, 0);
             SpawnPawn(4, 8);
-            CreateWallDecks(4).ForEach(x => x.AddWalls(9));
+            CreateWallDecks(4).ForEach(x => x.AddWalls(8));
         }
 
         //TODO: сделано для стартовой демки, выпилить после создания контроллера

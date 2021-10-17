@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3844340651347755658}
   - component: {fileID: 3844340651347755659}
+  - component: {fileID: 7222179056760625965}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -44,9 +45,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5355076c1d162c44b8408e85508ccba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderTarget: {fileID: 4711114365546791739}
   _jumpAnimationTime: 2
   _verticalMovementTimePart: 0.2
   _verticalMovementHeight: 1.4
+--- !u!65 &7222179056760625965
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3844340651347755670}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &8463408860391098202
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,8 +73,6 @@ GameObject:
   - component: {fileID: 2761274240899737785}
   - component: {fileID: 427343907159213940}
   - component: {fileID: 4711114365546791739}
-  - component: {fileID: 8820915533193513839}
-  - component: {fileID: 9078215730234865732}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -130,31 +143,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8820915533193513839
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8463408860391098202}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9078215730234865732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8463408860391098202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5355076c1d162c44b8408e85508ccba2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _jumpAnimationTime: 2
-  _verticalMovementTimePart: 0.2
-  _verticalMovementHeight: 1.4

@@ -49,7 +49,7 @@ namespace Quoridorgame.View
             {
                 var wallGo = Instantiate(_wallPrefab, _wallsRoot, true);
                 wallGo.Transform.localPosition =
-                    Vector3.right * (i * wallGo.Width * 3 - (wallGo.Width / 1.5f * wallsCount));
+                    Vector3.right * (i * wallGo.Width * 3 - (wallGo.Width* 3 / 2f * (wallsCount-1)));
                 wallGo.Transform.localRotation = Quaternion.Euler(0, 90, 0);
                 FreeWalls.Push(wallGo);
                 AllWalls.Push(wallGo);

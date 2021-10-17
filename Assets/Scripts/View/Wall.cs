@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Quoridorgame.View
 {
-    public class Wall : MonoBehaviour
+    public class Wall : HighlightedSelectable
     {
         public Transform Transform { get; private set; }
         public float Width { get; private set; }
