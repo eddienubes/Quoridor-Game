@@ -15,13 +15,17 @@ namespace Quoridorgame.View
         [SerializeField] private Transform _fieldGoRoot;
         [SerializeField] private List<Transform> _wallDecksRoots;
         [SerializeField] private CameraRotatorBase _cameraRotator;
-        private Cell[,] _cells = new Cell[0, 0];
+
+        public static FieldElementsFabric Instance;
+        public Cell[,] _cells { get; private set; } = new Cell[0, 0];
+        
         private List<WallDeck> _wallDecks = new List<WallDeck>();
 
 
         //TODO: сделано для стартовой демки, выпилить после создания контроллера
         private void Start()
         {
+            Instance = this;
             CreateField(9, 9);
             _cameraRotator.Init();
             SpawnPawn(4, 0);
@@ -130,6 +134,7 @@ namespace Quoridorgame.View
 
             return (cell1Transform + cell2Transform) / 2;
         }
+        public Vector3 GetPawnPosition(int x, int y) => _cells[x, y].SpawnPoint.position;
 
         private bool IsCoordsValid(int x, int y) =>
             _cells.GetLength(1) > y && _cells.GetLength(0) > x && x >= 0 && y >= 0;
