@@ -2,23 +2,39 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using graph_sandbox;
 
 namespace Quoridorgame.View
 {
     public class FieldElementsFabric : MonoBehaviour
     {
-        [SerializeField] private Transform _root;
-        [SerializeField] private Cell _cellPrefab;
-        [SerializeField] private Wall _wallPrefab;
-        [SerializeField] private WallDeck _wallDeckPrefab;
-        [SerializeField] private Pawn _pawnPrefab;
-        [SerializeField] private Transform _fieldGoRoot;
-        [SerializeField] private List<Transform> _wallDecksRoots;
-        [SerializeField] private CameraRotatorBase _cameraRotator;
+        [SerializeField]
+        private Transform _root;
+
+        [SerializeField]
+        private Cell _cellPrefab;
+
+        [SerializeField]
+        private Wall _wallPrefab;
+
+        [SerializeField]
+        private WallDeck _wallDeckPrefab;
+
+        [SerializeField]
+        private Pawn _pawnPrefab;
+
+        [SerializeField]
+        private Transform _fieldGoRoot;
+
+        [SerializeField]
+        private List<Transform> _wallDecksRoots;
+
+        [SerializeField]
+        private CameraRotatorBase _cameraRotator;
 
         public static FieldElementsFabric Instance;
         public Cell[,] _cells { get; private set; } = new Cell[0, 0];
-        
+
         private List<WallDeck> _wallDecks = new List<WallDeck>();
 
 
@@ -26,10 +42,10 @@ namespace Quoridorgame.View
         private void Start()
         {
             Instance = this;
-            CreateField(9, 9);
+            // CreateField(9, 9);
             _cameraRotator.Init();
-            SpawnPawn(4, 0);
-            SpawnPawn(4, 8);
+            // SpawnPawn(4, 0);
+            // SpawnPawn(4, 8);
             CreateWallDecks(4).ForEach(x => x.AddWalls(8));
         }
 
@@ -39,6 +55,14 @@ namespace Quoridorgame.View
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _cameraRotator.RotateCamera();
+            }
+        }
+
+        public void SubscribeModelSignals(Game gameModel, Player[] players)
+        {
+            foreach (var player in players)
+            {
+                player.OnSpawn += SpawnPawn;
             }
         }
 
@@ -53,6 +77,7 @@ namespace Quoridorgame.View
             foreach (var cell in _cells)
                 Destroy(cell.gameObject);
             _cells = new Cell[xSize, ySize];
+
 
             var wallSample = Instantiate(_wallPrefab, _root);
             var wallWidth = wallSample.Width;
@@ -97,14 +122,13 @@ namespace Quoridorgame.View
         /// <param name="y">Координата клетки, на которой нужно заспавнить пешку по оси У</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Бросается при невалидных координатах</exception>
-        public Pawn SpawnPawn(int x, int y)
+        public void SpawnPawn(graph_sandbox.Pawn pawnModel, int x, int y)
         {
             if (!IsCoordsValid(x, y))
                 throw new ArgumentException("Pawn coordinates are incorrect!");
 
             var pawnGo = Instantiate(_pawnPrefab, _cells[x, y].SpawnPoint, true);
             pawnGo.transform.localPosition = Vector3.zero;
-            return pawnGo;
         }
 
         /// <summary>
@@ -134,6 +158,7 @@ namespace Quoridorgame.View
 
             return (cell1Transform + cell2Transform) / 2;
         }
+
         public Vector3 GetPawnPosition(int x, int y) => _cells[x, y].SpawnPoint.position;
 
         private bool IsCoordsValid(int x, int y) =>

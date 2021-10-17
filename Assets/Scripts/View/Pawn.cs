@@ -11,11 +11,13 @@ namespace Quoridorgame.View
     /// </summary>
     public class Pawn : HighlightedSelectable
     {
-        [Header("Animations")] [SerializeField] [Tooltip("Длительность анимации перемещения")]
+        [Header("Animations")]
+        [SerializeField]
+        [Tooltip("Длительность анимации перемещения")]
         private float _jumpAnimationTime = 2;
 
         private Transform _transform;
-        
+
         /// <summary>
         /// Высота пешки
         /// </summary>
@@ -26,7 +28,7 @@ namespace Quoridorgame.View
             _transform = transform;
             Heigth = GetComponentInChildren<CapsuleCollider>().height;
         }
-        
+
         /// <summary>
         /// Переместить пешку на координату
         /// </summary>

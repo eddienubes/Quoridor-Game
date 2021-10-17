@@ -283,5 +283,6 @@ PrefabInstance:
       propertyPath: cardDecksRoot.Array.data[3]
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8126550009549019653, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}

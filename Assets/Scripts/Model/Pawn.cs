@@ -1,7 +1,10 @@
 namespace graph_sandbox
 {
+    using System;
+
     public class Pawn
     {
+        public event Action<int, int> OnMove;
         public int PlayerId { get; private set; }
         public int WinLineY { get; private set; }
 
@@ -9,6 +12,11 @@ namespace graph_sandbox
         {
             PlayerId = playerId;
             WinLineY = winLineY;
+        }
+
+        public void MoveTo(int targetCellGridX, int targetCellGridY)
+        {
+            OnMove?.Invoke(targetCellGridX, targetCellGridY);
         }
     }
 }

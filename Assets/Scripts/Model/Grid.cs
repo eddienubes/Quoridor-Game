@@ -385,32 +385,36 @@ public class Grid
         return (null, false);
     }
 
-    public void MovePlayer(Cell targetCell, Cell startCell, Pawn player)
+    public void MovePlayer(Cell targetCell, Cell startCell, Pawn playerPawn)
     {
         if (startCell.PlayerId == 0)
         {
             throw new Exception("There is no player on this cell");
         }
 
-        if (startCell.PlayerId == player.PlayerId)
+        if (startCell.PlayerId == playerPawn.PlayerId)
         {
             throw new Exception("There is player with another Id on this cell");
         }
 
         targetCell.PlayerId = startCell.PlayerId;
         startCell.PlayerId = 0;
+
+        playerPawn.MoveTo(targetCell.GridX, targetCell.GridY);
     }
 
-    public void SetPlayersOnGrid(params Player[] players)
+    public void SetPlayersOnGrid(Player[] players)
     {
-        if (players.Length == 2)
+        if (players.Length != 2)
         {
-            _grid[0, _rowCapacity / 2].PlayerId = players[0].Pawn.PlayerId;
-            _grid[_rowsAmount - 1, _rowCapacity / 2].PlayerId = players[1].Pawn.PlayerId;
-            return;
+            throw new Exception("Game is for 2 players only now.");
         }
 
-        throw new Exception("Game is for 2 players only now.");
+        players[0].Spawn(0, _rowCapacity / 2);
+        _grid[0, _rowCapacity / 2].PlayerId = players[0].Pawn.PlayerId;
+
+        players[1].Spawn(_rowsAmount - 1, _rowCapacity / 2);
+        _grid[_rowsAmount - 1, _rowCapacity / 2].PlayerId = players[1].Pawn.PlayerId;
     }
 
     public string ToString()
