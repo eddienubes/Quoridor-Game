@@ -7,7 +7,10 @@ namespace Quoridorgame.View
 {
     public class WallPlaceHolder : SelectableMonoBehaviour
     {
-        [SerializeField] private Renderer _renderer;
+        [SerializeField]
+        private Renderer _renderer;
+
+        public Cell cellParent;
 
         private void Start()
         {

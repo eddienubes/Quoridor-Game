@@ -42,10 +42,10 @@ namespace Quoridorgame.View
         private void Start()
         {
             Instance = this;
-            CreateField(9, 9);
+            // CreateField(9, 9);
             _cameraRotator.Init();
-            // SpawnPawn(4, 0);
             // SpawnPawn(4, 8);
+            // SpawnPawn(4, 0);
             CreateWallDecks(4).ForEach(x => x.AddWalls(8));
         }
 
@@ -92,6 +92,7 @@ namespace Quoridorgame.View
                     var yCoord = (cellGo.Size.z * y) + (wallWidth * (y - 1));
                     cellGo.transform.localPosition = new Vector3(xCoord, 0, yCoord);
                     cellGo.name = $"Cell {x}-{y}";
+                    cellGo.Coordinate = new Vector2Int(x, y);
                     _cells[x, y] = cellGo;
                 }
             }
@@ -101,12 +102,13 @@ namespace Quoridorgame.View
                 Destroy(_cells[x, 0].VerticalPlaceholder.gameObject);
                 Destroy(_cells[x, 0].HorizontalPlaceholder.gameObject);
             }
+
             for (int y = 0; y < ySize; y++)
             {
                 Destroy(_cells[xSize - 1, y].HorizontalPlaceholder.gameObject);
                 Destroy(_cells[xSize - 1, y].VerticalPlaceholder.gameObject);
             }
-              
+
 
             RecalculateFieldSize(xSize, ySize, wallWidth);
             return _cells;
@@ -134,7 +136,7 @@ namespace Quoridorgame.View
         /// <param name="y">Координата клетки, на которой нужно заспавнить пешку по оси У</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Бросается при невалидных координатах</exception>
-        public void SpawnPawn(graph_sandbox.Pawn pawnModel, int x, int y)
+        public void SpawnPawn(int x, int y)
         {
             if (!IsCoordsValid(x, y))
                 throw new ArgumentException("Pawn coordinates are incorrect!");

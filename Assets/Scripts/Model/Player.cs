@@ -7,7 +7,7 @@ namespace graph_sandbox
         public bool IsActiveTurn { get; private set; }
         public int WallsCount { get; private set; }
 
-        public event Action<Pawn, int, int> OnSpawn;
+        public event Action<int, int> OnSpawn;
         public event Action OnTurnStarted;
         public event Action OnTurnEnded;
 
@@ -23,7 +23,7 @@ namespace graph_sandbox
 
         public void Spawn(int xCoordinate, int yCoordinate)
         {
-            OnSpawn?.Invoke(Pawn, xCoordinate, yCoordinate);
+            OnSpawn?.Invoke(xCoordinate, yCoordinate);
         }
 
         public void EndTurn()

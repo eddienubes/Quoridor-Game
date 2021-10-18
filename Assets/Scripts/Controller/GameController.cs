@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private UnityPlayerController[] _playerControllers;
 
-    private Player[] _players;
+    private Player[] _players = new Player[2];
 
     [SerializeField]
     private FieldElementsFabric fieldCreatorView;
@@ -44,16 +44,51 @@ public class GameController : MonoBehaviour
         foreach (var cell in gridView)
         {
             cell.OnClicked += TryMovePawn;
+            cell.HorizontalPlaceholder.OnClicked += TrySetHorizontalWall;
+            cell.VerticalPlaceholder.OnClicked += TrySetVerticalWall;
         }
 
         _grid.SetPlayersOnGrid(_players);
     }
 
-    private void TryMovePawn()
+    private void TrySetVerticalWall(SelectableMonoBehaviour wallPlaceHolder)
     {
-        var currentPlayerPawn = _players.FirstOrDefault(p => p.IsActiveTurn).Pawn;
-        // TODO : ContinueWork
-        // var turnCommand = new MovePawnCommand(currentPlayerPawn, _grid,   ) 
+        var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
+
+        var cellUpLeftCoords = wallCell.Coordinate;
+        var currentPlayer = _players.FirstOrDefault(p => p.IsActiveTurn);
+
+        _gameModel.PlacingWall(currentPlayer, true, (cellUpLeftCoords.x, cellUpLeftCoords.y),
+            (cellUpLeftCoords.x, cellUpLeftCoords.y - 1), (cellUpLeftCoords.x + 1, cellUpLeftCoords.y),
+            (cellUpLeftCoords.x, cellUpLeftCoords.y - 1));
+    }
+
+    private void TrySetHorizontalWall(SelectableMonoBehaviour wallPlaceHolder)
+    {
+        var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
+
+        var cellDownLeftCoords = wallCell.Coordinate;
+        var currentPlayer = _players.FirstOrDefault(p => p.IsActiveTurn);
+
+        _gameModel.PlacingWall(currentPlayer, false, (cellDownLeftCoords.x, cellDownLeftCoords.y),
+            (cellDownLeftCoords.x + 1, cellDownLeftCoords.y), (cellDownLeftCoords.x, cellDownLeftCoords.y + 1),
+            (cellDownLeftCoords.x + 1, cellDownLeftCoords.y + 1));
+    }
+
+
+    private void TryMovePawn(SelectableMonoBehaviour clickedCell)
+    {
+        var currentPlayerPawn = _players.FirstOrDefault(p => p.IsActiveTurn)?.Pawn;
+        if (currentPlayerPawn == null)
+        {
+            throw new Exception("There is no players with active turn.");
+        }
+
+        var targetCellView = (Quoridorgame.View.Cell) clickedCell;
+        var currentCell = _grid.GetPawnCell(currentPlayerPawn);
+
+        _gameModel.MovingPlayer(currentPlayerPawn, currentCell.GridX, currentCell.GridY,
+            targetCellView.Coordinate.x, targetCellView.Coordinate.y);
     }
 
 

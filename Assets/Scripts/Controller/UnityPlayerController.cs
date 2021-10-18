@@ -39,7 +39,8 @@ namespace Quoridorgame.Controllers
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void MakeStep(int x, int y) => _pawn.Jump(FieldElementsFabric.Instance.GetPawnPosition(x, y));
+            
+        public void MakeStep(int x,int y) => _pawn.Jump(FieldElementsFabric.Instance.GetPawnPosition(x, y));
 
         /// <summary>
         /// "ставим стенку" на нужные координаты, отключаем подсветку и регистрацию 
@@ -55,10 +56,10 @@ namespace Quoridorgame.Controllers
             currentWall.Interactable = false;
         }
 
-        public void Init(Pawn pawn, WallDeck wallDeck)
-        {
-            (_pawn, _wallDeck) = (pawn, wallDeck);
-        }
+        // public void Init(Pawn pawn, WallDeck wallDeck)
+        // {
+        //     (_pawn, _wallDeck) = (pawn, wallDeck);
+        // }
 
         public void SubscribeToModel(Player playerModel)
         {

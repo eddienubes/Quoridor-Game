@@ -32,7 +32,7 @@ namespace Quoridorgame.View
         /// <summary>
         /// Событие нажания на обьект, для подписки извне
         /// </summary>
-        public event Action OnClicked;
+        public event Action<SelectableMonoBehaviour> OnClicked;
 
         /// <summary>
         /// Событие наведения на обьект, для подписки извне
@@ -78,7 +78,7 @@ namespace Quoridorgame.View
             if (_eventSystem.IsPointerOverGameObject()) return;
 
             OnGetSelected();
-            OnClicked?.Invoke();
+            OnClicked?.Invoke(this);
         }
     }
 }

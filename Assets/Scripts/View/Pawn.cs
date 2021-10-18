@@ -36,5 +36,10 @@ namespace Quoridorgame.View
         /// <param name="duration">Длинна анимации</param>
         public void Jump(Vector3 position)
             => _transform.DOJump(position, 2, 1, _jumpAnimationTime);
+
+        private void OnDestroy()
+        {
+            Debug.Log("Destroy");
+        }
     }
 }

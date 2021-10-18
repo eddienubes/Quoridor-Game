@@ -513,4 +513,20 @@ public class Grid
 
         return false;
     }
+
+    public Cell GetPawnCell(Pawn pawn)
+    {
+        for (int i = 0; i < _rowsAmount; i++)
+        {
+            for (int j = 0; j < _rowCapacity; j++)
+            {
+                if (_grid[i, j].PlayerId == pawn.PlayerId)
+                {
+                    return _grid[i, j];
+                }
+            }
+        }
+
+        throw new Exception($"There is no cell under this pawn. Pawn id is {pawn.PlayerId}");
+    }
 }

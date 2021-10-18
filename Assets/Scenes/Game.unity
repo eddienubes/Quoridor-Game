@@ -123,7 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1 &81017678
+=======
+--- !u!1 &680344393
+>>>>>>> eeeacbf (Controller WIP 2)
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,22 +135,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 81017681}
   - component: {fileID: 81017680}
   - component: {fileID: 81017679}
   m_Layer: 0
   m_Name: EventSystem
+=======
+  - component: {fileID: 680344397}
+  - component: {fileID: 680344396}
+  - component: {fileID: 680344395}
+  - component: {fileID: 680344394}
+  m_Layer: 0
+  m_Name: GameController
+>>>>>>> eeeacbf (Controller WIP 2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!114 &81017679
+=======
+--- !u!114 &680344394
+>>>>>>> eeeacbf (Controller WIP 2)
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 81017678}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -161,11 +179,21 @@ MonoBehaviour:
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
 --- !u!114 &81017680
+=======
+  m_GameObject: {fileID: 680344393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a75253915bd3c459211be681f6ee55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &680344395
+>>>>>>> eeeacbf (Controller WIP 2)
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 81017678}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -176,11 +204,39 @@ MonoBehaviour:
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &81017681
+=======
+  m_GameObject: {fileID: 680344393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a75253915bd3c459211be681f6ee55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &680344396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680344393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4c8e07be5a6af43a8c1e73fe461ba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerControllers:
+  - {fileID: 680344395}
+  - {fileID: 680344394}
+  fieldCreatorView: {fileID: 1025067034}
+  xSize: 9
+  ySize: 9
+--- !u!4 &680344397
+>>>>>>> eeeacbf (Controller WIP 2)
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 81017678}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 17.735107, y: 9.699905, z: 0}
@@ -188,6 +244,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+=======
+  m_GameObject: {fileID: 680344393}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+>>>>>>> eeeacbf (Controller WIP 2)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -282,6 +347,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+<<<<<<< HEAD
 --- !u!1001 &2011024975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -379,6 +445,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24e003704f04a0f4ba2011aeb04dcf48, type: 3}
+=======
+--- !u!114 &1025067034 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6437775929102723731, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+  m_PrefabInstance: {fileID: 6437775929780658913}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f59572ff82cfcc48b44487b3d49d3a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+>>>>>>> eeeacbf (Controller WIP 2)
 --- !u!1001 &6437775929780658913
 PrefabInstance:
   m_ObjectHideFlags: 0

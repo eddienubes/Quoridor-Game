@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace Quoridorgame.View
 {
+    using System;
+
     /// <summary>
     /// Отображение игровой клетки на сцене
     /// </summary>
@@ -11,8 +13,12 @@ namespace Quoridorgame.View
         [SerializeField, Tooltip("Точка, на которой будут спавниться другие обьекты, \"Находящиеся\" на клетке")]
         private Transform _spawnPoint;
 
-        [SerializeField] private WallPlaceHolder _verticalPlaceholder;
-        [SerializeField] private WallPlaceHolder _horizontalPlaceholder;
+        [SerializeField]
+        private WallPlaceHolder _verticalPlaceholder;
+
+        [SerializeField]
+        private WallPlaceHolder _horizontalPlaceholder;
+
         public Vector3 Size { get; private set; }
         public Transform Transform { get; private set; }
         public WallPlaceHolder VerticalPlaceholder => _verticalPlaceholder;
@@ -23,7 +29,7 @@ namespace Quoridorgame.View
         /// </summary>
         public Transform SpawnPoint => _spawnPoint;
 
-        public Vector2 Coordinates => new Vector2(_spawnPoint.position.x, _spawnPoint.position.y);
+        public Vector2Int Coordinate { get; set; }
 
         #region UnityEvents
 

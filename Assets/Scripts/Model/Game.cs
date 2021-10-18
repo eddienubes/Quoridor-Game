@@ -45,16 +45,17 @@ namespace graph_sandbox
             SwitchTurn(player);
         }
 
-        public void MovingPlayer(Player player, int startX, int startY, int targetX, int targetY)
+        public void MovingPlayer(Pawn playerPawn, int startX, int startY, int targetX, int targetY)
         {
+            var player = _players.FirstOrDefault(p => p.Pawn == playerPawn);
             if (player == null)
             {
-                throw new Exception($"There is no player.");
+                throw new Exception($"There is no player for this pawn. Id: {playerPawn.PlayerId}");
             }
 
             if (!player.IsActiveTurn)
             {
-                return;
+                throw new Exception($"This player is inactive. Id: {playerPawn.PlayerId}");
             }
 
             IMakeTurnCommand turnCommand = new MovePawnCommand(player.Pawn, _grid, startX, startY, targetX, targetY);
