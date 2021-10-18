@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a75253915bd3c459211be681f6ee55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pawn: {fileID: 0}
 --- !u!114 &680344395
 >>>>>>> eeeacbf (Controller WIP 2)
 MonoBehaviour:
@@ -211,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a75253915bd3c459211be681f6ee55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pawn: {fileID: 0}
 --- !u!114 &680344396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,6 +467,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6382202921061727004, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382202921120983229, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382202921789993658, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437775928192488502, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6437775929102723728, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
       propertyPath: m_Name
       value: GameField

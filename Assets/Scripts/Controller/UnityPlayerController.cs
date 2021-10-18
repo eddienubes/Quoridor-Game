@@ -6,13 +6,16 @@ using UnityEngine;
 namespace Quoridorgame.Controllers
 {
     using System;
+    using System.Linq;
     using graph_sandbox;
     using UnityEditor.VersionControl;
     using Pawn = View.Pawn;
 
     public class UnityPlayerController : MonoBehaviour
     {
+        [SerializeField]
         private Pawn _pawn;
+
         private WallDeck _wallDeck;
 
         private Player _playerModel;
@@ -39,8 +42,7 @@ namespace Quoridorgame.Controllers
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-            
-        public void MakeStep(int x,int y) => _pawn.Jump(FieldElementsFabric.Instance.GetPawnPosition(x, y));
+        public void MakeStep(int x, int y) => _pawn.Jump(FieldElementsFabric.Instance.GetPawnPosition(x, y));
 
         /// <summary>
         /// "ставим стенку" на нужные координаты, отключаем подсветку и регистрацию 
@@ -49,11 +51,19 @@ namespace Quoridorgame.Controllers
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="isVertical"></param>
-        public void PlaceWall(int x1, int y1, int x2, int y2, bool isVertical)
+        public void PlaceWall(bool isVertical, int x, int y)
         {
             var currentWall = _wallDeck.GetWall();
-            currentWall.Jump(FieldElementsFabric.Instance.GetWallPosition(x1, y1, x2, y2), isVertical);
-            currentWall.Interactable = false;
+            if (isVertical)
+            {
+                currentWall.Jump(FieldElementsFabric.Instance._cells[x, y].VerticalPlaceholder.transform.position,
+                    true);
+            }
+            else
+            {
+                currentWall.Jump(FieldElementsFabric.Instance._cells[x, y].HorizontalPlaceholder.transform.position,
+                    false);
+            }
         }
 
         // public void Init(Pawn pawn, WallDeck wallDeck)
@@ -65,18 +75,27 @@ namespace Quoridorgame.Controllers
         {
             _playerModel = playerModel;
             _playerModel.Pawn.OnMove += MakeStep;
+            _playerModel.OnWallPlaced += PlaceWall;
             _playerModel.OnTurnEnded += OnTurnEnded;
             _playerModel.OnTurnStarted += OnTurnStarted;
         }
 
+        public void SetPawnView(Pawn obj)
+        {
+            _pawn = obj;
+        }
+
+
         private void OnTurnStarted()
         {
             IsActiveNow = true;
+            _pawn.Interactable = true;
         }
 
         private void OnTurnEnded()
         {
             IsActiveNow = false;
+            _pawn.Interactable = false;
         }
 
         private void OnDestroy()
@@ -84,6 +103,11 @@ namespace Quoridorgame.Controllers
             _playerModel.Pawn.OnMove -= MakeStep;
             _playerModel.OnTurnEnded -= OnTurnEnded;
             _playerModel.OnTurnStarted -= OnTurnStarted;
+        }
+
+        public void SetWallDeck(WallDeck deck)
+        {
+            _wallDeck = deck;
         }
     }
 }

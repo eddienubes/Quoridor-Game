@@ -38,7 +38,6 @@ public class GameController : MonoBehaviour
 
         _gameModel = new Game(_grid, _players);
 
-        fieldCreatorView.SubscribeModelSignals(_gameModel, _players);
         var gridView = fieldCreatorView.CreateField(xSize, ySize);
 
         foreach (var cell in gridView)
@@ -48,7 +47,25 @@ public class GameController : MonoBehaviour
             cell.VerticalPlaceholder.OnClicked += TrySetVerticalWall;
         }
 
+        SetPlayers();
+        SetDecks();
+    }
+
+    private void SetPlayers()
+    {
         _grid.SetPlayersOnGrid(_players);
+        _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(0, 4));
+        _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(8, 4));
+    }
+
+    private void SetDecks()
+    {
+        var decks = fieldCreatorView.CreateWallDecks(_playerControllers.Length);
+        decks.ForEach(deck => deck.AddWalls(10));
+        for (int i = 0; i < _playerControllers.Length; i++)
+        {
+            _playerControllers[i].SetWallDeck(decks[i]);
+        }
     }
 
     private void TrySetVerticalWall(SelectableMonoBehaviour wallPlaceHolder)
@@ -59,8 +76,8 @@ public class GameController : MonoBehaviour
         var currentPlayer = _players.FirstOrDefault(p => p.IsActiveTurn);
 
         _gameModel.PlacingWall(currentPlayer, true, (cellUpLeftCoords.x, cellUpLeftCoords.y),
-            (cellUpLeftCoords.x, cellUpLeftCoords.y - 1), (cellUpLeftCoords.x + 1, cellUpLeftCoords.y),
-            (cellUpLeftCoords.x, cellUpLeftCoords.y - 1));
+            (cellUpLeftCoords.x + 1, cellUpLeftCoords.y), (cellUpLeftCoords.x, cellUpLeftCoords.y - 1),
+            (cellUpLeftCoords.x + 1, cellUpLeftCoords.y - 1));
     }
 
     private void TrySetHorizontalWall(SelectableMonoBehaviour wallPlaceHolder)
@@ -71,8 +88,8 @@ public class GameController : MonoBehaviour
         var currentPlayer = _players.FirstOrDefault(p => p.IsActiveTurn);
 
         _gameModel.PlacingWall(currentPlayer, false, (cellDownLeftCoords.x, cellDownLeftCoords.y),
-            (cellDownLeftCoords.x + 1, cellDownLeftCoords.y), (cellDownLeftCoords.x, cellDownLeftCoords.y + 1),
-            (cellDownLeftCoords.x + 1, cellDownLeftCoords.y + 1));
+            (cellDownLeftCoords.x, cellDownLeftCoords.y - 1), (cellDownLeftCoords.x + 1, cellDownLeftCoords.y),
+            (cellDownLeftCoords.x + 1, cellDownLeftCoords.y - 1));
     }
 
 
@@ -87,6 +104,8 @@ public class GameController : MonoBehaviour
         var targetCellView = (Quoridorgame.View.Cell) clickedCell;
         var currentCell = _grid.GetPawnCell(currentPlayerPawn);
 
+        Debug.Log(
+            $"{currentCell.GridX} : {currentCell.GridY} ---> {targetCellView.Coordinate.x} : {targetCellView.Coordinate.y}");
         _gameModel.MovingPlayer(currentPlayerPawn, currentCell.GridX, currentCell.GridY,
             targetCellView.Coordinate.x, targetCellView.Coordinate.y);
     }

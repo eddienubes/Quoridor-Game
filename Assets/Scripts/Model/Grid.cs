@@ -202,27 +202,14 @@ public class Grid
         return true;
     }
 
-    public bool PlaceWall(
-        Cell cell1Pair1,
-        Cell cell2Pair1,
-        Cell cell1Pair2,
-        Cell cell2Pair2,
-        bool isVertical
-    )
+    public bool PlaceWall(Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2, Cell cell2Pair2, bool isVertical)
     {
-        if (!(IsCellOnGrid(cell1Pair1) &&
-              IsCellOnGrid(cell2Pair1) &&
-              IsCellOnGrid(cell1Pair2) &&
+        if (!(IsCellOnGrid(cell1Pair1) && IsCellOnGrid(cell2Pair1) && IsCellOnGrid(cell1Pair2) &&
               IsCellOnGrid(cell2Pair2))
         )
             throw new Exception("Cell is not on the grid");
 
-        bool isVerticallyAligned = CheckVerticalAlignment(
-            cell1Pair1,
-            cell2Pair1,
-            cell1Pair2,
-            cell2Pair2
-        );
+        bool isVerticallyAligned = CheckVerticalAlignment(cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
 
         if (!(isVertical && isVerticallyAligned || !isVertical && !isVerticallyAligned))
             throw new Exception("Cells are not aligned!");
@@ -232,13 +219,8 @@ public class Grid
         Cell gridCell1Pair2 = _grid[cell1Pair2.GridX, cell1Pair2.GridY];
         Cell gridCell2Pair2 = _grid[cell2Pair2.GridX, cell2Pair2.GridY];
 
-        List<Cell> neighborsToCheck = GetNeighbors(
-            gridCell1Pair1,
-            gridCell1Pair1,
-            gridCell1Pair2,
-            gridCell2Pair2,
-            isVertical
-        );
+        List<Cell> neighborsToCheck = GetNeighbors(gridCell1Pair1, gridCell1Pair1, gridCell1Pair2,
+            gridCell2Pair2, isVertical);
 
         if (CheckNeighborsForNull(neighborsToCheck))
             return false;
@@ -385,16 +367,88 @@ public class Grid
         return (null, false);
     }
 
-    public void MovePlayer(Cell targetCell, Cell startCell, Pawn playerPawn)
+    public List<Cell> GetPossibleMovesFromCell(Cell startCell)
+    {
+        if (startCell == null)
+        {
+            throw new ArgumentException("GetPossibleMoves : Startcell is null");
+        }
+
+        var result = startCell.Neighbors.Where(n => n != null).ToList();
+        for (var i = 0; i < result.Count; i++)
+        {
+            var cell = result[i];
+            if (cell.PlayerId != 0)
+            {
+                var nextCell = GetOverCell(startCell, cell);
+                if (nextCell != null)
+                {
+                    result.Add(nextCell);
+                    result.Remove(cell);
+                }
+                else
+                {
+                    result.AddRange(GetDiagonalNeighBours(startCell, cell)
+                        .Where(move => move != null && !result.Contains(move)));
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private List<Cell> GetDiagonalNeighBours(Cell startCell, Cell cell)
+    {
+        if (startCell == null)
+        {
+            throw new ArgumentException("GetOverCell : Startcell is null");
+        }
+
+        if (cell == null)
+        {
+            throw new ArgumentException("GetOverCell : cell is null");
+        }
+
+        var indexOfDirection = Array.IndexOf(startCell.Neighbors, cell);
+        return new List<Cell>
+        {
+            cell.Neighbors[(indexOfDirection + 3) % 4],
+            cell.Neighbors[(indexOfDirection + 5) % 4]
+        };
+    }
+
+    private Cell GetOverCell(Cell startCell, Cell cell)
+    {
+        if (startCell == null)
+        {
+            throw new ArgumentException("GetOverCell : Startcell is null");
+        }
+
+        if (cell == null)
+        {
+            throw new ArgumentException("GetOverCell : cell is null");
+        }
+
+        var indexOfDirection = Array.IndexOf(startCell.Neighbors, cell);
+        return cell.Neighbors[indexOfDirection];
+    }
+
+    public void MovePlayer(Cell startCell, Cell targetCell, Pawn playerPawn)
     {
         if (startCell.PlayerId == 0)
         {
             throw new Exception("There is no player on this cell");
         }
 
-        if (startCell.PlayerId == playerPawn.PlayerId)
+        if (targetCell.PlayerId == playerPawn.PlayerId)
         {
-            throw new Exception("There is player with another Id on this cell");
+            throw new Exception("This player is already on this cell");
+        }
+
+        if (!GetPossibleMovesFromCell(startCell).Contains(targetCell))
+        {
+            throw new Exception(
+                $"Player can't move from cell {startCell.GridX}:{startCell.GridY} to {targetCell.GridX}:{targetCell.GridY}");
         }
 
         targetCell.PlayerId = startCell.PlayerId;
@@ -410,11 +464,17 @@ public class Grid
             throw new Exception("Game is for 2 players only now.");
         }
 
-        players[0].Spawn(0, _rowCapacity / 2);
+        // players[0].Spawn(0, _rowCapacity / 2);
         _grid[0, _rowCapacity / 2].PlayerId = players[0].Pawn.PlayerId;
 
-        players[1].Spawn(_rowsAmount - 1, _rowCapacity / 2);
+        if (players[0].Pawn.PlayerId == 0)
+            throw new Exception("Playerpawn has 0 id");
+
+        // players[1].Spawn(_rowsAmount - 1, _rowCapacity / 2);
         _grid[_rowsAmount - 1, _rowCapacity / 2].PlayerId = players[1].Pawn.PlayerId;
+
+        if (players[1].Pawn.PlayerId == 0)
+            throw new Exception("Playerpawn has 0 id");
     }
 
     public string ToString()

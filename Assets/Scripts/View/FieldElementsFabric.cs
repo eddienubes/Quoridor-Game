@@ -39,14 +39,14 @@ namespace Quoridorgame.View
 
 
         //TODO: сделано для стартовой демки, выпилить после создания контроллера
-        private void Start()
+        private void Awake()
         {
             Instance = this;
             // CreateField(9, 9);
             _cameraRotator.Init();
             // SpawnPawn(4, 8);
             // SpawnPawn(4, 0);
-            CreateWallDecks(4).ForEach(x => x.AddWalls(8));
+            CreateWallDecks(2).ForEach(x => x.AddWalls(10));
         }
 
         //TODO: сделано для стартовой демки, выпилить после создания контроллера
@@ -58,15 +58,7 @@ namespace Quoridorgame.View
             }
         }
 
-        public void SubscribeModelSignals(Game gameModel, Player[] players)
-        {
-            foreach (var player in players)
-            {
-                player.OnSpawn += SpawnPawn;
-            }
-        }
-
-        /// <summary>
+       /// <summary>
         /// Создания игрового поля 
         /// </summary>
         /// <param name="xSize">кол-во клеток по оси Х</param>
@@ -136,13 +128,15 @@ namespace Quoridorgame.View
         /// <param name="y">Координата клетки, на которой нужно заспавнить пешку по оси У</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Бросается при невалидных координатах</exception>
-        public void SpawnPawn(int x, int y)
+        public Pawn SpawnPawn(int x, int y)
         {
             if (!IsCoordsValid(x, y))
                 throw new ArgumentException("Pawn coordinates are incorrect!");
 
             var pawnGo = Instantiate(_pawnPrefab, _cells[x, y].SpawnPoint, true);
             pawnGo.transform.localPosition = Vector3.zero;
+
+            return pawnGo;
         }
 
         /// <summary>

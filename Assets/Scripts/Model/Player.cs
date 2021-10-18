@@ -1,15 +1,16 @@
 namespace graph_sandbox
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public abstract class Player
     {
         public bool IsActiveTurn { get; private set; }
         public int WallsCount { get; private set; }
-
-        public event Action<int, int> OnSpawn;
         public event Action OnTurnStarted;
         public event Action OnTurnEnded;
+        public event Action<bool, int, int> OnWallPlaced;
 
         public Pawn Pawn { get; private set; }
 
@@ -19,11 +20,6 @@ namespace graph_sandbox
             WallsCount = wallsCount;
 
             Pawn = new Pawn(playerId, winLineY);
-        }
-
-        public void Spawn(int xCoordinate, int yCoordinate)
-        {
-            OnSpawn?.Invoke(xCoordinate, yCoordinate);
         }
 
         public void EndTurn()
@@ -36,6 +32,23 @@ namespace graph_sandbox
         {
             IsActiveTurn = true;
             OnTurnStarted?.Invoke();
+        }
+
+        public void OnWallPlacedInvoke(bool isVertical, (int, int) cell1Pair1, (int, int) cell2Pair1,
+            (int, int) cell1Pair2, (int, int) cell2Pair2)
+        {
+            if (isVertical)
+            {
+                var cellCoords = new List<(int, int)> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}
+                    .OrderBy(c => c.Item1).ThenByDescending(c => c.Item2).FirstOrDefault();
+                OnWallPlaced?.Invoke(true, cellCoords.Item1, cellCoords.Item2);
+            }
+            else
+            {
+                var cellCoords = new List<(int, int)> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}
+                    .OrderBy(c => c.Item1).ThenBy(c => c.Item2).FirstOrDefault();
+                OnWallPlaced?.Invoke(false, cellCoords.Item1, cellCoords.Item2);
+            }
         }
     }
 }

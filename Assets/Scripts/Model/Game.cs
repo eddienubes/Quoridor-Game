@@ -17,7 +17,6 @@ namespace graph_sandbox
         private Stack<IMakeTurnCommand> _gameLog;
 
         public event Action<Player> GameEnded;
-        public event Action<bool, (int, int), (int, int), (int, int), (int, int)> OnWallPlaced;
         public event Action<Player, (int, int), (int, int)> OnPlayerMoved;
 
         public Game(Grid grid, params Player[] players)
@@ -41,7 +40,7 @@ namespace graph_sandbox
             _gameLog.Push(turnCommand);
             turnCommand.Execute();
 
-            OnWallPlaced?.Invoke(isVertical, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
+            player.OnWallPlacedInvoke(isVertical, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
             SwitchTurn(player);
         }
 
@@ -70,7 +69,7 @@ namespace graph_sandbox
 
         private void SwitchTurn(Player player)
         {
-            var nextPlayerIndex = Array.IndexOf(_players, player) % _players.Length;
+            var nextPlayerIndex = (Array.IndexOf(_players, player) + 1) % _players.Length;
             player.EndTurn();
             _players[nextPlayerIndex].StartTurn();
         }
@@ -80,6 +79,7 @@ namespace graph_sandbox
             if (_grid.CheckIsPawnOnTheWinLine(p.Pawn))
             {
                 GameEnded?.Invoke(p);
+                Debug.Log($"<color=red> GAME ENDED. PLAYER {p.Pawn.PlayerId} WON </color>");
             }
         }
     }
