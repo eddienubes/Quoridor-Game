@@ -58,7 +58,7 @@ namespace Quoridorgame.View
             }
         }
 
-       /// <summary>
+        /// <summary>
         /// Создания игрового поля 
         /// </summary>
         /// <param name="xSize">кол-во клеток по оси Х</param>
@@ -92,13 +92,13 @@ namespace Quoridorgame.View
             for (int x = 0; x < xSize; x++)
             {
                 Destroy(_cells[x, 0].VerticalPlaceholder.gameObject);
-                Destroy(_cells[x, 0].HorizontalPlaceholder.gameObject);
+                // Destroy(_cells[x, 0].HorizontalPlaceholder.gameObject);
             }
 
             for (int y = 0; y < ySize; y++)
             {
                 Destroy(_cells[xSize - 1, y].HorizontalPlaceholder.gameObject);
-                Destroy(_cells[xSize - 1, y].VerticalPlaceholder.gameObject);
+                // Destroy(_cells[xSize - 1, y].VerticalPlaceholder.gameObject);
             }
 
 

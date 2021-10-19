@@ -25,7 +25,7 @@ public class Grid
         {
             for (int cell = 0; cell < _rowCapacity; cell++)
             {
-                _grid[row, cell] = new Cell(row, cell);
+                _grid[row, cell] = new Cell(cell, _rowsAmount - 1 - row);
             }
         }
 
@@ -45,16 +45,16 @@ public class Grid
                 int bottomRowConnectedNodeIndex = row + 1;
 
                 if (leftNodeIndex >= 0)
-                    _grid[row, cell].Neighbors[0] = _grid[row, leftNodeIndex];
+                    _grid[row, cell].Neighbors[0] = _grid[leftNodeIndex, row];
 
                 if (upperRowConnectedNodeIndex >= 0)
-                    _grid[row, cell].Neighbors[1] = _grid[upperRowConnectedNodeIndex, cell];
+                    _grid[row, cell].Neighbors[1] = _grid[cell, upperRowConnectedNodeIndex];
 
                 if (rightNodeIndex < _rowCapacity)
-                    _grid[row, cell].Neighbors[2] = _grid[row, rightNodeIndex];
+                    _grid[row, cell].Neighbors[2] = _grid[rightNodeIndex, row];
 
                 if (bottomRowConnectedNodeIndex < _rowsAmount)
-                    _grid[row, cell].Neighbors[3] = _grid[bottomRowConnectedNodeIndex, cell];
+                    _grid[row, cell].Neighbors[3] = _grid[cell, bottomRowConnectedNodeIndex];
             }
         }
     }
@@ -98,53 +98,58 @@ public class Grid
 
     private bool IsCellOnGrid(Cell cell)
     {
-        return cell.GridX < _rowsAmount &&
+        return cell.GridX < _rowCapacity &&
                cell.GridX >= 0 &&
                cell.GridY >= 0 &&
-               cell.GridY < _rowCapacity;
+               cell.GridY < _rowsAmount;
     }
 
-    private bool CheckNeighborsForNull(List<Cell> neighbors)
-        => neighbors.Exists(neighbor => neighbor is null);
+    // private bool CheckNeighborsForNull(List<Cell> neighbors)
+    //     => neighbors.Exists(neighbor => neighbor is null);
+    //
+    // private bool CheckNeighborsForNotNull(List<Cell> neighbors)
+    //     => neighbors.Exists(neighbor => !(neighbor is null));
+    //
+    //
+    // private List<Cell> GetNeighbors(
+    //     Cell gridCell1Pair1,
+    //     Cell gridCell2Pair1,
+    //     Cell gridCell1Pair2,
+    //     Cell gridCell2Pair2,
+    //     bool isVertical
+    // )      //
 
-    private bool CheckNeighborsForNotNull(List<Cell> neighbors)
-        => neighbors.Exists(neighbor => !(neighbor is null));
+    //      c1p1  c2p1
+    //      c1p2  c2p2
 
-    private List<Cell> GetNeighbors(
-        Cell gridCell1Pair1,
-        Cell gridCell2Pair1,
-        Cell gridCell1Pair2,
-        Cell gridCell2Pair2,
-        bool isVertical
-    )
-    {
-        if (isVertical)
-        {
-            return new List<Cell>
-            {
-                gridCell1Pair1.Neighbors[3],
-                gridCell1Pair2.Neighbors[3],
-                gridCell1Pair1.Neighbors[2],
-                gridCell2Pair1.Neighbors[2],
-                gridCell2Pair1.Neighbors[1],
-                gridCell2Pair2.Neighbors[1],
-                gridCell1Pair2.Neighbors[0],
-                gridCell2Pair2.Neighbors[0]
-            };
-        }
-
-        return new List<Cell>
-        {
-            gridCell1Pair1.Neighbors[3],
-            gridCell2Pair1.Neighbors[3],
-            gridCell1Pair1.Neighbors[2],
-            gridCell1Pair2.Neighbors[2],
-            gridCell1Pair2.Neighbors[1],
-            gridCell2Pair2.Neighbors[1],
-            gridCell2Pair1.Neighbors[0],
-            gridCell2Pair2.Neighbors[0]
-        };
-    }
+    // {
+    //     if (isVertical)
+    //     {
+    //         return new List<Cell>
+    //         {
+    //             gridCell1Pair1.Neighbors[3],
+    //             gridCell1Pair2.Neighbors[3],
+    //             gridCell1Pair1.Neighbors[2],
+    //             gridCell2Pair1.Neighbors[2],
+    //             gridCell2Pair1.Neighbors[1],
+    //             gridCell2Pair2.Neighbors[1],
+    //             gridCell1Pair2.Neighbors[0],
+    //             gridCell2Pair2.Neighbors[0]
+    //         };
+    //     }
+    //
+    //     return new List<Cell>
+    //     {
+    //         gridCell1Pair1.Neighbors[3],
+    //         gridCell2Pair1.Neighbors[3],
+    //         gridCell1Pair1.Neighbors[2],
+    //         gridCell1Pair2.Neighbors[2],
+    //         gridCell1Pair2.Neighbors[1],
+    //         gridCell2Pair2.Neighbors[1],
+    //         gridCell2Pair1.Neighbors[0],
+    //         gridCell2Pair2.Neighbors[0]
+    //     };
+    // }
 
     private bool CheckVerticalAlignment(
         Cell cell1Pair1,
@@ -155,19 +160,19 @@ public class Grid
     {
         // pair cells aligned vertically close to each other
         // are couple placed close to each other
-        bool isVerticallyAligned = Math.Abs(cell1Pair1.GridX - cell2Pair1.GridX) == 1 &&
-                                   Math.Abs(cell1Pair2.GridX - cell2Pair2.GridX) == 1 &&
-                                   cell1Pair1.GridY == cell2Pair1.GridY &&
-                                   cell1Pair2.GridY == cell2Pair2.GridY &&
-                                   Math.Abs(cell1Pair1.GridY - cell1Pair2.GridY) == 1;
+        bool isHorizontallyAligned = Math.Abs(cell1Pair1.GridX - cell2Pair1.GridX) == 1 &&
+                                     Math.Abs(cell1Pair2.GridX - cell2Pair2.GridX) == 1 &&
+                                     cell1Pair1.GridY == cell2Pair1.GridY &&
+                                     cell1Pair2.GridY == cell2Pair2.GridY &&
+                                     cell1Pair1.GridY - cell1Pair2.GridY == 1;
 
         // pair cells aligned horizontally close to each other
         // are couple placed close to each other
-        bool isHorizontallyAligned = Math.Abs(cell1Pair1.GridY - cell2Pair1.GridY) == 1 &&
-                                     Math.Abs(cell1Pair2.GridY - cell2Pair2.GridY) == 1 &&
-                                     cell1Pair1.GridX == cell2Pair1.GridX &&
-                                     cell1Pair2.GridX == cell2Pair2.GridX &&
-                                     Math.Abs(cell1Pair1.GridY - cell1Pair2.GridY) == 1;
+        bool isVerticallyAligned = Math.Abs(cell1Pair1.GridY - cell2Pair1.GridY) == 1 &&
+                                   Math.Abs(cell1Pair2.GridY - cell2Pair2.GridY) == 1 &&
+                                   cell1Pair1.GridX == cell2Pair1.GridX &&
+                                   cell1Pair2.GridX == cell2Pair2.GridX &&
+                                   cell1Pair1.GridY - cell1Pair2.GridY == 1;
 
         return isVerticallyAligned switch
         {
@@ -218,12 +223,12 @@ public class Grid
         Cell gridCell2Pair1 = _grid[cell2Pair1.GridX, cell2Pair1.GridY];
         Cell gridCell1Pair2 = _grid[cell1Pair2.GridX, cell1Pair2.GridY];
         Cell gridCell2Pair2 = _grid[cell2Pair2.GridX, cell2Pair2.GridY];
-
-        List<Cell> neighborsToCheck = GetNeighbors(gridCell1Pair1, gridCell1Pair1, gridCell1Pair2,
-            gridCell2Pair2, isVertical);
-
-        if (CheckNeighborsForNull(neighborsToCheck))
-            return false;
+        //
+        // List<Cell> neighborsToCheck = GetNeighbors(gridCell1Pair1, gridCell1Pair1, gridCell1Pair2,
+        //     gridCell2Pair2, isVertical);
+        //
+        // if (CheckNeighborsForNull(neighborsToCheck))
+        //     return false;
 
         if (isVertical)
         {
@@ -280,16 +285,16 @@ public class Grid
         Cell gridCell1Pair2 = _grid[cell1Pair2.GridX, cell1Pair2.GridY];
         Cell gridCell2Pair2 = _grid[cell2Pair2.GridX, cell2Pair2.GridY];
 
-        List<Cell> neighborsToCheck = GetNeighbors(
-            gridCell1Pair1,
-            gridCell1Pair1,
-            gridCell1Pair2,
-            gridCell2Pair2,
-            isVertical
-        );
-
-        if (CheckNeighborsForNotNull(neighborsToCheck))
-            return false;
+        // List<Cell> neighborsToCheck = GetNeighbors(
+        //     gridCell1Pair1,
+        //     gridCell1Pair1,
+        //     gridCell1Pair2,
+        //     gridCell2Pair2,
+        //     isVertical
+        // );
+        //
+        // if (CheckNeighborsForNotNull(neighborsToCheck))
+        //     return false;
 
         if (isVertical && isVerticallyAligned)
         {

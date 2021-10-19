@@ -543,6 +543,34 @@ PrefabInstance:
       propertyPath: cardDecksRoot.Array.data[3]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6437775929397464981, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437775929397464981, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437775929397464981, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8660254
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437775929397464981, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437775929397464981, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437775929397464981, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437775929397464981, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8126550009549019653, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}

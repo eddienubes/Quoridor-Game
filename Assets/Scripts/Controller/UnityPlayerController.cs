@@ -54,6 +54,7 @@ namespace Quoridorgame.Controllers
         public void PlaceWall(bool isVertical, int x, int y)
         {
             var currentWall = _wallDeck.GetWall();
+            Debug.Log($"<color=yellow> {x} : {y} </color>");
             if (isVertical)
             {
                 currentWall.Jump(FieldElementsFabric.Instance._cells[x, y].VerticalPlaceholder.transform.position,

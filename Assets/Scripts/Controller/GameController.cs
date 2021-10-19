@@ -71,6 +71,7 @@ public class GameController : MonoBehaviour
     private void TrySetVerticalWall(SelectableMonoBehaviour wallPlaceHolder)
     {
         var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
+        Debug.Log($"<color=cyan> v holder clicked. parent cell is {wallCell.Coordinate} </color>");
 
         var cellUpLeftCoords = wallCell.Coordinate;
         var currentPlayer = _players.FirstOrDefault(p => p.IsActiveTurn);
@@ -83,13 +84,14 @@ public class GameController : MonoBehaviour
     private void TrySetHorizontalWall(SelectableMonoBehaviour wallPlaceHolder)
     {
         var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
+        Debug.Log($"<color=red> h holder clicked. parent cell is {wallCell.Coordinate} </color>");
 
-        var cellDownLeftCoords = wallCell.Coordinate;
+        var cellUpLeftCoords = wallCell.Coordinate;
         var currentPlayer = _players.FirstOrDefault(p => p.IsActiveTurn);
 
-        _gameModel.PlacingWall(currentPlayer, false, (cellDownLeftCoords.x, cellDownLeftCoords.y),
-            (cellDownLeftCoords.x, cellDownLeftCoords.y - 1), (cellDownLeftCoords.x + 1, cellDownLeftCoords.y),
-            (cellDownLeftCoords.x + 1, cellDownLeftCoords.y - 1));
+        _gameModel.PlacingWall(currentPlayer, false, (cellUpLeftCoords.x, cellUpLeftCoords.y),
+            (cellUpLeftCoords.x , cellUpLeftCoords.y-1), (cellUpLeftCoords.x+1, cellUpLeftCoords.y),
+            (cellUpLeftCoords.x + 1, cellUpLeftCoords.y - 1));
     }
 
 
