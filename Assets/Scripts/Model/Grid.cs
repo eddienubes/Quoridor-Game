@@ -221,7 +221,7 @@ public class Grid
         if (!(isVertical && isVerticallyAligned || !isVertical && !isVerticallyAligned))
             throw new Exception("Cells are not aligned!");
 
-      
+
         //
         // List<Cell> neighborsToCheck = GetNeighbors(gridCell1Pair1, gridCell1Pair1, gridCell1Pair2,
         //     gridCell2Pair2, isVertical);
@@ -462,21 +462,21 @@ public class Grid
         playerPawn.MoveTo(targetCell.GridX, targetCell.GridY);
     }
 
-    public void SetPlayersOnGrid(Player[] players)
+    public void SetPlayersOnTheGridLogically(Player[] players)
     {
         if (players.Length != 2)
         {
             throw new Exception("Game is for 2 players only now.");
         }
-
         // players[0].Spawn(0, _rowCapacity / 2);
-        _grid[_rowCapacity / 2, 0].SetId(players[0].Pawn.PlayerId);
+        _grid[_rowsAmount-1, _rowCapacity / 2].SetId(players[0].Pawn.PlayerId);
 
         if (players[0].Pawn.PlayerId == 0)
             throw new Exception("Player pawn has 0 id");
 
         // players[1].Spawn(_rowsAmount - 1, _rowCapacity / 2);
-        _grid[_rowCapacity / 2, _rowsAmount - 1].SetId(players[1].Pawn.PlayerId);
+
+        _grid[0, _rowCapacity / 2].SetId(players[1].Pawn.PlayerId);
 
         if (players[1].Pawn.PlayerId == 0)
             throw new Exception("Player pawn has 0 id");

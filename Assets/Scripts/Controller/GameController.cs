@@ -10,10 +10,10 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public int MapSizeY => ySize;
+
     [SerializeField]
     private UnityPlayerController[] _playerControllers;
-
-    private Player[] _players = new Player[2];
 
     [SerializeField]
     private FieldElementsFabric fieldCreatorView;
@@ -21,15 +21,16 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int xSize = 9, ySize = 9;
 
+    private Player[] _players = new Player[2];
     private Game _gameModel;
     private Grid _grid;
 
-    void Start()
+    public void Init()
     {
         _grid = new Grid(xSize, ySize);
-
-        _players[0] = new HotSeatPlayer(ySize - 1, true, 1);
-        _players[1] = new HotSeatPlayer(0, true, 2);
+        //
+        // _players[0] = new HotSeatPlayer(ySize - 1, true, 1);
+        // _players[1] = new HotSeatPlayer(0, false, 2);
 
         for (var i = 0; i < _playerControllers.Length; i++)
         {
@@ -47,13 +48,18 @@ public class GameController : MonoBehaviour
             cell.VerticalPlaceholder.OnClicked += TrySetVerticalWall;
         }
 
-        SetPlayers();
+        SetPlayersOnTheGrid();
         SetDecks();
     }
 
-    private void SetPlayers()
+    public void SetPlayers(params Player[] players)
     {
-        _grid.SetPlayersOnGrid(_players);
+        _players = players;
+    }
+
+    private void SetPlayersOnTheGrid()
+    {
+        _grid.SetPlayersOnTheGridLogically(_players);
         _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(4, 0));
         _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(4, 8));
     }
@@ -88,7 +94,7 @@ public class GameController : MonoBehaviour
         var currentPlayer = _players.FirstOrDefault(p => p.IsActiveTurn);
 
         _gameModel.PlacingWall(currentPlayer, false, (cellUpLeftCoords.x, cellUpLeftCoords.y),
-            (cellUpLeftCoords.x , cellUpLeftCoords.y-1), (cellUpLeftCoords.x+1, cellUpLeftCoords.y),
+            (cellUpLeftCoords.x, cellUpLeftCoords.y - 1), (cellUpLeftCoords.x + 1, cellUpLeftCoords.y),
             (cellUpLeftCoords.x + 1, cellUpLeftCoords.y - 1));
     }
 

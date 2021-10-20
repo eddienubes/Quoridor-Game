@@ -89,7 +89,7 @@ namespace Quoridorgame.View
                 {
                     var cellGo = Instantiate(_cellPrefab, _root);
                     var xCoord = (cellGo.Size.x * x) + (wallWidth * (x - 1));
-                    var yCoord = (cellGo.Size.z * ySize - 1 - y) + (wallWidth * (y - ySize - 1 - y));
+                    var yCoord = (cellGo.Size.z * ySize - 1 - y) + (wallWidth * (ySize - 1 - y));
                     cellGo.transform.localPosition = new Vector3(xCoord, 0, yCoord);
                     cellGo.name = $"Cell {x}-{ySize - 1 - y}";
                     cellGo.Coordinate = new Vector2Int(x, ySize - y - 1);
@@ -178,7 +178,7 @@ namespace Quoridorgame.View
         public Vector3 GetPawnPosition(int x, int y) => _cells[x, y].SpawnPoint.position;
 
         private bool IsCoordsValid(int x, int y) =>
-            _cells.GetLength(1) > y && _cells.GetLength(0) > x && x >= 0 && y >= 0;
+            _cells.GetLength(0) > y && _cells.GetLength(1) > x && x >= 0 && y >= 0;
 
         /// <summary>
         /// Перерасчитывает размеры игрового поля
