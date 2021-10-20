@@ -54,8 +54,8 @@ public class GameController : MonoBehaviour
     private void SetPlayers()
     {
         _grid.SetPlayersOnGrid(_players);
-        _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(0, 4));
-        _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(8, 4));
+        _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(4, 0));
+        _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(4, 8));
     }
 
     private void SetDecks()
@@ -71,7 +71,6 @@ public class GameController : MonoBehaviour
     private void TrySetVerticalWall(SelectableMonoBehaviour wallPlaceHolder)
     {
         var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
-        Debug.Log($"<color=cyan> v holder clicked. parent cell is {wallCell.Coordinate} </color>");
 
         var cellUpLeftCoords = wallCell.Coordinate;
         var currentPlayer = _players.FirstOrDefault(p => p.IsActiveTurn);
@@ -84,7 +83,6 @@ public class GameController : MonoBehaviour
     private void TrySetHorizontalWall(SelectableMonoBehaviour wallPlaceHolder)
     {
         var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
-        Debug.Log($"<color=red> h holder clicked. parent cell is {wallCell.Coordinate} </color>");
 
         var cellUpLeftCoords = wallCell.Coordinate;
         var currentPlayer = _players.FirstOrDefault(p => p.IsActiveTurn);

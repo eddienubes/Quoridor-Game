@@ -75,17 +75,25 @@ namespace Quoridorgame.View
             var wallWidth = wallSample.Width;
             Destroy(wallSample.gameObject);
 
-            for (int x = 0; x < xSize; x++)
+            //
+            // for (int row = 0; row < _rowsAmount; ++row)
+            // {
+            //     for (int cell = 0; cell < _rowCapacity; cell++)
+            //     {
+            //         _grid[row, cell] = new Cell(cell, _rowsAmount - 1 - row);
+            //     }
+            // }
+            for (int y = 0; y < ySize; y++)
             {
-                for (int y = 0; y < ySize; y++)
+                for (int x = 0; x < xSize; x++)
                 {
                     var cellGo = Instantiate(_cellPrefab, _root);
                     var xCoord = (cellGo.Size.x * x) + (wallWidth * (x - 1));
-                    var yCoord = (cellGo.Size.z * y) + (wallWidth * (y - 1));
+                    var yCoord = (cellGo.Size.z * ySize - 1 - y) + (wallWidth * (y - ySize - 1 - y));
                     cellGo.transform.localPosition = new Vector3(xCoord, 0, yCoord);
-                    cellGo.name = $"Cell {x}-{y}";
-                    cellGo.Coordinate = new Vector2Int(x, y);
-                    _cells[x, y] = cellGo;
+                    cellGo.name = $"Cell {x}-{ySize - 1 - y}";
+                    cellGo.Coordinate = new Vector2Int(x, ySize - y - 1);
+                    _cells[x, ySize - 1 - y] = cellGo;
                 }
             }
 

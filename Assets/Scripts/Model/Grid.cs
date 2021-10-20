@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Runtime;
 using graph_sandbox;
+using UnityEngine;
 
 public class Grid
 {
@@ -41,27 +42,27 @@ public class Grid
                 int leftNodeIndex = cell - 1;
                 int rightNodeIndex = cell + 1;
 
-                int upperRowConnectedNodeIndex = row - 1;
-                int bottomRowConnectedNodeIndex = row + 1;
+                int upperRowConnectedNodeIndex = row + 1;
+                int bottomRowConnectedNodeIndex = row - 1;
 
                 if (leftNodeIndex >= 0)
-                    _grid[row, cell].Neighbors[0] = _grid[leftNodeIndex, row];
+                    _grid[row, cell].Neighbors[0] = _grid[row, leftNodeIndex];
 
-                if (upperRowConnectedNodeIndex >= 0)
-                    _grid[row, cell].Neighbors[1] = _grid[cell, upperRowConnectedNodeIndex];
+                if (upperRowConnectedNodeIndex < _rowsAmount)
+                    _grid[row, cell].Neighbors[1] = _grid[upperRowConnectedNodeIndex, cell];
 
                 if (rightNodeIndex < _rowCapacity)
-                    _grid[row, cell].Neighbors[2] = _grid[rightNodeIndex, row];
+                    _grid[row, cell].Neighbors[2] = _grid[row, rightNodeIndex];
 
-                if (bottomRowConnectedNodeIndex < _rowsAmount)
-                    _grid[row, cell].Neighbors[3] = _grid[cell, bottomRowConnectedNodeIndex];
+                if (bottomRowConnectedNodeIndex >= 0)
+                    _grid[row, cell].Neighbors[3] = _grid[bottomRowConnectedNodeIndex, cell];
             }
         }
     }
 
     public Cell GetCellByCoordinates(int x, int y)
     {
-        return _grid[x, y];
+        return _grid[_grid.GetLength(0) - 1 - y, x];
     }
 
     private List<Cell> RetrievePath(Cell sourceCell, Cell destinationCell)
@@ -95,7 +96,6 @@ public class Grid
         return a.GridX == b.GridX && a.GridY == b.GridY;
     }
 
-
     private bool IsCellOnGrid(Cell cell)
     {
         return cell.GridX < _rowCapacity &&
@@ -104,52 +104,52 @@ public class Grid
                cell.GridY < _rowsAmount;
     }
 
-    // private bool CheckNeighborsForNull(List<Cell> neighbors)
-    //     => neighbors.Exists(neighbor => neighbor is null);
-    //
-    // private bool CheckNeighborsForNotNull(List<Cell> neighbors)
-    //     => neighbors.Exists(neighbor => !(neighbor is null));
-    //
-    //
-    // private List<Cell> GetNeighbors(
-    //     Cell gridCell1Pair1,
-    //     Cell gridCell2Pair1,
-    //     Cell gridCell1Pair2,
-    //     Cell gridCell2Pair2,
-    //     bool isVertical
-    // )      //
+// private bool CheckNeighborsForNull(List<Cell> neighbors)
+//     => neighbors.Exists(neighbor => neighbor is null);
+//
+// private bool CheckNeighborsForNotNull(List<Cell> neighbors)
+//     => neighbors.Exists(neighbor => !(neighbor is null));
+//
+//
+// private List<Cell> GetNeighbors(
+//     Cell gridCell1Pair1,
+//     Cell gridCell2Pair1,
+//     Cell gridCell1Pair2,
+//     Cell gridCell2Pair2,
+//     bool isVertical
+// )      //
 
-    //      c1p1  c2p1
-    //      c1p2  c2p2
+//      c1p1  c2p1
+//      c1p2  c2p2
 
-    // {
-    //     if (isVertical)
-    //     {
-    //         return new List<Cell>
-    //         {
-    //             gridCell1Pair1.Neighbors[3],
-    //             gridCell1Pair2.Neighbors[3],
-    //             gridCell1Pair1.Neighbors[2],
-    //             gridCell2Pair1.Neighbors[2],
-    //             gridCell2Pair1.Neighbors[1],
-    //             gridCell2Pair2.Neighbors[1],
-    //             gridCell1Pair2.Neighbors[0],
-    //             gridCell2Pair2.Neighbors[0]
-    //         };
-    //     }
-    //
-    //     return new List<Cell>
-    //     {
-    //         gridCell1Pair1.Neighbors[3],
-    //         gridCell2Pair1.Neighbors[3],
-    //         gridCell1Pair1.Neighbors[2],
-    //         gridCell1Pair2.Neighbors[2],
-    //         gridCell1Pair2.Neighbors[1],
-    //         gridCell2Pair2.Neighbors[1],
-    //         gridCell2Pair1.Neighbors[0],
-    //         gridCell2Pair2.Neighbors[0]
-    //     };
-    // }
+// {
+//     if (isVertical)
+//     {
+//         return new List<Cell>
+//         {
+//             gridCell1Pair1.Neighbors[3],
+//             gridCell1Pair2.Neighbors[3],
+//             gridCell1Pair1.Neighbors[2],
+//             gridCell2Pair1.Neighbors[2],
+//             gridCell2Pair1.Neighbors[1],
+//             gridCell2Pair2.Neighbors[1],
+//             gridCell1Pair2.Neighbors[0],
+//             gridCell2Pair2.Neighbors[0]
+//         };
+//     }
+//
+//     return new List<Cell>
+//     {
+//         gridCell1Pair1.Neighbors[3],
+//         gridCell2Pair1.Neighbors[3],
+//         gridCell1Pair1.Neighbors[2],
+//         gridCell1Pair2.Neighbors[2],
+//         gridCell1Pair2.Neighbors[1],
+//         gridCell2Pair2.Neighbors[1],
+//         gridCell2Pair1.Neighbors[0],
+//         gridCell2Pair2.Neighbors[0]
+//     };
+// }
 
     private bool CheckVerticalAlignment(
         Cell cell1Pair1,
@@ -160,25 +160,27 @@ public class Grid
     {
         // pair cells aligned vertically close to each other
         // are couple placed close to each other
-        bool isHorizontallyAligned = Math.Abs(cell1Pair1.GridX - cell2Pair1.GridX) == 1 &&
-                                     Math.Abs(cell1Pair2.GridX - cell2Pair2.GridX) == 1 &&
-                                     cell1Pair1.GridY == cell2Pair1.GridY &&
-                                     cell1Pair2.GridY == cell2Pair2.GridY &&
-                                     cell1Pair1.GridY - cell1Pair2.GridY == 1;
+        bool isVerticallyAligned = Math.Abs(cell1Pair1.GridX - cell2Pair1.GridX) == 1 &&
+                                   Math.Abs(cell1Pair2.GridX - cell2Pair2.GridX) == 1 &&
+                                   cell1Pair1.GridY == cell2Pair1.GridY &&
+                                   cell1Pair2.GridY == cell2Pair2.GridY &&
+                                   cell1Pair1.GridY - cell1Pair2.GridY == 1;
 
         // pair cells aligned horizontally close to each other
         // are couple placed close to each other
-        bool isVerticallyAligned = Math.Abs(cell1Pair1.GridY - cell2Pair1.GridY) == 1 &&
-                                   Math.Abs(cell1Pair2.GridY - cell2Pair2.GridY) == 1 &&
-                                   cell1Pair1.GridX == cell2Pair1.GridX &&
-                                   cell1Pair2.GridX == cell2Pair2.GridX &&
-                                   cell1Pair1.GridY - cell1Pair2.GridY == 1;
+        bool isHorizontallyAligned = Math.Abs(cell1Pair1.GridY - cell2Pair1.GridY) == 1 &&
+                                     Math.Abs(cell1Pair2.GridY - cell2Pair2.GridY) == 1 &&
+                                     cell1Pair1.GridX == cell2Pair1.GridX &&
+                                     cell1Pair2.GridX == cell2Pair2.GridX &&
+                                     Math.Abs(cell1Pair1.GridX - cell1Pair2.GridX) == 1;
 
         return isVerticallyAligned switch
         {
             true when !isHorizontallyAligned => true,
             false when isHorizontallyAligned => false,
-            _ => throw new Exception("Cells are not aligned in any way!")
+            _ => throw new Exception($"Cells are not aligned in any way! " +
+                                     $" Pair 1 : {cell1Pair1.GridX}:{cell1Pair1.GridY} {cell2Pair1.GridX}:{cell2Pair1.GridY} " +
+                                     $" Pair 2: {cell1Pair2.GridX}:{cell1Pair2.GridY} {cell2Pair2.GridX}:{cell2Pair2.GridY}")
         };
     }
 
@@ -219,10 +221,7 @@ public class Grid
         if (!(isVertical && isVerticallyAligned || !isVertical && !isVerticallyAligned))
             throw new Exception("Cells are not aligned!");
 
-        Cell gridCell1Pair1 = _grid[cell1Pair1.GridX, cell1Pair1.GridY];
-        Cell gridCell2Pair1 = _grid[cell2Pair1.GridX, cell2Pair1.GridY];
-        Cell gridCell1Pair2 = _grid[cell1Pair2.GridX, cell1Pair2.GridY];
-        Cell gridCell2Pair2 = _grid[cell2Pair2.GridX, cell2Pair2.GridY];
+      
         //
         // List<Cell> neighborsToCheck = GetNeighbors(gridCell1Pair1, gridCell1Pair1, gridCell1Pair2,
         //     gridCell2Pair2, isVertical);
@@ -234,11 +233,11 @@ public class Grid
         {
             // * | * 
             // * | *
-            gridCell1Pair1.Neighbors[2] = null;
-            gridCell2Pair1.Neighbors[2] = null;
+            cell1Pair1.Neighbors[2] = null;
+            cell2Pair1.Neighbors[0] = null;
 
-            gridCell1Pair2.Neighbors[0] = null;
-            gridCell2Pair2.Neighbors[0] = null;
+            cell1Pair2.Neighbors[2] = null;
+            cell2Pair2.Neighbors[0] = null;
 
             return true;
         }
@@ -246,11 +245,11 @@ public class Grid
         // * *
         // ---
         // * *
-        gridCell1Pair1.Neighbors[3] = null;
-        gridCell2Pair1.Neighbors[3] = null;
+        cell1Pair1.Neighbors[1] = null;
+        cell2Pair1.Neighbors[3] = null;
 
-        gridCell1Pair2.Neighbors[1] = null;
-        gridCell2Pair2.Neighbors[1] = null;
+        cell1Pair2.Neighbors[1] = null;
+        cell2Pair2.Neighbors[3] = null;
 
         return true;
     }
@@ -440,6 +439,7 @@ public class Grid
 
     public void MovePlayer(Cell startCell, Cell targetCell, Pawn playerPawn)
     {
+        Debug.Log($"<color=yellow> {startCell.GridX}:{startCell.GridY} has {startCell.PlayerId} id </color>");
         if (startCell.PlayerId == 0)
         {
             throw new Exception("There is no player on this cell");
@@ -456,8 +456,8 @@ public class Grid
                 $"Player can't move from cell {startCell.GridX}:{startCell.GridY} to {targetCell.GridX}:{targetCell.GridY}");
         }
 
-        targetCell.PlayerId = startCell.PlayerId;
-        startCell.PlayerId = 0;
+        targetCell.SetId(startCell.PlayerId);
+        startCell.SetId(0);
 
         playerPawn.MoveTo(targetCell.GridX, targetCell.GridY);
     }
@@ -470,16 +470,16 @@ public class Grid
         }
 
         // players[0].Spawn(0, _rowCapacity / 2);
-        _grid[0, _rowCapacity / 2].PlayerId = players[0].Pawn.PlayerId;
+        _grid[_rowCapacity / 2, 0].SetId(players[0].Pawn.PlayerId);
 
         if (players[0].Pawn.PlayerId == 0)
-            throw new Exception("Playerpawn has 0 id");
+            throw new Exception("Player pawn has 0 id");
 
         // players[1].Spawn(_rowsAmount - 1, _rowCapacity / 2);
-        _grid[_rowsAmount - 1, _rowCapacity / 2].PlayerId = players[1].Pawn.PlayerId;
+        _grid[_rowCapacity / 2, _rowsAmount - 1].SetId(players[1].Pawn.PlayerId);
 
         if (players[1].Pawn.PlayerId == 0)
-            throw new Exception("Playerpawn has 0 id");
+            throw new Exception("Player pawn has 0 id");
     }
 
     public string ToString()
@@ -502,63 +502,61 @@ public class Grid
         return result;
     }
 
+// public (string[], bool) FindShortestPathDijkstra(int[,] graph, int src, int destination)
+// {
+//     int[] distances = new int[_verticesAmount];
+//     
+//     bool[] visitedNodes = new bool[_verticesAmount];
+//     
+//     for (int i = 0; i < _verticesAmount; ++i)
+//     {
+//         distances[i] = int.MaxValue;
+//         visitedNodes[i] = false;
+//     }
+//     
+//     distances[src] = 0;
+//
+//     for (int count = 0; count < _verticesAmount - 1; ++count)
+//     {
+//         int currentMinNode = _FindMinDistance(distances, visitedNodes);
+//
+//         visitedNodes[currentMinNode] = true;
+//         
+//         for (int neighbor = 0; neighbor < graph.GetLength(1); ++neighbor)
+//         {
+//             int distanceFromCurrentToNeighbor = graph[currentMinNode, neighbor];
+//             int completeDistanceToNeighbor = distances[currentMinNode] + distanceFromCurrentToNeighbor;
+//             
+//             // has edge?
+//             // is new distance suitable?
+//             // has this neighbor been already visited?
+//             if (distanceFromCurrentToNeighbor != 0 
+//                 && completeDistanceToNeighbor < distances[neighbor] 
+//                 && !visitedNodes[neighbor])
+//             {
+//                 distances[neighbor] = completeDistanceToNeighbor;
+//             }
+//         }
+//     }
+//     
+//     return distances;
+// }
 
-    // public (string[], bool) FindShortestPathDijkstra(int[,] graph, int src, int destination)
-    // {
-    //     int[] distances = new int[_verticesAmount];
-    //     
-    //     bool[] visitedNodes = new bool[_verticesAmount];
-    //     
-    //     for (int i = 0; i < _verticesAmount; ++i)
-    //     {
-    //         distances[i] = int.MaxValue;
-    //         visitedNodes[i] = false;
-    //     }
-    //     
-    //     distances[src] = 0;
-    //
-    //     for (int count = 0; count < _verticesAmount - 1; ++count)
-    //     {
-    //         int currentMinNode = _FindMinDistance(distances, visitedNodes);
-    //
-    //         visitedNodes[currentMinNode] = true;
-    //         
-    //         for (int neighbor = 0; neighbor < graph.GetLength(1); ++neighbor)
-    //         {
-    //             int distanceFromCurrentToNeighbor = graph[currentMinNode, neighbor];
-    //             int completeDistanceToNeighbor = distances[currentMinNode] + distanceFromCurrentToNeighbor;
-    //             
-    //             // has edge?
-    //             // is new distance suitable?
-    //             // has this neighbor been already visited?
-    //             if (distanceFromCurrentToNeighbor != 0 
-    //                 && completeDistanceToNeighbor < distances[neighbor] 
-    //                 && !visitedNodes[neighbor])
-    //             {
-    //                 distances[neighbor] = completeDistanceToNeighbor;
-    //             }
-    //         }
-    //     }
-    //     
-    //     return distances;
-    // }
-
-    // private int _FindMinDistance(int[] distances, bool[] visitedNodes)
-    // {
-    //     int currentMinDistance = int.MaxValue, minIndex = -1;
-    //
-    //     for (int v = 0; v < _verticesAmount; ++v)
-    //     {
-    //         if (!visitedNodes[v] && distances[v] < currentMinDistance)
-    //         {
-    //             currentMinDistance = distances[v];
-    //             minIndex = v;
-    //         }
-    //     }
-    //
-    //     return minIndex;
-    // }
-
+// private int _FindMinDistance(int[] distances, bool[] visitedNodes)
+// {
+//     int currentMinDistance = int.MaxValue, minIndex = -1;
+//
+//     for (int v = 0; v < _verticesAmount; ++v)
+//     {
+//         if (!visitedNodes[v] && distances[v] < currentMinDistance)
+//         {
+//             currentMinDistance = distances[v];
+//             minIndex = v;
+//         }
+//     }
+//
+//     return minIndex;
+// }
 
     public bool CheckIsPawnOnTheWinLine(Pawn pawn)
     {

@@ -58,6 +58,11 @@ namespace graph_sandbox
             }
 
             IMakeTurnCommand turnCommand = new MovePawnCommand(player.Pawn, _grid, startX, startY, targetX, targetY);
+
+            Debug.Log(
+                $"<color=red> {_grid.GetPawnCell(player.Pawn).GridX}:{_grid.GetPawnCell(player.Pawn).GridY} </color>");
+            Debug.Log(
+                $"<color=red> {_grid.GetPawnCell(player.Pawn).PlayerId}</color>");
             turnCommand.Execute();
             _gameLog.Push(turnCommand);
             CheckGameForFinishing(player);

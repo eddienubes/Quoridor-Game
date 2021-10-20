@@ -6,13 +6,13 @@ public class Cell
     public int GScore { get; set; }
     public int HScore { get; set; }
 
-    public int PlayerId { get; set; }
-    
+    public int PlayerId { get; private set; }
+
     public int GridX { get; }
     public int GridY { get; }
 
     public Cell[] Neighbors = new Cell[4];
-    
+
     /// <summary>
     /// Be aware of row & column segregation
     /// </summary>
@@ -24,6 +24,11 @@ public class Cell
         GridY = gridY;
         PlayerId = 0;
     }
-    
+
     public int FScore => GScore + HScore;
+
+    public void SetId(int pawnPlayerId)
+    {
+        PlayerId = pawnPlayerId;
+    }
 }
