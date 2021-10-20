@@ -221,6 +221,10 @@ public class Grid
         if (!(isVertical && isVerticallyAligned || !isVertical && !isVerticallyAligned))
             throw new Exception("Cells are not aligned!");
 
+        if (HasCollisionWithAnoterWall(isVertical, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2))
+        {
+            throw new Exception("This wall will collide another wall");
+        }
 
         //
         // List<Cell> neighborsToCheck = GetNeighbors(gridCell1Pair1, gridCell1Pair1, gridCell1Pair2,
@@ -252,6 +256,45 @@ public class Grid
         cell2Pair2.Neighbors[3] = null;
 
         return true;
+    }
+
+    private bool HasCollisionWithAnoterWall(bool isVertical, Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2,
+        Cell cell2Pair2)
+    {
+        if (isVertical)
+        {
+            if (
+                cell1Pair1.Neighbors[2] == null && cell2Pair1.Neighbors[0] == null || 
+                cell1Pair2.Neighbors[2] == null && cell2Pair2.Neighbors[0] == null)
+            {
+                return true;
+            }
+              
+            if (
+                cell1Pair1.Neighbors[1] == null && cell1Pair2.Neighbors[3] == null &&
+                cell2Pair1.Neighbors[1] == null && cell2Pair2.Neighbors[3] == null)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            
+            if (
+                cell1Pair1.Neighbors[1] == null && cell2Pair1.Neighbors[3] == null || 
+                cell1Pair2.Neighbors[1] == null && cell2Pair2.Neighbors[3] == null)
+            {
+                return true;
+            }
+            
+            if (
+                cell1Pair1.Neighbors[2] == null && cell1Pair2.Neighbors[0] == null&&
+                cell2Pair1.Neighbors[2] == null && cell2Pair2.Neighbors[0] == null)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public bool RemoveWall(
@@ -468,8 +511,9 @@ public class Grid
         {
             throw new Exception("Game is for 2 players only now.");
         }
+
         // players[0].Spawn(0, _rowCapacity / 2);
-        _grid[_rowsAmount-1, _rowCapacity / 2].SetId(players[0].Pawn.PlayerId);
+        _grid[_rowsAmount - 1, _rowCapacity / 2].SetId(players[0].Pawn.PlayerId);
 
         if (players[0].Pawn.PlayerId == 0)
             throw new Exception("Player pawn has 0 id");
