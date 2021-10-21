@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Runtime;
 using graph_sandbox;
+using graph_sandbox.Commands;
 using UnityEngine;
 
 public class Grid
@@ -209,7 +210,8 @@ public class Grid
         return true;
     }
 
-    public bool PlaceWall(Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2, Cell cell2Pair2, bool isVertical)
+    public BreakLinkCommand[] PlaceWall(Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2, Cell cell2Pair2,
+        bool isVertical)
     {
         if (!(IsCellOnGrid(cell1Pair1) && IsCellOnGrid(cell2Pair1) && IsCellOnGrid(cell1Pair2) &&
               IsCellOnGrid(cell2Pair2))
@@ -221,7 +223,7 @@ public class Grid
         if (!(isVertical && isVerticallyAligned || !isVertical && !isVerticallyAligned))
             throw new Exception("Cells are not aligned!");
 
-        if (HasCollisionWithAnoterWall(isVertical, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2))
+        if (HasCollisionWithAnotherWall(isVertical, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2))
         {
             throw new Exception("This wall will collide another wall");
         }
@@ -232,44 +234,95 @@ public class Grid
         //
         // if (CheckNeighborsForNull(neighborsToCheck))
         //     return false;
-
+        BreakLinkCommand[] breakLinksCommands = new BreakLinkCommand[4];
         if (isVertical)
         {
             // * | * 
             // * | *
-            cell1Pair1.Neighbors[2] = null;
-            cell2Pair1.Neighbors[0] = null;
+            // cell1Pair1.Neighbors[2] = null;
+            // cell2Pair1.Neighbors[0] = null;
+            //
+            // cell1Pair2.Neighbors[2] = null;
+            // cell2Pair2.Neighbors[0] = null;
 
-            cell1Pair2.Neighbors[2] = null;
-            cell2Pair2.Neighbors[0] = null;
-
-            return true;
+            breakLinksCommands[0] = new BreakLinkCommand(cell1Pair1, 2);
+            breakLinksCommands[1] = new BreakLinkCommand(cell2Pair1, 0);
+            breakLinksCommands[2] = new BreakLinkCommand(cell1Pair2, 2);
+            breakLinksCommands[3] = new BreakLinkCommand(cell2Pair2, 0);
+            
+            return breakLinksCommands;
         }
 
         // * *
         // ---
         // * *
-        cell1Pair1.Neighbors[1] = null;
-        cell2Pair1.Neighbors[3] = null;
+        
+        
+        breakLinksCommands[0] = new BreakLinkCommand(cell1Pair1, 1);
+        breakLinksCommands[1] = new BreakLinkCommand(cell2Pair1, 3);
 
-        cell1Pair2.Neighbors[1] = null;
-        cell2Pair2.Neighbors[3] = null;
+        breakLinksCommands[2] = new BreakLinkCommand(cell1Pair2, 1);
+        breakLinksCommands[3] = new BreakLinkCommand(cell2Pair2, 3);
+        // cell1Pair1.Neighbors[1] = null;
+        // cell2Pair1.Neighbors[3] = null;
+        //
+        // cell1Pair2.Neighbors[1] = null;
+        // cell2Pair2.Neighbors[3] = null;
 
-        return true;
+        return breakLinksCommands;
     }
 
-    private bool HasCollisionWithAnoterWall(bool isVertical, Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2,
+    public bool RemoveWall(Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2, Cell cell2Pair2, bool isVertical)
+    {
+        if (!(IsCellOnGrid(cell1Pair1) && IsCellOnGrid(cell2Pair1) &&
+              IsCellOnGrid(cell1Pair2) && IsCellOnGrid(cell2Pair2)))
+            throw new Exception("Cell is not on the grid");
+
+        bool isVerticallyAligned = CheckVerticalAlignment(cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
+
+        if (!(isVertical && isVertical || !isVertical && !isVerticallyAligned))
+            throw new Exception("Cells are not aligned!");
+
+
+        if (isVertical && isVerticallyAligned)
+        {
+            // * | * 
+            // * | *
+            cell1Pair1.Neighbors[2] = cell2Pair1;
+            cell2Pair1.Neighbors[0] = cell1Pair1;
+
+            cell2Pair1.Neighbors[2] = cell2Pair2;
+            cell2Pair2.Neighbors[0] = cell2Pair1;
+            return true;
+        }
+        else
+        {
+            // * *
+            // ---
+            // * *
+            cell1Pair1.Neighbors[1] = cell2Pair1;
+            cell2Pair1.Neighbors[3] = cell1Pair1;
+
+            cell2Pair1.Neighbors[1] = cell2Pair2;
+            cell2Pair2.Neighbors[3] = cell2Pair1;
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool HasCollisionWithAnotherWall(bool isVertical, Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2,
         Cell cell2Pair2)
     {
         if (isVertical)
         {
             if (
-                cell1Pair1.Neighbors[2] == null && cell2Pair1.Neighbors[0] == null || 
+                cell1Pair1.Neighbors[2] == null && cell2Pair1.Neighbors[0] == null ||
                 cell1Pair2.Neighbors[2] == null && cell2Pair2.Neighbors[0] == null)
             {
                 return true;
             }
-              
+
             if (
                 cell1Pair1.Neighbors[1] == null && cell1Pair2.Neighbors[3] == null &&
                 cell2Pair1.Neighbors[1] == null && cell2Pair2.Neighbors[3] == null)
@@ -279,140 +332,74 @@ public class Grid
         }
         else
         {
-            
             if (
-                cell1Pair1.Neighbors[1] == null && cell2Pair1.Neighbors[3] == null || 
+                cell1Pair1.Neighbors[1] == null && cell2Pair1.Neighbors[3] == null ||
                 cell1Pair2.Neighbors[1] == null && cell2Pair2.Neighbors[3] == null)
             {
                 return true;
             }
-            
+
             if (
-                cell1Pair1.Neighbors[2] == null && cell1Pair2.Neighbors[0] == null&&
+                cell1Pair1.Neighbors[2] == null && cell1Pair2.Neighbors[0] == null &&
                 cell2Pair1.Neighbors[2] == null && cell2Pair2.Neighbors[0] == null)
             {
                 return true;
             }
         }
+
         return false;
     }
 
-    public bool RemoveWall(
-        Cell cell1Pair1,
-        Cell cell2Pair1,
-        Cell cell1Pair2,
-        Cell cell2Pair2,
-        bool isVertical
-    )
-    {
-        if (!(IsCellOnGrid(cell1Pair1) &&
-              IsCellOnGrid(cell2Pair1) &&
-              IsCellOnGrid(cell1Pair2) &&
-              IsCellOnGrid(cell2Pair2))
-        )
-            throw new Exception("Cell is not on the grid");
-
-        bool isVerticallyAligned = CheckVerticalAlignment(
-            cell1Pair1,
-            cell2Pair1,
-            cell1Pair2,
-            cell2Pair2
-        );
-
-        if (!(isVertical && isVertical || !isVertical && !isVerticallyAligned))
-            throw new Exception("Cells are not aligned!");
-
-        Cell gridCell1Pair1 = _grid[cell1Pair1.GridX, cell1Pair1.GridY];
-        Cell gridCell2Pair1 = _grid[cell2Pair1.GridX, cell2Pair1.GridY];
-        Cell gridCell1Pair2 = _grid[cell1Pair2.GridX, cell1Pair2.GridY];
-        Cell gridCell2Pair2 = _grid[cell2Pair2.GridX, cell2Pair2.GridY];
-
-        // List<Cell> neighborsToCheck = GetNeighbors(
-        //     gridCell1Pair1,
-        //     gridCell1Pair1,
-        //     gridCell1Pair2,
-        //     gridCell2Pair2,
-        //     isVertical
-        // );
-        //
-        // if (CheckNeighborsForNotNull(neighborsToCheck))
-        //     return false;
-
-        if (isVertical && isVerticallyAligned)
-        {
-            // * | * 
-            // * | *
-            gridCell1Pair1.Neighbors[2] = gridCell1Pair2;
-            gridCell1Pair2.Neighbors[0] = gridCell1Pair1;
-
-            gridCell2Pair1.Neighbors[2] = gridCell2Pair2;
-            gridCell2Pair2.Neighbors[0] = gridCell2Pair1;
-
-            return true;
-        }
-
-        // * *
-        // ---
-        // * *
-        gridCell1Pair1.Neighbors[3] = gridCell1Pair2;
-        gridCell1Pair2.Neighbors[1] = gridCell1Pair1;
-
-        gridCell2Pair1.Neighbors[3] = gridCell2Pair2;
-        gridCell2Pair2.Neighbors[1] = gridCell2Pair1;
-
-        return true;
-    }
-
-    public (List<Cell> path, bool passable) FindPathWithAStar(int sourceX, int sourceY, int destinationX,
-        int destinationY)
-    {
-        List<Cell> openCells = new List<Cell>();
-        List<Cell> closedCells = new List<Cell>();
-
-        // y = columns
-        // x = rows
-        Cell sourceCell = _grid[sourceX, sourceY];
-        Cell destinationCell = _grid[destinationX, destinationY];
-
-        openCells.Add(sourceCell);
-
-        while (openCells.Count > 0)
-        {
-            int lowestCost = openCells.Min(cell => cell.GScore + cell.HScore);
-            Cell current = openCells.First(cell => cell.FScore == lowestCost);
-
-            openCells.Remove(current);
-            closedCells.Add(current);
-
-            if (CompareCells(current, destinationCell))
-                return (RetrievePath(sourceCell, destinationCell), true);
-
-            foreach (Cell neighbor in current.Neighbors)
-            {
-                if (neighbor == null)
-                    continue;
-
-                if (closedCells.Exists(cell => CompareCells(cell, neighbor)))
-                    continue;
-
-                if (!openCells.Exists(cell => CompareCells(cell, neighbor)))
-                {
-                    neighbor.HScore = CalculateHCost(neighbor, destinationCell);
-                    neighbor.GScore = current.GScore + 1;
-                    neighbor.Parent = current;
-
-                    openCells.Add(neighbor);
-                }
-                else if (current.GScore + 1 + neighbor.HScore < neighbor.FScore)
-                {
-                    neighbor.GScore = current.GScore + 1;
-                    neighbor.Parent = current;
-                }
-            }
-        }
-
-        return (null, false);
-    }
+    // public (List<Cell> path, bool passable) FindPathWithAStar(int sourceX, int sourceY, int destinationX,
+    //     int destinationY)
+    // {
+    //     List<Cell> openCells = new List<Cell>();
+    //     List<Cell> closedCells = new List<Cell>();
+    //
+    //     // y = columns
+    //     // x = rows
+    //     Cell sourceCell = _grid[sourceX, sourceY];
+    //     Cell destinationCell = _grid[destinationX, destinationY];
+    //
+    //     openCells.Add(sourceCell);
+    //
+    //     while (openCells.Count > 0)
+    //     {
+    //         int lowestCost = openCells.Min(cell => cell.GScore + cell.HScore);
+    //         Cell current = openCells.First(cell => cell.FScore == lowestCost);
+    //
+    //         openCells.Remove(current);
+    //         closedCells.Add(current);
+    //
+    //         if (CompareCells(current, destinationCell))
+    //             return (RetrievePath(sourceCell, destinationCell), true);
+    //
+    //         foreach (Cell posMove in GetPossibleMovesFromCell(current))
+    //         {
+    //             if (posMove == null)
+    //                 continue;
+    //
+    //             if (closedCells.Exists(cell => CompareCells(cell, posMove)))
+    //                 continue;
+    //
+    //             if (!openCells.Exists(cell => CompareCells(cell, posMove)))
+    //             {
+    //                 posMove.HScore = CalculateHCost(posMove, destinationCell);
+    //                 posMove.GScore = current.GScore + 1;
+    //                 posMove.Parent = current;
+    //
+    //                 openCells.Add(posMove);
+    //             }
+    //             else if (current.GScore + 1 + posMove.HScore < posMove.FScore)
+    //             {
+    //                 posMove.GScore = current.GScore + 1;
+    //                 posMove.Parent = current;
+    //             }
+    //         }
+    //     }
+    //
+    //     return (null, false);
+    // }
 
     public List<Cell> GetPossibleMovesFromCell(Cell startCell)
     {
@@ -435,7 +422,7 @@ public class Grid
                 }
                 else
                 {
-                    result.AddRange(GetDiagonalNeighBours(startCell, cell)
+                    result.AddRange(GetDiagonalNeighbours(startCell, cell)
                         .Where(move => move != null && !result.Contains(move)));
                 }
             }
@@ -444,7 +431,7 @@ public class Grid
         return result;
     }
 
-    private List<Cell> GetDiagonalNeighBours(Cell startCell, Cell cell)
+    private List<Cell> GetDiagonalNeighbours(Cell startCell, Cell cell)
     {
         if (startCell == null)
         {
@@ -635,5 +622,42 @@ public class Grid
         }
 
         throw new Exception($"There is no cell under this pawn. Pawn id is {pawn.PlayerId}");
+    }
+
+    public bool CheckPaths(Player[] players)
+    {
+        foreach (var player in players)
+        {
+            var goals = new List<Cell>();
+            var playerCell = GetPawnCell(player.Pawn);
+
+            if (!BfsCheck(playerCell, player.Pawn.WinLineY))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private bool BfsCheck(Cell playerCell, int pawnWinLineY)
+    {
+        var available = new List<Cell>() {playerCell};
+        var visited = new List<Cell>();
+
+        while (available.Count > 0)
+        {
+            visited.Add(available[0]);
+            available.AddRange(available[0].Neighbors
+                .Where(n => n != null && !visited.Contains(n) && !available.Contains(n)));
+            available.RemoveAt(0);
+        }
+
+        if (visited.Exists(v => v.GridY == pawnWinLineY))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

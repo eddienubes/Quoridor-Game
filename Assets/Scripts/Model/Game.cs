@@ -37,8 +37,16 @@ namespace graph_sandbox
 
             IMakeTurnCommand turnCommand =
                 new PlaceWallCommand(_grid, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2, isVertical);
-            _gameLog.Push(turnCommand);
             turnCommand.Execute();
+
+            if (!_grid.CheckPaths(_players))
+            {
+                turnCommand.Undo();
+                return;
+                throw new Exception("Wall can be placed because it will close last path to win for one of the players");
+            }
+
+            _gameLog.Push(turnCommand);
 
             player.OnWallPlacedInvoke(isVertical, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
             SwitchTurn(player);

@@ -7,6 +7,8 @@ namespace graph_sandbox.Commands
         private Cell _cell1Pair1, _cell2Pair1, _cell1Pair2, _cell2Pair2;
         private bool _isWallVertical;
 
+        private BreakLinkCommand[] breakLinkCommands;
+
         public PlaceWallCommand(Grid grid, Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2, Cell cell2Pair2,
             bool isWallVertical)
         {
@@ -32,14 +34,25 @@ namespace graph_sandbox.Commands
 
         public void Execute()
         {
-            _grid.PlaceWall(_cell1Pair1, _cell2Pair1,
+            breakLinkCommands = _grid.PlaceWall(_cell1Pair1, _cell2Pair1,
                 _cell1Pair2, _cell2Pair2, _isWallVertical);
+
+            foreach (var command in breakLinkCommands)
+            {
+                command.Execute();
+            }
         }
 
         public void Undo()
         {
-            _grid.RemoveWall(_cell1Pair1, _cell2Pair1,
-                _cell1Pair2, _cell2Pair2, _isWallVertical);
+            foreach (var command in breakLinkCommands)
+            {
+                command.Undo();
+                
+            }
+            //
+            // _grid.RemoveWall(_cell1Pair1, _cell2Pair1,
+            //     _cell1Pair2, _cell2Pair2, _isWallVertical);
         }
     }
 }
