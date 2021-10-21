@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour
 
     private void SetPlayersOnTheGrid()
     {
-        _grid.SetPlayersOnTheGridLogically(_players);
+        _grid.SetPlayersOnTheGridModel(_players);
         _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(4, 0));
         _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(4, 8));
     }
