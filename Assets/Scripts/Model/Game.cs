@@ -30,7 +30,7 @@ namespace graph_sandbox
         public void PlacingWall(Player player, bool isVertical, (int, int) cell1Pair1, (int, int) cell2Pair1,
             (int, int) cell1Pair2, (int, int) cell2Pair2)
         {
-            if (!player.IsActiveTurn)
+            if (!player.IsActiveTurn || player.WallsCount <= 0)
             {
                 return;
             }

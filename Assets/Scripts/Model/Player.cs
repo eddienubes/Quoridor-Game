@@ -37,6 +37,7 @@ namespace graph_sandbox
         public void OnWallPlacedInvoke(bool isVertical, (int, int) cell1Pair1, (int, int) cell2Pair1,
             (int, int) cell1Pair2, (int, int) cell2Pair2)
         {
+            WallsCount--;
             var cellCoords = new List<(int, int)> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}
                 .OrderBy(c => c.Item1).ThenByDescending(c => c.Item2).FirstOrDefault();
             OnWallPlaced?.Invoke(isVertical, cellCoords.Item1, cellCoords.Item2);

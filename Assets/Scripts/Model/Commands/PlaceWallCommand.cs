@@ -48,11 +48,10 @@ namespace graph_sandbox.Commands
             foreach (var command in breakLinkCommands)
             {
                 command.Undo();
-                
             }
-            //
-            // _grid.RemoveWall(_cell1Pair1, _cell2Pair1,
-            //     _cell1Pair2, _cell2Pair2, _isWallVertical);
+
+            _grid.RemoveWall(_cell1Pair1, _cell2Pair1,
+                _cell1Pair2, _cell2Pair2, _isWallVertical);
         }
     }
 }
