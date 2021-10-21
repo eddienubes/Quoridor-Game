@@ -249,15 +249,15 @@ public class Grid
             breakLinksCommands[1] = new BreakLinkCommand(cell2Pair1, 0);
             breakLinksCommands[2] = new BreakLinkCommand(cell1Pair2, 2);
             breakLinksCommands[3] = new BreakLinkCommand(cell2Pair2, 0);
-            
+
             return breakLinksCommands;
         }
 
         // * *
         // ---
         // * *
-        
-        
+
+
         breakLinksCommands[0] = new BreakLinkCommand(cell1Pair1, 1);
         breakLinksCommands[1] = new BreakLinkCommand(cell2Pair1, 3);
 
@@ -492,7 +492,7 @@ public class Grid
         playerPawn.MoveTo(targetCell.GridX, targetCell.GridY);
     }
 
-    public void SetPlayersOnTheGridLogically(Player[] players)
+    public void SetPlayersOnTheGridModel(Player[] players)
     {
         if (players.Length != 2)
         {
@@ -599,7 +599,7 @@ public class Grid
 
         for (int i = 0; i < _grid.GetLength(1); i++)
         {
-            if (_grid[pawn.WinLineY, i].PlayerId == pawn.PlayerId)
+            if (_grid[_grid.GetLength(0) - pawn.WinLineY-1, i].PlayerId == pawn.PlayerId)
             {
                 return true;
             }
