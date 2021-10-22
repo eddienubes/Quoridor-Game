@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -23,11 +24,17 @@ public abstract class CameraRotatorBase : MonoBehaviour
     {
         _mainCameraTransform = Camera.main.transform;
         _cameraMoveDatas = new LoopedList<CameraMoveData>(CameraMoveDatas).GetEnumerator();
+        RotateCamera(0);
     }
 
-    public void RotateCamera() 
+    public void RotateCamera(float delay) 
     {
         _cameraMoveDatas.MoveNext();
+        StartCoroutine( RotateAfterDelay(delay));
+    }
+    IEnumerator RotateAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         SetData(_cameraMoveDatas.Current);
     }
 

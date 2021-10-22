@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderTarget: {fileID: 4711114365546791739}
-  _jumpAnimationTime: 2
+  _jumpAnimationTime: 1.7
   _verticalMovementTimePart: 0.2
-  _verticalMovementHeight: 1.4
+  _verticalMovementHeight: 1
 --- !u!65 &7222179056760625965
 BoxCollider:
   m_ObjectHideFlags: 0

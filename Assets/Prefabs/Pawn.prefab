@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderTarget: {fileID: 5060992830996105253}
-  _jumpAnimationTime: 2
+  _jumpAnimationTime: 1
 --- !u!136 &1171324405583532666
 CapsuleCollider:
   m_ObjectHideFlags: 0

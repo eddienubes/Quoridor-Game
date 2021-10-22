@@ -17,6 +17,7 @@ namespace graph_sandbox
         private Stack<IMakeTurnCommand> _gameLog;
 
         public event Action<Player> OnGameEnded;
+        public event Action<Player> OnTurnSwitched;
         public event Action<Player, (int, int), (int, int)> OnPlayerMoved;
 
         public Game(Grid grid, params Player[] players)
@@ -85,6 +86,7 @@ namespace graph_sandbox
             var nextPlayerIndex = (Array.IndexOf(_players, player) + 1) % _players.Length;
             player.EndTurn();
             _players[nextPlayerIndex].StartTurn();
+            OnTurnSwitched?.Invoke(_players[nextPlayerIndex]);
         }
 
         private void CheckGameForFinishing(Player p)

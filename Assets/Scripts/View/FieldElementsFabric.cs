@@ -26,10 +26,7 @@ namespace Quoridorgame.View
 
         [SerializeField]
         private List<Transform> _wallDecksRoots;
-
-        [SerializeField]
-        private CameraRotatorBase _cameraRotator;
-
+        
         public static FieldElementsFabric Instance;
         public Cell[,] _cells { get; private set; } = new Cell[0, 0];
 
@@ -39,19 +36,9 @@ namespace Quoridorgame.View
         private void Start()
         {
             Instance = this;
-            _cameraRotator.Init();
             CreateWallDecks(2).ForEach(x => x.AddWalls(10));
         }
         
-        //TODO: сделано для стартовой демки, выпилить после создания контроллера
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _cameraRotator.RotateCamera();
-            }
-        }
-
         /// <summary>
         /// Создания игрового поля 
         /// </summary>
