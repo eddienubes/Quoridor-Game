@@ -16,7 +16,7 @@ namespace graph_sandbox
 
         private Stack<IMakeTurnCommand> _gameLog;
 
-        public event Action<Player> GameEnded;
+        public event Action<Player> OnGameEnded;
         public event Action<Player, (int, int), (int, int)> OnPlayerMoved;
 
         public Game(Grid grid, params Player[] players)
@@ -91,7 +91,7 @@ namespace graph_sandbox
         {
             if (_grid.CheckIsPawnOnTheWinLine(p.Pawn))
             {
-                GameEnded?.Invoke(p);
+                OnGameEnded?.Invoke(p);
                 Debug.Log($"<color=red> GAME ENDED. PLAYER {p.Pawn.PlayerId} WON </color>");
             }
         }

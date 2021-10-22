@@ -1,15 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using graph_sandbox;
-using graph_sandbox.Commands;
 using Quoridorgame.Controllers;
 using Quoridorgame.View;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public event Action<int> OnPlayerWins;
     public int MapSizeY => ySize;
 
     [SerializeField]
@@ -28,10 +26,7 @@ public class GameController : MonoBehaviour
     public void Init()
     {
         _grid = new Grid(xSize, ySize);
-        //
-        // _players[0] = new HotSeatPlayer(ySize - 1, true, 1);
-        // _players[1] = new HotSeatPlayer(0, false, 2);
-
+        
         for (var i = 0; i < _playerControllers.Length; i++)
         {
             _playerControllers[i].SubscribeToModel(_players[i]);
@@ -50,6 +45,16 @@ public class GameController : MonoBehaviour
 
         SetPlayersOnTheGrid();
         SetDecks();
+
+
+        _gameModel.OnGameEnded += winner =>
+        {
+            var winnerIndex = 0;
+            for(int i = 0; i<_players.Length;i++)
+                if (winner == _players[i])
+                    winnerIndex = i;
+            OnPlayerWins?.Invoke(winnerIndex);
+        };
     }
 
     public void SetPlayers(params Player[] players)

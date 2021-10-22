@@ -1,17 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 namespace Quoridorgame.View
 {
     using graph_sandbox;
 
     public class MainMenu : MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI _label;
+        
         [SerializeField]
         private GameController gameController;
 
+
+        private void Start()
+        {
+            gameController.OnPlayerWins += winnerId =>
+            {
+                _label.SetText($"{(winnerId == 0 ? "First" : "Second")} player wins!");
+                gameObject.SetActive(true);
+            };
+        }
         public void PlayAgainstPlayer()
         {
             var players = new Player[2];
@@ -20,7 +32,7 @@ namespace Quoridorgame.View
 
             gameController.SetPlayers(players);
             gameController.Init();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         public void PlayAgainstAI()
@@ -31,7 +43,7 @@ namespace Quoridorgame.View
 
             gameController.SetPlayers(players);
             gameController.Init();
-            Destroy(this);
+            gameObject.SetActive(false);
         }
 
         public void QuitGame() => Application.Quit();
