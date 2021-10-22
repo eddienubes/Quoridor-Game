@@ -7,7 +7,7 @@ namespace graph_sandbox
     public abstract class Player
     {
         public bool IsActiveTurn { get; private set; }
-        public int WallsCount { get; private set; }
+        public int WallsCount { get; protected set; }
         public event Action OnTurnStarted;
         public event Action OnTurnEnded;
         public event Action<bool, int, int> OnWallPlaced;
@@ -28,7 +28,7 @@ namespace graph_sandbox
             OnTurnEnded?.Invoke();
         }
 
-        public void StartTurn()
+        public virtual void StartTurn()
         {
             IsActiveTurn = true;
             OnTurnStarted?.Invoke();
@@ -42,5 +42,7 @@ namespace graph_sandbox
                 .OrderBy(c => c.Item1).ThenByDescending(c => c.Item2).FirstOrDefault();
             OnWallPlaced?.Invoke(isVertical, cellCoords.Item1, cellCoords.Item2);
         }
+
+        public abstract (bool, bool, Cell) MakeDecision(Game gameModel, Grid grid, Pawn pawn);
     }
 }

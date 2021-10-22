@@ -3,15 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using AI;
 using UnityEngine.SceneManagement;
+
 namespace Quoridorgame.View
 {
+    using Controllers;
     using graph_sandbox;
 
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _label;
-        
+        [SerializeField]
+        private TextMeshProUGUI _label;
+
         [SerializeField]
         private GameController gameController;
 
@@ -23,9 +27,8 @@ namespace Quoridorgame.View
                 _label.SetText($"{(winnerId == 0 ? "First" : "Second")} player wins!");
                 gameObject.SetActive(true);
             };
-            PlayAgainstPlayer();
-            gameObject.SetActive(true);
         }
+
         public void PlayAgainstPlayer()
         {
             var players = new Player[2];
@@ -33,7 +36,9 @@ namespace Quoridorgame.View
             players[1] = new HotSeatPlayer(0, false, 2);
 
             gameController.SetPlayers(players);
-            gameController.Init();
+            var p1 = gameController.gameObject.AddComponent<UnityPlayerController>();
+            var p2 = gameController.gameObject.AddComponent<UnityPlayerController>();
+            gameController.Init(p1, p2);
             gameObject.SetActive(false);
         }
 
@@ -41,10 +46,12 @@ namespace Quoridorgame.View
         {
             var players = new Player[2];
             players[0] = new HotSeatPlayer(gameController.MapSizeY - 1, true, 1);
-            players[1] = new HotSeatPlayer(0, false, 2);
+            players[1] = new DummyAiPlayer(0, false, 2);
 
             gameController.SetPlayers(players);
-            gameController.Init();
+            var bot = gameController.gameObject.AddComponent<AiController>();
+            var player = gameController.gameObject.AddComponent<UnityPlayerController>();
+            gameController.Init(player, bot);
             gameObject.SetActive(false);
         }
 

@@ -6,5 +6,10 @@ namespace graph_sandbox
             isActiveTurn, playerId, wallsCount)
         {
         }
+
+        public override (bool, bool, Cell) MakeDecision(Game gameModel, Grid grid, Pawn pawn)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

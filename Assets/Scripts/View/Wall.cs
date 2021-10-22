@@ -19,7 +19,7 @@ namespace Quoridorgame.View
         [Range(0, 1)]
         private float _verticalMovementTimePart = 0.2f;
 
-        [SerializeField] [Tooltip("Высота, с которой стенка будет двигаться вертикально вниз ")]
+        [SerializeField] [Tooltip("Высота, с которой стенка будет двигаться вертикально вниз ")] [Range(0, 1)]
         private float _verticalMovementHeight = 1.4f;
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Quoridorgame.View
         /// <param name="duration">Длительность анимации</param>
         public void Jump(Vector3 position, bool isVertical)
         {
-            var jumpDuration = _jumpAnimationTime * (1-_verticalMovementTimePart);
+            var jumpDuration = _jumpAnimationTime * _verticalMovementTimePart;
             DOTween.Sequence()
                 .Append(Transform.DOJump(position + Vector3.up * _verticalMovementHeight, 2, 1, jumpDuration))
                 .Insert(0, Transform.DORotate(AxisRotation(isVertical).eulerAngles, jumpDuration))

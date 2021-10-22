@@ -27,7 +27,7 @@ namespace Quoridorgame.Controllers
         /// "Ходит" ли данный контроллер в текущий момент
         /// Сеттер откючает подсветку и регистрацию нажатий на "свои" стенки и пешку
         /// </summary>
-        public bool IsActiveNow
+        public override bool IsActiveNow
         {
             get => _playerModel.IsActiveTurn;
             set
@@ -73,7 +73,7 @@ namespace Quoridorgame.Controllers
                 targetCellView.Coordinate.x, targetCellView.Coordinate.y);
         }
 
-        public void SetModelsGameAndGrid(Game game, Grid grid)
+        public override void SetModelsGameAndGrid(Game game, Grid grid)
         {
             _gameModel = game;
             _grid = grid;

@@ -17,7 +17,6 @@ namespace graph_sandbox
         private Stack<IMakeTurnCommand> _gameLog;
 
         public event Action<Player> OnGameEnded;
-        public event Action<Player> OnTurnSwitched;
         public event Action<Player, (int, int), (int, int)> OnPlayerMoved;
 
         public Game(Grid grid, params Player[] players)
@@ -31,9 +30,14 @@ namespace graph_sandbox
         public void PlacingWall(Player player, bool isVertical, (int, int) cell1Pair1, (int, int) cell2Pair1,
             (int, int) cell1Pair2, (int, int) cell2Pair2)
         {
-            if (!player.IsActiveTurn || player.WallsCount <= 0)
+            if (!player.IsActiveTurn)
             {
-                return;
+                throw new Exception("Player isn't active");
+            }
+
+            if (player.WallsCount <= 0)
+            {
+                throw new Exception("Walldeck is empty");
             }
 
             IMakeTurnCommand turnCommand =
@@ -81,12 +85,39 @@ namespace graph_sandbox
             SwitchTurn(player);
         }
 
+        public void MovingPlayer(Pawn playerPawn, Cell start, Cell target)
+        {
+            var player = _players.FirstOrDefault(p => p.Pawn == playerPawn);
+            if (player == null)
+            {
+                throw new Exception($"There is no player for this pawn. Id: {playerPawn.PlayerId}");
+            }
+
+            if (!player.IsActiveTurn)
+            {
+                throw new Exception($"This player is inactive. Id: {playerPawn.PlayerId}");
+            }
+
+            IMakeTurnCommand turnCommand = new MovePawnCommand(player.Pawn, _grid, start, target);
+
+            Debug.Log(
+                $"<color=red> {_grid.GetPawnCell(player.Pawn).GridX}:{_grid.GetPawnCell(player.Pawn).GridY} </color>");
+            Debug.Log(
+                $"<color=red> {_grid.GetPawnCell(player.Pawn).PlayerId}</color>");
+            turnCommand.Execute();
+            _gameLog.Push(turnCommand);
+            CheckGameForFinishing(player);
+
+            OnPlayerMoved?.Invoke(player, (start.GridX, start.GridY), (target.GridX, target.GridY));
+
+            SwitchTurn(player);
+        }
+
         private void SwitchTurn(Player player)
         {
             var nextPlayerIndex = (Array.IndexOf(_players, player) + 1) % _players.Length;
             player.EndTurn();
             _players[nextPlayerIndex].StartTurn();
-            OnTurnSwitched?.Invoke(_players[nextPlayerIndex]);
         }
 
         private void CheckGameForFinishing(Player p)
