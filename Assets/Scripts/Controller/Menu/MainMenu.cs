@@ -27,6 +27,8 @@ namespace Quoridorgame.View
                 _label.SetText($"{(winnerId == 0 ? "First" : "Second")} player wins!");
                 gameObject.SetActive(true);
             };
+            PlayAgainstPlayer();
+            gameObject.SetActive(true);
         }
 
         public void PlayAgainstPlayer()
