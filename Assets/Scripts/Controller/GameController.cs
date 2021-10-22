@@ -67,14 +67,17 @@ public class GameController : MonoBehaviour
 
             OnPlayerWins?.Invoke(winnerIndex);
         };
-
-        _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched());
+        if (playerControllers.All(pc => pc.GetType() == typeof(UnityPlayerController)))
+            _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched(true));
+        else
+            _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched(false));
     }
 
-    IEnumerator OnTurnSwitched()
+    IEnumerator OnTurnSwitched(bool rotateCam)
     {
         yield return new WaitForSeconds(1.7f);
-        _cameraRotator.RotateCamera();
+        if (rotateCam)
+            _cameraRotator.RotateCamera();
         foreach (var pawn in _playerControllers)
             pawn.Pawn.SetSelected(false);
         foreach (var cell in fieldCreatorView._cells)
