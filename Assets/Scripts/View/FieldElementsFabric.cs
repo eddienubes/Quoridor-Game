@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using graph_sandbox;
 
 namespace Quoridorgame.View
 {
@@ -37,18 +35,14 @@ namespace Quoridorgame.View
 
         private List<WallDeck> _wallDecks = new List<WallDeck>();
 
-
-        //TODO: сделано для стартовой демки, выпилить после создания контроллера
-        private void Awake()
+        private Vector3 _cameraStartPosition = Vector3.zero;
+        private void Start()
         {
             Instance = this;
-            // CreateField(9, 9);
             _cameraRotator.Init();
-            // SpawnPawn(4, 8);
-            // SpawnPawn(4, 0);
             CreateWallDecks(2).ForEach(x => x.AddWalls(10));
         }
-
+        
         //TODO: сделано для стартовой демки, выпилить после создания контроллера
         private void Update()
         {
@@ -74,15 +68,7 @@ namespace Quoridorgame.View
             var wallSample = Instantiate(_wallPrefab, _root);
             var wallWidth = wallSample.Width;
             Destroy(wallSample.gameObject);
-
-            //
-            // for (int row = 0; row < _rowsAmount; ++row)
-            // {
-            //     for (int cell = 0; cell < _rowCapacity; cell++)
-            //     {
-            //         _grid[row, cell] = new Cell(cell, _rowsAmount - 1 - row);
-            //     }
-            // }
+            
             for (int y = 0; y < ySize; y++)
             {
                 for (int x = 0; x < xSize; x++)
@@ -188,11 +174,12 @@ namespace Quoridorgame.View
         /// <param name="wallWidth">Ширина стенки</param>
         private void RecalculateFieldSize(int xSize, int ySize, float wallWidth)
         {
-            var fieldRootXSize = (_cells[0, 0].Size.x * xSize) + (wallWidth * (xSize + 1));
+            const float fieldScale = 1.5f;
+            var fieldRootXSize = ((_cells[0, 0].Size.x * xSize) + (wallWidth * (xSize + 1))) * fieldScale;
             var fieldRootYSize = _fieldGoRoot.localScale.y;
-            var fieldRootZSize = (_cells[0, 0].Size.z * ySize) + (wallWidth * (ySize + 1));
+            var fieldRootZSize = ((_cells[0, 0].Size.z * ySize) + (wallWidth * (ySize + 1))) * fieldScale;
 
-            _fieldGoRoot.localScale = new Vector3(fieldRootXSize, fieldRootYSize, fieldRootZSize) * 1.5f;
+            _fieldGoRoot.localScale = new Vector3(fieldRootXSize, fieldRootYSize, fieldRootZSize) ;
 
             var fieldRootXPos = 0f;
             if (xSize % 2 != 0)
@@ -216,9 +203,11 @@ namespace Quoridorgame.View
 
             _fieldGoRoot.transform.localPosition = new Vector3(fieldRootXPos, -2, fieldRootZPos);
 
-            var position = Camera.main.transform.position;
-            Camera.main.transform.position = new Vector3(position.x,
-                position.y * Mathf.Max(fieldRootZSize, fieldRootXSize), position.z);
+            if (_cameraStartPosition ==  Vector3.zero)
+                _cameraStartPosition = Camera.main.transform.position;
+            
+            Camera.main.transform.position = new Vector3(_cameraStartPosition.x,
+                _cameraStartPosition.y * Mathf.Max(fieldRootZSize, fieldRootXSize), _cameraStartPosition.z);
         }
     }
 }
