@@ -19,7 +19,7 @@ namespace Quoridorgame.Controllers
         private WallDeck _wallDeck;
 
         private Player _playerModel;
-
+        public Pawn Pawn => _pawn;
         /// <summary>
         /// "Ходит" ли данный контроллер в текущий момент
         /// Сеттер откючает подсветку и регистрацию нажатий на "свои" стенки и пешку

@@ -59,10 +59,20 @@ public class GameController : MonoBehaviour
                     winnerIndex = i;
             OnPlayerWins?.Invoke(winnerIndex);
         };
-
-        _gameModel.OnTurnSwitched += _ => _cameraRotator.RotateCamera(2);
+        
+        _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched());
     }
 
+    IEnumerator OnTurnSwitched()
+    {
+        yield return new WaitForSeconds(1.7f);
+        _cameraRotator.RotateCamera();
+        foreach (var pawn in _playerControllers)
+            pawn.Pawn.SetSelected(false);
+        foreach (var cell in fieldCreatorView._cells)
+            cell.SetSelected(false);
+    }
+    
     public void SetPlayers(params Player[] players)
     {
         _players = players;

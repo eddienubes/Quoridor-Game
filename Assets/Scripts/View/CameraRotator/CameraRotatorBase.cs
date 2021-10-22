@@ -24,17 +24,12 @@ public abstract class CameraRotatorBase : MonoBehaviour
     {
         _mainCameraTransform = Camera.main.transform;
         _cameraMoveDatas = new LoopedList<CameraMoveData>(CameraMoveDatas).GetEnumerator();
-        RotateCamera(0);
+        RotateCamera();
     }
 
-    public void RotateCamera(float delay) 
+    public void RotateCamera() 
     {
         _cameraMoveDatas.MoveNext();
-        StartCoroutine( RotateAfterDelay(delay));
-    }
-    IEnumerator RotateAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
         SetData(_cameraMoveDatas.Current);
     }
 
