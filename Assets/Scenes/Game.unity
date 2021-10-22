@@ -361,13 +361,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4c8e07be5a6af43a8c1e73fe461ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerControllers:
-  - {fileID: 1924372495}
-  - {fileID: 1924372494}
+  _playerControllers: []
+  _cameraRotator: {fileID: 1677061346}
   fieldCreatorView: {fileID: 391813872}
   xSize: 9
   ySize: 9
-  _cameraRotator: {fileID: 1677061346}
 --- !u!4 &1924372497
 Transform:
   m_ObjectHideFlags: 0

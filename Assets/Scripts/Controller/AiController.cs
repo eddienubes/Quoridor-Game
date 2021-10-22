@@ -9,15 +9,6 @@ namespace Quoridorgame.Controllers
 
     public class AiController : IPlayerController
     {
-        [SerializeField]
-        private Pawn _pawn;
-
-        private WallDeck _wallDeck;
-
-        private Player _playerModel;
-        private Grid _grid;
-        private Game _gameModel;
-
         public override void SetModelsGameAndGrid(Game game, Grid grid)
         {
             _gameModel = game;

@@ -14,15 +14,7 @@ namespace Quoridorgame.Controllers
 
     public class UnityPlayerController : IPlayerController
     {
-        [SerializeField]
-        private Pawn _pawn;
-
-        private WallDeck _wallDeck;
-
-        private Player _playerModel;
-        private Grid _grid;
-        private Game _gameModel;
-
+        
         /// <summary>
         /// "Ходит" ли данный контроллер в текущий момент
         /// Сеттер откючает подсветку и регистрацию нажатий на "свои" стенки и пешку

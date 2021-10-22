@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using graph_sandbox;
 using Quoridorgame.Controllers;
@@ -12,6 +13,8 @@ public class GameController : MonoBehaviour
 
     public IPlayerController[] _playerControllers;
 
+    [SerializeField]
+    private CameraRotator2Players _cameraRotator;
 
     [SerializeField]
     private FieldElementsFabric fieldCreatorView;
@@ -57,12 +60,26 @@ public class GameController : MonoBehaviour
         {
             var winnerIndex = 0;
             for (int i = 0; i < _players.Length; i++)
+            {
                 if (winner == _players[i])
                     winnerIndex = i;
+            }
+
             OnPlayerWins?.Invoke(winnerIndex);
         };
+
+        _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched());
     }
 
+    IEnumerator OnTurnSwitched()
+    {
+        yield return new WaitForSeconds(1.7f);
+        _cameraRotator.RotateCamera();
+        foreach (var pawn in _playerControllers)
+            pawn.Pawn.SetSelected(false);
+        foreach (var cell in fieldCreatorView._cells)
+            cell.SetSelected(false);
+    }
 
     public void SetPlayers(params Player[] players)
     {
