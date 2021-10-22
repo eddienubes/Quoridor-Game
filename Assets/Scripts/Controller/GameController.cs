@@ -26,6 +26,10 @@ public class GameController : MonoBehaviour
     private Game _gameModel;
     private Grid _grid;
 
+    /// <summary>
+    /// Задержка в секундах между ходом и отображением некоторых данных (типа поворота камеры)
+    /// </summary>
+    private const float MoveViewUpdateDelay = 1.7f;
     public void Init()
     {
         _grid = new Grid(xSize, ySize);
@@ -57,15 +61,21 @@ public class GameController : MonoBehaviour
             for(int i = 0; i<_players.Length;i++)
                 if (winner == _players[i])
                     winnerIndex = i;
-            OnPlayerWins?.Invoke(winnerIndex);
+            StartCoroutine(OnTurnSwitched(winnerIndex));
         };
         
         _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched());
     }
 
-    IEnumerator OnTurnSwitched()
+    private IEnumerator OnTurnSwitched(int winnerIndex)
     {
-        yield return new WaitForSeconds(1.7f);
+        yield return new WaitForSeconds(MoveViewUpdateDelay);
+        OnPlayerWins?.Invoke(winnerIndex);
+    }
+
+    private IEnumerator OnTurnSwitched()
+    {
+        yield return new WaitForSeconds(MoveViewUpdateDelay);
         _cameraRotator.RotateCamera();
         foreach (var pawn in _playerControllers)
             pawn.Pawn.SetSelected(false);
@@ -81,8 +91,8 @@ public class GameController : MonoBehaviour
     private void SetPlayersOnTheGrid()
     {
         _grid.SetPlayersOnTheGridModel(_players);
-        _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(4, 0));
-        _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(4, 8));
+        _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(xSize / 2, 0));
+        _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(xSize / 2, ySize - 1));
     }
 
     private void SetDecks()
@@ -135,11 +145,5 @@ public class GameController : MonoBehaviour
             $"{currentCell.GridX} : {currentCell.GridY} ---> {targetCellView.Coordinate.x} : {targetCellView.Coordinate.y}");
         _gameModel.MovingPlayer(currentPlayerPawn, currentCell.GridX, currentCell.GridY,
             targetCellView.Coordinate.x, targetCellView.Coordinate.y);
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }
