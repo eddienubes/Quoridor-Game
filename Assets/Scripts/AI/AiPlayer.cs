@@ -1,6 +1,5 @@
 namespace AI
 {
-    using System;
     using graph_sandbox;
 
     public abstract class AiPlayer : Player

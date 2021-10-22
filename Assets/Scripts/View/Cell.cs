@@ -3,8 +3,6 @@ using UnityEngine;
 
 namespace Quoridorgame.View
 {
-    using System;
-
     /// <summary>
     /// Отображение игровой клетки на сцене
     /// </summary>

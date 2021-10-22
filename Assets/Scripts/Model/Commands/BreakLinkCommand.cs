@@ -1,7 +1,6 @@
 namespace graph_sandbox.Commands
 {
     using System;
-    using System.Linq;
 
     public class BreakLinkCommand : ICommand
     {

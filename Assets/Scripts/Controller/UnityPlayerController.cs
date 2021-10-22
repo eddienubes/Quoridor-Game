@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using Quoridorgame.View;
 using UnityEngine;
 
 namespace Quoridorgame.Controllers
 {
     using System;
-    using System.Linq;
     using graph_sandbox;
-    using UnityEditor.VersionControl;
     using Cell = View.Cell;
     using Pawn = View.Pawn;
 
