@@ -11,17 +11,17 @@ public class GameController : MonoBehaviour
     public event Action<int> OnPlayerWins;
     public int MapSizeY => ySize;
 
-    [SerializeField]
-    private UnityPlayerController[] _playerControllers;
+    IPlayerController[] _playerControllers;
 
     [SerializeField]
     private FieldElementsFabric fieldCreatorView;
-    
+
     [SerializeField]
     private int xSize = 9, ySize = 9;
 
-    [SerializeField] private CameraRotatorBase _cameraRotator;
-    
+    [SerializeField]
+    private CameraRotatorBase _cameraRotator;
+
     private Player[] _players = new Player[2];
     private Game _gameModel;
     private Grid _grid;
@@ -30,10 +30,11 @@ public class GameController : MonoBehaviour
     /// Задержка в секундах между ходом и отображением некоторых данных (типа поворота камеры)
     /// </summary>
     private const float MoveViewUpdateDelay = 1.7f;
+
     public void Init()
     {
         _grid = new Grid(xSize, ySize);
-        
+
         for (var i = 0; i < _playerControllers.Length; i++)
         {
             _playerControllers[i].SubscribeToModel(_players[i]);
@@ -58,12 +59,12 @@ public class GameController : MonoBehaviour
         _gameModel.OnGameEnded += winner =>
         {
             var winnerIndex = 0;
-            for(int i = 0; i<_players.Length;i++)
+            for (int i = 0; i < _players.Length; i++)
                 if (winner == _players[i])
                     winnerIndex = i;
             StartCoroutine(OnTurnSwitched(winnerIndex));
         };
-        
+
         _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched());
     }
 
@@ -82,7 +83,7 @@ public class GameController : MonoBehaviour
         foreach (var cell in fieldCreatorView._cells)
             cell.SetSelected(false);
     }
-    
+
     public void SetPlayers(params Player[] players)
     {
         _players = players;
