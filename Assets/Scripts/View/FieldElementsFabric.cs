@@ -39,19 +39,8 @@ namespace Quoridorgame.View
         private void Start()
         {
             Instance = this;
-            _cameraRotator.Init();
-            CreateWallDecks(2).ForEach(x => x.AddWalls(10));
         }
         
-        //TODO: сделано для стартовой демки, выпилить после создания контроллера
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _cameraRotator.RotateCamera();
-            }
-        }
-
         /// <summary>
         /// Создания игрового поля 
         /// </summary>

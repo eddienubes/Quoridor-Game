@@ -37,8 +37,7 @@ namespace Quoridorgame.Controllers
                 {
                     MakeTurn(turn);
                 }
-
-                catch (Exception e)
+                catch
                 {
                     turn = _playerModel.MakeDecision(_gameModel, _grid, _playerModel.Pawn);
                 }

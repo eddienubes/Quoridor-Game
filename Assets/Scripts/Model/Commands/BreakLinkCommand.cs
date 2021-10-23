@@ -10,8 +10,8 @@ namespace graph_sandbox.Commands
 
         public BreakLinkCommand(Cell linker, int index)
         {
-            this.linker = linker;
-            this.linked = linked; this.index = index;
+            this.linker = linker; 
+            this.index = index;
             if (index < 0 || index >= linker.Neighbors.Length)
             {
                 throw new IndexOutOfRangeException("index is out of neighbour array bounds");

@@ -523,7 +523,7 @@ public class Grid
             throw new Exception("Player pawn has 0 id");
     }
 
-    public string ToString()
+    public override string ToString()
     {
         string result = "";
 

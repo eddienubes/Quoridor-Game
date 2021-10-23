@@ -31,10 +31,6 @@ public class GameController : MonoBehaviour
         _playerControllers = playerControllers;
         _grid = new Grid(xSize, ySize);
 
-        //
-        // _players[0] = new HotSeatPlayer(ySize - 1, true, 1);
-        // _players[1] = new HotSeatPlayer(0, false, 2);
-
         _gameModel = new Game(_grid, _players);
 
         var gridView = fieldCreatorView.CreateField(xSize, ySize);
@@ -54,6 +50,8 @@ public class GameController : MonoBehaviour
 
         SetPlayersOnTheGrid();
         SetDecks();
+        
+        _cameraRotator.Init();
 
 
         _gameModel.OnGameEnded += winner =>
