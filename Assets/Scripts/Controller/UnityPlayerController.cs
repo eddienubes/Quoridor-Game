@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Quoridorgame.Controllers
 {
     using System;
-    using graph_sandbox;
+    using Quorridor.Model;
     using Cell = View.Cell;
     using Pawn = View.Pawn;
 

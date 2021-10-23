@@ -1,4 +1,4 @@
-namespace graph_sandbox
+namespace Quorridor.Model
 {
     using System;
 

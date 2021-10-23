@@ -1,6 +1,6 @@
 namespace Quoridorgame.Controllers
 {
-    using graph_sandbox;
+    using Quorridor.Model;
     using UnityEngine;
     using View;
     using Grid = Grid;

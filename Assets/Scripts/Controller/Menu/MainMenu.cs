@@ -1,12 +1,12 @@
 
 using TMPro;
 using UnityEngine;
-using AI;
+using Quorridor.AI;
 
 namespace Quoridorgame.View
 {
     using Controllers;
-    using graph_sandbox;
+    using Quorridor.Model;
 
     public class MainMenu : MonoBehaviour
     {

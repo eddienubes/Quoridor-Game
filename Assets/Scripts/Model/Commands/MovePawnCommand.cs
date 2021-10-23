@@ -1,5 +1,5 @@
 
-namespace graph_sandbox.Commands
+namespace Quorridor.Model.Commands
 {
     public class MovePawnCommand : IMakeTurnCommand
     {

@@ -1,4 +1,4 @@
-namespace graph_sandbox
+namespace Quorridor.Model
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,6 @@ namespace graph_sandbox
     using Commands;
     using UnityEngine;
     using Grid = Grid;
-
     public class Game
     {
         private Grid _grid;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
-using graph_sandbox;
+using Quorridor.Model;
 using Quoridorgame.Controllers;
 using Quoridorgame.View;
 using UnityEngine;

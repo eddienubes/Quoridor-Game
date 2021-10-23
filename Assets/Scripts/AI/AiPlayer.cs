@@ -1,6 +1,6 @@
-namespace AI
+namespace Quorridor.AI
 {
-    using graph_sandbox;
+    using Model;
 
     public abstract class AiPlayer : Player
     {

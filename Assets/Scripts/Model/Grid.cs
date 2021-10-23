@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using graph_sandbox;
-using graph_sandbox.Commands;
+using Quorridor.Model;
+using Quorridor.Model.Commands;
 using UnityEngine;
 
 public class Grid

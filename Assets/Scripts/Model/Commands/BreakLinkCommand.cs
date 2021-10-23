@@ -1,4 +1,4 @@
-namespace graph_sandbox.Commands
+namespace Quorridor.Model.Commands
 {
     using System;
 
