@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour
                     winnerIndex = i;
             }
 
-            _cameraRotator.DisableTopView();
+            _cameraRotator.Reset();
             OnPlayerWins?.Invoke(winnerIndex);
         };
         if (playerControllers.All(pc => pc.GetType() == typeof(UnityPlayerController)))

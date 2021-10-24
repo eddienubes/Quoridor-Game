@@ -35,10 +35,19 @@ public abstract class CameraRotatorBase : MonoBehaviour
 
     private bool _isTopView = false;
 
-    public virtual void Reset() => SetData(CameraMoveDatas[0]);
+    public virtual void Reset()
+    {
+        SetData(CameraMoveDatas[0]);
+        DisableTopView();
+    }
 
     public virtual void Init()
     {
+        if (_mainCameraTransform != default)
+        {
+            Reset();
+            return;
+        }
         _mainCameraTransform = Camera.main.transform;
         _cameraMoveDatas = new LoopedList<CameraMoveData>(CameraMoveDatas).GetEnumerator();
         RotateCamera();
@@ -58,12 +67,14 @@ public abstract class CameraRotatorBase : MonoBehaviour
 
     public void RotateCamera()
     {
+        _isTopView = false;
         _cameraMoveDatas.MoveNext();
         SetData(_cameraMoveDatas.Current);
     }
 
     protected void SetData(CameraMoveData cameraMoveData)
     {
+        _mainCameraTransform.DOKill();
         _mainCameraTransform.DOLocalMove(cameraMoveData.position, _cameraTransitionTime);
         _mainCameraTransform.DORotate(cameraMoveData.rotation, _cameraTransitionTime);
     }
