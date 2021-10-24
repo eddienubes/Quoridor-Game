@@ -27,8 +27,7 @@ namespace Quoridorgame.View
         [SerializeField]
         private List<Transform> _wallDecksRoots;
 
-        [SerializeField]
-        private CameraRotatorBase _cameraRotator;
+        [SerializeField] private List<Material> _pawnMaterials;
 
         public static FieldElementsFabric Instance;
         public Cell[,] _cells { get; private set; } = new Cell[0, 0];
@@ -111,7 +110,7 @@ namespace Quoridorgame.View
         /// <param name="y">Координата клетки, на которой нужно заспавнить пешку по оси У</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Бросается при невалидных координатах</exception>
-        public Pawn SpawnPawn(int x, int y)
+        public Pawn SpawnPawn(int x, int y,int pawnId)
         {
             if (!IsCoordsValid(x, y))
                 throw new ArgumentException("Pawn coordinates are incorrect!");
@@ -119,6 +118,8 @@ namespace Quoridorgame.View
             var pawnGo = Instantiate(_pawnPrefab, _cells[x, y].SpawnPoint, true);
             pawnGo.transform.localPosition = Vector3.zero;
 
+            pawnGo.GetComponentInChildren<Renderer>().material = _pawnMaterials[pawnId];
+            
             return pawnGo;
         }
 

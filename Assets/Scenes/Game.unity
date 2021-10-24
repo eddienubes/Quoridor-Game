@@ -537,6 +537,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6437775929102723731, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: _pawnMaterials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437775929102723731, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
       propertyPath: cardDecksRoot.Array.data[1]
       value: 
       objectReference: {fileID: 0}
@@ -548,6 +552,14 @@ PrefabInstance:
       propertyPath: cardDecksRoot.Array.data[3]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6437775929102723731, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: _pawnMaterials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e6f63000e25f86f48a7a8af5e63313c1, type: 2}
+    - target: {fileID: 6437775929102723731, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
+      propertyPath: _pawnMaterials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdc60d6363c056e40a0cea5583db301f, type: 2}
     m_RemovedComponents:
     - {fileID: 8126550009549019653, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5ced6d0e2fa767e48b6b57ac3dcbdc46, type: 3}
