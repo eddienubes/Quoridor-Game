@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
 
         SetPlayersOnTheGrid();
         SetDecks();
-        
+
         _cameraRotator.Init();
 
 
@@ -63,6 +63,7 @@ public class GameController : MonoBehaviour
                     winnerIndex = i;
             }
 
+            _cameraRotator.DisableTopView();
             OnPlayerWins?.Invoke(winnerIndex);
         };
         if (playerControllers.All(pc => pc.GetType() == typeof(UnityPlayerController)))
@@ -90,8 +91,8 @@ public class GameController : MonoBehaviour
     private void SetPlayersOnTheGrid()
     {
         _grid.SetPlayersOnTheGridModel(_players);
-        _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(4, 0,0));
-        _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(4, 8,1));
+        _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(4, 0, 0));
+        _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(4, 8, 1));
     }
 
     private void SetDecks()
