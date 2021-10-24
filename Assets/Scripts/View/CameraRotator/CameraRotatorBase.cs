@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using LoopedList;
@@ -14,21 +15,45 @@ public abstract class CameraRotatorBase : MonoBehaviour
         public CameraMoveData(Vector3 pos, Vector3 rot) => (rotation, position) = (rot, pos);
     }
 
-    [SerializeField, MinAttribute(0)]
-    protected float _cameraTransitionTime = 5;
+    [SerializeField, MinAttribute(0)] protected float _cameraTransitionTime = 5;
 
     protected Transform _mainCameraTransform;
     private IEnumerator<CameraMoveData> _cameraMoveDatas;
 
     protected abstract List<CameraMoveData> CameraMoveDatas { get; }
 
-    public virtual void Init()
+    protected virtual CameraMoveData TopViewData
+    {
+        get
+        {
+            var pos = Vector3.up * CameraMoveDatas.First().position.y;
+            var rot = Vector3.right * 90;
+            rot.y = _mainCameraTransform.rotation.eulerAngles.y;
+            return new CameraMoveData(pos, rot);
+        }
+    }
+
+    private bool _isTopView = false;
+
+
+public virtual void Init()
     {
         _mainCameraTransform = Camera.main.transform;
         _cameraMoveDatas = new LoopedList<CameraMoveData>(CameraMoveDatas).GetEnumerator();
         RotateCamera();
     }
+    public void EnableTopView()
+    {
+        _isTopView = true;
+        SetData(TopViewData);
+    }
 
+    public void DisableTopView()
+    {
+        _isTopView = false;
+        SetData(_cameraMoveDatas.Current);
+    }
+    
     public void RotateCamera()
     {
         _cameraMoveDatas.MoveNext();
@@ -39,5 +64,14 @@ public abstract class CameraRotatorBase : MonoBehaviour
     {
         _mainCameraTransform.DOLocalMove(cameraMoveData.position, _cameraTransitionTime);
         _mainCameraTransform.DORotate(cameraMoveData.rotation, _cameraTransitionTime);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            if (_isTopView)
+                DisableTopView();
+            else
+                EnableTopView();
     }
 }

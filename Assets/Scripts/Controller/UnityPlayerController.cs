@@ -132,6 +132,7 @@ namespace Quoridorgame.Controllers
 
         private void OnDestroy()
         {
+            if(_playerModel == default) return;
             _playerModel.OnTurnEnded -= OnTurnEnded;
             _playerModel.OnTurnStarted -= OnTurnStarted;
         }
