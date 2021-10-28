@@ -5,12 +5,17 @@ using Quorridor.Model;
 using Quorridor.Model.Commands;
 using UnityEngine;
 
-public class Grid
+public partial class Grid
 {
     private Cell[,] _grid;
     private int _rowCapacity;
     private int _rowsAmount;
     private List<Wall> _walls;
+
+    private List<Wall> _availableWallMoves;
+    private List<Wall> _notAvailableWallMoves;
+
+    public List<Wall> GetAvailableWallMoves => _availableWallMoves;
 
     public Grid(int cellsAmount) : this((int) Math.Sqrt(cellsAmount), (int) Math.Sqrt(cellsAmount))
     {
@@ -59,6 +64,26 @@ public class Grid
                     _grid[row, cell].Neighbors[3] = _grid[bottomRowConnectedNodeIndex, cell];
             }
         }
+
+        _availableWallMoves = GenerateStartAvailableWallMoves();
+        _notAvailableWallMoves = new List<Wall>();
+    }
+
+    private List<Wall> GenerateStartAvailableWallMoves()
+    {
+        var result = new List<Wall>();
+        for (int i = 0; i < _grid.GetLength(0) - 1; i++)
+        {
+            for (int j = 0; j < _grid.GetLength(1) - 1; j++)
+            {
+                var newWallV = new Wall(true, _grid[i, j], _grid[i, j + 1], _grid[i + 1, j], _grid[i + 1, j + 1]);
+                var newWallH = new Wall(false, _grid[i, j], _grid[i + 1, j], _grid[i, j + 1], _grid[i + 1, j + 1]);
+                result.Add(newWallH);
+                result.Add(newWallV);
+            }
+        }
+
+        return result;
     }
 
     public Cell GetCellByCoordinates(int x, int y)
@@ -210,7 +235,7 @@ public class Grid
         return true;
     }
 
-    public BreakLinkCommand[] PlaceWall(Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2, Cell cell2Pair2,
+    public void PlaceWall(Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2, Cell cell2Pair2,
         bool isVertical)
     {
         if (!(IsCellOnGrid(cell1Pair1) && IsCellOnGrid(cell2Pair1) && IsCellOnGrid(cell1Pair2) &&
@@ -236,128 +261,95 @@ public class Grid
         //
         // if (CheckNeighborsForNull(neighborsToCheck))
         //     return false;
-        BreakLinkCommand[] breakLinksCommands = new BreakLinkCommand[4];
         if (isVertical)
         {
             // * | * 
             // * | *
-            // cell1Pair1.Neighbors[2] = null;
-            // cell2Pair1.Neighbors[0] = null;
-            //
-            // cell1Pair2.Neighbors[2] = null;
-            // cell2Pair2.Neighbors[0] = null;
+            cell1Pair1.Neighbors[2] = null;
+            cell2Pair1.Neighbors[0] = null;
 
-            breakLinksCommands[0] = new BreakLinkCommand(cell1Pair1, 2);
-            breakLinksCommands[1] = new BreakLinkCommand(cell2Pair1, 0);
-            breakLinksCommands[2] = new BreakLinkCommand(cell1Pair2, 2);
-            breakLinksCommands[3] = new BreakLinkCommand(cell2Pair2, 0);
+            cell1Pair2.Neighbors[2] = null;
+            cell2Pair2.Neighbors[0] = null;
+
             _walls.Add(newWall);
 
-            return breakLinksCommands;
+            var topLeftCell = new List<Cell> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}.OrderBy(c => c.GridX)
+                .ThenByDescending(c => c.GridY).FirstOrDefault();
+            _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w => w.CollidesWith(newWall)));
+            _availableWallMoves.RemoveAll(w => w.CollidesWith(newWall));
+            return;
         }
 
 
         // * *
         // ---
         // * *
+        cell1Pair1.Neighbors[1] = null;
+        cell2Pair1.Neighbors[3] = null;
 
+        cell1Pair2.Neighbors[1] = null;
+        cell2Pair2.Neighbors[3] = null;
+        _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w => w.CollidesWith(newWall)));
+        _availableWallMoves.RemoveAll(w => w.CollidesWith(newWall));
 
-        breakLinksCommands[0] = new BreakLinkCommand(cell1Pair1, 1);
-        breakLinksCommands[1] = new BreakLinkCommand(cell2Pair1, 3);
-
-        breakLinksCommands[2] = new BreakLinkCommand(cell1Pair2, 1);
-        breakLinksCommands[3] = new BreakLinkCommand(cell2Pair2, 3);
-        // cell1Pair1.Neighbors[1] = null;
-        // cell2Pair1.Neighbors[3] = null;
-        //
-        // cell1Pair2.Neighbors[1] = null;
-        // cell2Pair2.Neighbors[3] = null;
 
         _walls.Add(newWall);
-        return breakLinksCommands;
     }
 
     public void RemoveWall(Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2, Cell cell2Pair2, bool isVertical)
     {
-        // if (!(IsCellOnGrid(cell1Pair1) && IsCellOnGrid(cell2Pair1) &&
-        //       IsCellOnGrid(cell1Pair2) && IsCellOnGrid(cell2Pair2)))
-        //     throw new Exception("Cell is not on the grid");
-        //
-        // bool isVerticallyAligned = CheckVerticalAlignment(cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
-        //
-        // if (!(isVertical && isVertical || !isVertical && !isVerticallyAligned))
-        //     throw new Exception("Cells are not aligned!");
-        //
-        //
-        // if (isVertical && isVerticallyAligned)
-        // {
-        //     // * | * 
-        //     // * | *
-        //     cell1Pair1.Neighbors[2] = cell2Pair1;
-        //     cell2Pair1.Neighbors[0] = cell1Pair1;
-        //
-        //     cell2Pair1.Neighbors[2] = cell2Pair2;
-        //     cell2Pair2.Neighbors[0] = cell2Pair1;
-        //     return true;
-        // }
-        // else
-        // {
-        //     // * *
-        //     // ---
-        //     // * *
-        //     cell1Pair1.Neighbors[1] = cell2Pair1;
-        //     cell2Pair1.Neighbors[3] = cell1Pair1;
-        //
-        //     cell2Pair1.Neighbors[1] = cell2Pair2;
-        //     cell2Pair2.Neighbors[3] = cell2Pair1;
-        //     return true;
-        // }
+        if (!(IsCellOnGrid(cell1Pair1) && IsCellOnGrid(cell2Pair1) &&
+              IsCellOnGrid(cell1Pair2) && IsCellOnGrid(cell2Pair2)))
+            throw new Exception("Cell is not on the grid");
+
+        bool isVerticallyAligned = CheckVerticalAlignment(cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
+
+        if (!(isVertical && isVertical || !isVertical && !isVerticallyAligned))
+            throw new Exception("Cells are not aligned!");
+
+
+        var newWall = new Wall(isVertical, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
+
+        var wallMovesToReturn = _notAvailableWallMoves.Where(w => w.CollidesWith(newWall)).ToList();
+
+        wallMovesToReturn.RemoveAll(w => _walls.Exists(settedWall => settedWall.CollidesWith(w)));
+        _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w => w.CollidesWith(newWall)));
+        _availableWallMoves.RemoveAll(w => w.CollidesWith(newWall));
+
+        var topLeftCell = new List<Cell> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}.OrderBy(c => c.GridX)
+            .ThenByDescending(c => c.GridY).FirstOrDefault();
+
 
         _walls.RemoveAll(w =>
             w.Cell1Pair1 == cell1Pair1 &&
             w.Cell1Pair2 == cell1Pair2 &&
             w.Cell2Pair1 == cell2Pair1 &&
             w.Cell2Pair2 == cell2Pair2);
-    }
 
-    private bool HasCollisionWithAnotherWall(bool isVertical, Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2,
-        Cell cell2Pair2)
-    {
-        if (isVertical)
+        if (isVertical && isVerticallyAligned)
         {
-            if (
-                cell1Pair1.Neighbors[2] == null && cell2Pair1.Neighbors[0] == null ||
-                cell1Pair2.Neighbors[2] == null && cell2Pair2.Neighbors[0] == null)
-            {
-                return true;
-            }
+            // * | * 
+            // * | *
+            cell1Pair1.Neighbors[2] = cell2Pair1;
+            cell2Pair1.Neighbors[0] = cell1Pair1;
 
-            if (
-                cell1Pair1.Neighbors[1] == null && cell1Pair2.Neighbors[3] == null &&
-                cell2Pair1.Neighbors[1] == null && cell2Pair2.Neighbors[3] == null)
-            {
-                return true;
-            }
-        }
-        else
-        {
-            if (
-                cell1Pair1.Neighbors[1] == null && cell2Pair1.Neighbors[3] == null ||
-                cell1Pair2.Neighbors[1] == null && cell2Pair2.Neighbors[3] == null)
-            {
-                return true;
-            }
+            cell2Pair1.Neighbors[2] = cell2Pair2;
+            cell2Pair2.Neighbors[0] = cell2Pair1;
 
-            if (
-                cell1Pair1.Neighbors[2] == null && cell1Pair2.Neighbors[0] == null &&
-                cell2Pair1.Neighbors[2] == null && cell2Pair2.Neighbors[0] == null)
-            {
-                return true;
-            }
+
+            return;
         }
 
-        return false;
+        // * *
+        // ---
+        // * *
+        cell1Pair1.Neighbors[1] = cell2Pair1;
+        cell2Pair1.Neighbors[3] = cell1Pair1;
+
+        cell2Pair1.Neighbors[1] = cell2Pair2;
+        cell2Pair2.Neighbors[3] = cell2Pair1;
     }
+
 
     // public (List<Cell> path, bool passable) FindPathWithAStar(int sourceX, int sourceY, int destinationX,
     //     int destinationY)
@@ -668,47 +660,5 @@ public class Grid
         }
 
         return false;
-    }
-
-    class Wall
-    {
-        public Wall(bool isVertical, Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2, Cell cell2Pair2)
-        {
-            this.isVertical = isVertical;
-            Cell1Pair1 = cell1Pair1;
-            Cell2Pair1 = cell2Pair1;
-            Cell1Pair2 = cell1Pair2;
-            Cell2Pair2 = cell2Pair2;
-        }
-
-        public bool isVertical { get; }
-        public Cell Cell1Pair1 { get; }
-        public Cell Cell2Pair1 { get; }
-        public Cell Cell1Pair2 { get; }
-        public Cell Cell2Pair2 { get; }
-
-        public bool CollidesWith(Wall wall)
-        {
-            if (Cell1Pair1 == wall.Cell1Pair2 && Cell2Pair1 == wall.Cell2Pair2)
-            {
-                return true;
-            }
-
-            if (Cell1Pair2 == wall.Cell1Pair1 && Cell2Pair2 == wall.Cell2Pair1)
-            {
-                return true;
-            }
-
-            var aList = new List<Cell>() {Cell1Pair1, Cell1Pair2, Cell2Pair1, Cell2Pair2};
-            var bList = new List<Cell>() {wall.Cell1Pair1, wall.Cell1Pair2, wall.Cell2Pair1, wall.Cell2Pair2};
-
-            if (aList.All(c => bList.Contains(c)) && bList.All(c => aList.Contains(c)))
-            {
-                if (wall != this)
-                    return true;
-            }
-
-            return false;
-        }
     }
 }

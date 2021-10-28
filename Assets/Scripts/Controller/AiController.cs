@@ -31,17 +31,7 @@ namespace Quoridorgame.Controllers
             _pawn.Interactable = true;
             var turn = _playerModel.MakeDecision(_gameModel, _grid, _playerModel.Pawn);
 
-            while (_playerModel.IsActiveTurn)
-            {
-                try
-                {
-                    MakeTurn(turn);
-                }
-                catch
-                {
-                    turn = _playerModel.MakeDecision(_gameModel, _grid, _playerModel.Pawn);
-                }
-            }
+            MakeTurn(turn);
         }
 
         private void MakeTurn((bool isWalking, bool isWallVertical, global::Cell cell) turn)
