@@ -11,31 +11,26 @@ namespace Quorridor.AI
 
         public override (bool, bool, Cell) MakeDecision(Game gameModel, Grid grid, Pawn pawn)
         {
-            var countMovesWithPawn = grid.GetPossibleMovesFromCell(grid.GetPawnCell(pawn)).Count;
-
-            if (WallsCount <= 0)
+            var allPossiblePawnMoves = grid.GetPossibleMovesFromCell(grid.GetPawnCell(pawn));
+            var r = new System.Random();
+            if (WallsCount == 0)
             {
-                var cellToMove =
-                    grid.GetPossibleMovesFromCell(grid.GetPawnCell(pawn))
-                        [grid.GetPossibleMovesFromCell(grid.GetPawnCell(pawn)).Count - 1];
-                return (true, false, cellToMove);
+                return (true, false, allPossiblePawnMoves[r.Next(allPossiblePawnMoves.Count)]);
+            }
+
+            var allPossibleWallMovesMoves = grid.GetAvailableWallMoves;
+
+            var randMoveIndex = r.Next(allPossiblePawnMoves.Count + allPossibleWallMovesMoves.Count);
+
+            if (randMoveIndex < allPossiblePawnMoves.Count)
+            {
+                return (true, false, allPossiblePawnMoves[randMoveIndex]);
             }
             else
             {
-                var countOfMoves = countMovesWithPawn + 64;
-                var r = new System.Random();
-                var rand = r.Next(countOfMoves);
-                if (rand < countMovesWithPawn)
-                {
-                    var cellToMove = grid.GetPossibleMovesFromCell(grid.GetPawnCell(pawn))[rand];
-                    return (false, false, cellToMove);
-                }
-                else
-                {
-                    rand -= countMovesWithPawn;
-                    return (false, rand % 2 == 0,
-                        grid.GetCellByCoordinates(rand / 8 + 1, rand % 8 + 1));
-                }
+                randMoveIndex -= allPossiblePawnMoves.Count;
+                return (false, allPossibleWallMovesMoves[randMoveIndex].isVertical,
+                    allPossibleWallMovesMoves[randMoveIndex].Cell1Pair1);
             }
         }
     }
