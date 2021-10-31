@@ -5,7 +5,7 @@ using Quorridor.Model;
 using Quorridor.Model.Commands;
 using UnityEngine;
 
-public partial class Grid
+public class Grid
 {
     private Cell[,] _grid;
     private int _rowCapacity;
