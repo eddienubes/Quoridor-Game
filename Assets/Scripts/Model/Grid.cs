@@ -661,4 +661,39 @@ public partial class Grid
 
         return false;
     }
+
+    public int GetShortestPath(Cell currentCell, int pawnWinLineY)
+    {
+        return DijkstraToWinLine(currentCell, pawnWinLineY);
+    }
+
+    private int DijkstraToWinLine(Cell currentCell, int pawnWinLineY)
+    {
+        var availableList = new List<Cell>() {currentCell};
+        var visitedList = new List<Cell>();
+
+        currentCell.GScore = 0;
+        while (!visitedList.Exists(c => c.GridY == pawnWinLineY))
+        {
+            var neighbours = availableList[0].Neighbors.Where(c => c != null);
+            foreach (var neighbour in neighbours)
+            {
+                neighbour.GScore = availableList[0].GScore + 1;
+            }
+
+            availableList.AddRange(neighbours);
+            visitedList.Add(availableList[0]);
+            availableList.RemoveAt(0);
+        }
+
+        foreach (var c in visitedList)
+        {
+            if (c.GridY == pawnWinLineY)
+            {
+                return c.GScore;
+            }
+        }
+
+        throw new Exception($"Path doesn't exists. WinLine : {pawnWinLineY}");
+    }
 }
