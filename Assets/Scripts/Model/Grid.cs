@@ -2,9 +2,9 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Quorridor.Model;
-using Quorridor.Model.Commands;
 using UnityEngine;
 
+ 
 public class Grid
 {
     private Cell[,] _grid;

@@ -3,11 +3,12 @@ namespace Quorridor.Model.Commands
     public class PlaceWallCommand : IMakeTurnCommand
     {
         private Grid _grid;
-
-        private Cell _cell1Pair1, _cell2Pair1, _cell1Pair2, _cell2Pair2;
-        private bool _isWallVertical;
-
-
+        public Cell _cell1Pair1 { get; private set; }
+        public Cell _cell2Pair1 { get; private set; }
+        public Cell _cell1Pair2 { get; private set; }
+        public Cell _cell2Pair2 { get; private set; }
+        public bool _isWallVertical { get; private set; }
+        
         public PlaceWallCommand(Grid grid, Cell cell1Pair1, Cell cell2Pair1, Cell cell1Pair2, Cell cell2Pair2,
             bool isWallVertical)
         {

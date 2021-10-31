@@ -1,13 +1,17 @@
 
+using UnityEditor;
+
 namespace Quorridor.Model.Commands
 {
     public class MovePawnCommand : IMakeTurnCommand
     {
+        public Cell  _startCell { get; private set; }
+        public Cell  _targetCell { get; private set; }
+
+        public bool IsJump => _startCell.GridX - _targetCell.GridX + _startCell.GridY - _targetCell.GridY >= 1;
+        
         private Grid _grid;
         private Pawn playerPawn;
-        private Cell _targetCell, _startCell;
-
-
         public MovePawnCommand(Pawn p, Grid grid, Cell startCell, Cell targetCell)
         {
             _grid = grid;
