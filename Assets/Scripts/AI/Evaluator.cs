@@ -8,10 +8,9 @@ namespace Quorridor.AI
         {
             var pawn = player.Pawn;
             var currentCell = grid.GetPawnCell(pawn);
+            var shortestPath = grid.GetShortestPath(currentCell, pawn.WinLineY);
 
-            var shortestWay = grid;
-            
-            return 0;
+            return shortestPath;
         }
     }
 }
