@@ -6,12 +6,12 @@ using Quoridorgame.Controllers;
 using Quoridorgame.View;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GameController : MonoBehaviour, IGameController
 {
     public event Action<int> OnPlayerWins;
     public int MapSizeY => ySize;
 
-    public IPlayerController[] _playerControllers;
+    public PlayerController[] _playerControllers;
 
     [SerializeField]
     private CameraRotator2Players _cameraRotator;
@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
 
     public void Init(params IPlayerController[] playerControllers)
     {
-        _playerControllers = playerControllers;
+        _playerControllers = (PlayerController[]) playerControllers;
         _grid = new Grid(xSize, ySize);
 
         _gameModel = new Game(_grid, _players);

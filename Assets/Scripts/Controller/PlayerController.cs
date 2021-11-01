@@ -6,7 +6,7 @@ namespace Quoridorgame.Controllers
     using Grid = Grid;
     using Pawn = View.Pawn;
 
-    public abstract class IPlayerController : MonoBehaviour
+    public abstract class PlayerController : MonoBehaviour, IPlayerController
     {
         [SerializeField]
         protected Pawn _pawn;

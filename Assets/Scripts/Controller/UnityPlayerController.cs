@@ -8,7 +8,7 @@ namespace Quoridorgame.Controllers
     using Cell = View.Cell;
     using Pawn = View.Pawn;
 
-    public class UnityPlayerController : IPlayerController
+    public class UnityPlayerController : PlayerController
     {
         
         /// <summary>
