@@ -4,8 +4,8 @@ namespace Quorridor.Model
     using System.Collections.Generic;
     using System.Linq;
     using Commands;
-    using UnityEngine;
     using Grid = Grid;
+
     public class Game
     {
         private Grid _grid;
@@ -17,6 +17,8 @@ namespace Quorridor.Model
         public event Action<Player> OnGameEnded;
         public event Action<Player> OnTurnSwitched;
         public event Action<Player, (int, int), (int, int)> OnPlayerMoved;
+
+        public Player[] Players => _players;
 
         public Game(Grid grid, params Player[] players)
         {
@@ -71,10 +73,6 @@ namespace Quorridor.Model
 
             IMakeTurnCommand turnCommand = new MovePawnCommand(player.Pawn, _grid, startX, startY, targetX, targetY);
 
-            Debug.Log(
-                $"<color=red> {_grid.GetPawnCell(player.Pawn).GridX}:{_grid.GetPawnCell(player.Pawn).GridY} </color>");
-            Debug.Log(
-                $"<color=red> {_grid.GetPawnCell(player.Pawn).PlayerId}</color>");
             turnCommand.Execute();
             _gameLog.Push(turnCommand);
             CheckGameForFinishing(player);
@@ -99,10 +97,6 @@ namespace Quorridor.Model
 
             IMakeTurnCommand turnCommand = new MovePawnCommand(player.Pawn, _grid, start, target);
 
-            Debug.Log(
-                $"<color=red> {_grid.GetPawnCell(player.Pawn).GridX}:{_grid.GetPawnCell(player.Pawn).GridY} </color>");
-            Debug.Log(
-                $"<color=red> {_grid.GetPawnCell(player.Pawn).PlayerId}</color>");
             turnCommand.Execute();
             _gameLog.Push(turnCommand);
             CheckGameForFinishing(player);
@@ -125,7 +119,6 @@ namespace Quorridor.Model
             if (_grid.CheckIsPawnOnTheWinLine(p.Pawn))
             {
                 OnGameEnded?.Invoke(p);
-                Debug.Log($"<color=red> GAME ENDED. PLAYER {p.Pawn.PlayerId} WON </color>");
             }
         }
     }
