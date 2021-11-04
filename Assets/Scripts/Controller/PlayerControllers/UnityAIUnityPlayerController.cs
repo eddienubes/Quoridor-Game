@@ -2,14 +2,13 @@ using Quorridor.AI;
 
 namespace Quoridorgame.Controllers
 {
-    using System;
     using Quorridor.Model;
     using UnityEngine;
     using View;
     using Grid = Grid;
     using Pawn = View.Pawn;
 
-    public class AiPlayerController : PlayerController
+    public class UnityAIUnityPlayerController : UnityPlayerControllerBase
     {
         private AiPlayer _aiPlayerModel;
         public override void SetModelsGameAndGrid(Game game, Grid grid)

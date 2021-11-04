@@ -13,7 +13,7 @@ namespace Controller
         public event Action<int> OnPlayerWins;
         public int MapSizeY => ySize;
 
-        public PlayerController[] _playerControllers;
+        public UnityPlayerControllerBase[] _playerControllers;
 
         [SerializeField]
         private CameraRotator2Players _cameraRotator;
@@ -31,7 +31,7 @@ namespace Controller
         {
             _players = players;
 
-            _playerControllers =  playerControllers.Cast<PlayerController>().ToArray();
+            _playerControllers =  playerControllers.Cast<UnityPlayerControllerBase>().ToArray();
             _grid = new Grid(xSize, ySize);
 
             _gameModel = new Game(_grid, _players);
@@ -69,7 +69,7 @@ namespace Controller
                 _cameraRotator.Reset();
                 OnPlayerWins?.Invoke(winnerIndex);
             };
-            if (playerControllers.All(pc => pc.GetType() == typeof(UnityPlayerController)))
+            if (playerControllers.All(pc => pc.GetType() == typeof(UnityHotSeatUnityPlayerController)))
                 _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched(true));
             else
                 _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched(false));
@@ -109,7 +109,7 @@ namespace Controller
                 return;
             }
 
-            var pc = (UnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
+            var pc = (UnityHotSeatUnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
             var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
             pc.TrySetVerticalWall(wallCell);
         }
@@ -121,7 +121,7 @@ namespace Controller
                 return;
             }
 
-            var pc = (UnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
+            var pc = (UnityHotSeatUnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
             var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
             pc.TrySetHorizontalWall(wallCell);
         }
@@ -135,7 +135,7 @@ namespace Controller
             }
 
             var cell = (Quoridorgame.View.Cell) clickedCell;
-            var pc = (UnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
+            var pc = (UnityHotSeatUnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
             pc.TryMovePawn(cell);
         }
     }
