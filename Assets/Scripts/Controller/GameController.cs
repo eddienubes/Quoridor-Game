@@ -4,6 +4,7 @@ using System.Linq;
 using Quorridor.Model;
 using Quoridorgame.Controllers;
 using Quoridorgame.View;
+using Quorridor.AI;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -81,6 +82,9 @@ public class GameController : MonoBehaviour
             pawn.Pawn.SetSelected(false);
         foreach (var cell in fieldCreatorView._cells)
             cell.SetSelected(false);
+
+        Minimax mm = new Minimax(4, _players[0]);
+        mm.FindBestMove(_gameModel, _grid);
     }
 
     public void SetPlayers(params Player[] players)
