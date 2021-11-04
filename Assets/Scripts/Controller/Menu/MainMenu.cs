@@ -1,4 +1,5 @@
 
+using Controller;
 using TMPro;
 using UnityEngine;
 using Quorridor.AI;
@@ -34,10 +35,9 @@ namespace Quoridorgame.View
             players[0] = new HotSeatPlayer(gameController.MapSizeY - 1, true, 1);
             players[1] = new HotSeatPlayer(0, false, 2);
 
-            gameController.SetPlayers(players);
             var p1 = gameController.gameObject.AddComponent<UnityPlayerController>();
             var p2 = gameController.gameObject.AddComponent<UnityPlayerController>();
-            gameController.Init(p1, p2);
+            gameController.Init(new IPlayerController[] { p1, p2 }, players);
             gameObject.SetActive(false);
         }
 
@@ -46,11 +46,10 @@ namespace Quoridorgame.View
             var players = new Player[2];
             players[0] = new HotSeatPlayer(gameController.MapSizeY - 1, true, 1);
             players[1] = new DummyAiPlayer(0, false, 2);
-
-            gameController.SetPlayers(players);
+            
             var bot = gameController.gameObject.AddComponent<AiPlayerController>();
             var player = gameController.gameObject.AddComponent<UnityPlayerController>();
-            gameController.Init(player, bot);
+            gameController.Init(new IPlayerController[] { player, bot }, players);
             gameObject.SetActive(false);
         }
 

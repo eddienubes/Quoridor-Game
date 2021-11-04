@@ -12,7 +12,7 @@ namespace Quorridor.AI
         public Game _gameModel { get; private set;}
         public Grid _grid { get; private set; }
 
-        public void Init(params IPlayerController[] playerControllers)
+        public void Init(IPlayerController[] playerControllers, Player[] players)
         {
             if (!playerControllers.All(x => x is CLIPlayerController))
                 throw new ArgumentException();
@@ -26,11 +26,6 @@ namespace Quorridor.AI
                 _playerControllers[i].SubscribeToModel(_players[i]);
                 _playerControllers[i].SetModelsGameAndGrid(_gameModel, _grid);
             }
-        }
-
-        public void SetPlayers( Player[] players)
-        {
-            _players = players;
         }
     }
 }

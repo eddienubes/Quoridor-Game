@@ -1,143 +1,142 @@
 using System;
 using System.Collections;
 using System.Linq;
-using Quorridor.Model;
 using Quoridorgame.Controllers;
 using Quoridorgame.View;
+using Quorridor.Model;
 using UnityEngine;
 
-public class GameController : MonoBehaviour, IGameController
+namespace Controller
 {
-    public event Action<int> OnPlayerWins;
-    public int MapSizeY => ySize;
-
-    public PlayerController[] _playerControllers;
-
-    [SerializeField]
-    private CameraRotator2Players _cameraRotator;
-
-    [SerializeField]
-    private FieldElementsFabric fieldCreatorView;
-
-    [SerializeField]
-    private int xSize = 9, ySize = 9;
-
-    private Player[] _players = new Player[2];
-    public Game _gameModel { get; private set; }
-    public Grid _grid { get; private set; }
-    public void Init(params IPlayerController[] playerControllers)
+    public class GameController : MonoBehaviour, IGameController
     {
-        _playerControllers = (PlayerController[]) playerControllers;
-        _grid = new Grid(xSize, ySize);
+        public event Action<int> OnPlayerWins;
+        public int MapSizeY => ySize;
 
-        _gameModel = new Game(_grid, _players);
+        public PlayerController[] _playerControllers;
 
-        var gridView = fieldCreatorView.CreateField(xSize, ySize);
+        [SerializeField]
+        private CameraRotator2Players _cameraRotator;
 
-        for (var i = 0; i < _playerControllers.Length; i++)
+        [SerializeField]
+        private FieldElementsFabric fieldCreatorView;
+
+        [SerializeField]
+        private int xSize = 9, ySize = 9;
+
+        private Player[] _players = new Player[2];
+        public Game _gameModel { get; private set; }
+        public Grid _grid { get; private set; }
+        public void Init(IPlayerController[] playerControllers, Player[] players)
         {
-            _playerControllers[i].SubscribeToModel(_players[i]);
-            _playerControllers[i].SetModelsGameAndGrid(_gameModel, _grid);
-        }
+            _players = players;
 
-        foreach (var cell in gridView)
-        {
-            cell.OnClicked += TryMovePawn;
-            cell.HorizontalPlaceholder.OnClicked += TrySetHorizontalWall;
-            cell.VerticalPlaceholder.OnClicked += TrySetVerticalWall;
-        }
+            _playerControllers =  playerControllers.Cast<PlayerController>().ToArray();
+            _grid = new Grid(xSize, ySize);
 
-        SetPlayersOnTheGrid();
-        SetDecks();
+            _gameModel = new Game(_grid, _players);
 
-        _cameraRotator.Init();
+            var gridView = fieldCreatorView.CreateField(xSize, ySize);
 
-
-        _gameModel.OnGameEnded += winner =>
-        {
-            var winnerIndex = 0;
-            for (int i = 0; i < _players.Length; i++)
+            for (var i = 0; i < _playerControllers.Length; i++)
             {
-                if (winner == _players[i])
-                    winnerIndex = i;
+                _playerControllers[i].SubscribeToModel(_players[i]);
+                _playerControllers[i].SetModelsGameAndGrid(_gameModel, _grid);
             }
 
-            _cameraRotator.Reset();
-            OnPlayerWins?.Invoke(winnerIndex);
-        };
-        if (playerControllers.All(pc => pc.GetType() == typeof(UnityPlayerController)))
-            _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched(true));
-        else
-            _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched(false));
-    }
+            foreach (var cell in gridView)
+            {
+                cell.OnClicked += TryMovePawn;
+                cell.HorizontalPlaceholder.OnClicked += TrySetHorizontalWall;
+                cell.VerticalPlaceholder.OnClicked += TrySetVerticalWall;
+            }
 
-    IEnumerator OnTurnSwitched(bool rotateCam)
-    {
-        yield return new WaitForSeconds(1.7f);
-        if (rotateCam)
-            _cameraRotator.RotateCamera();
-        foreach (var pawn in _playerControllers)
-            pawn.Pawn.SetSelected(false);
-        foreach (var cell in fieldCreatorView._cells)
-            cell.SetSelected(false);
-    }
+            SetPlayersOnTheGrid();
+            SetDecks();
 
-    public void SetPlayers(params Player[] players)
-    {
-        _players = players;
-    }
-    
-    private void SetPlayersOnTheGrid()
-    {
-        _grid.SetPlayersOnTheGridModel(_players);
-        _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(4, 0, 0));
-        _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(4, 8, 1));
-    }
+            _cameraRotator.Init();
 
-    private void SetDecks()
-    {
-        var decks = fieldCreatorView.CreateWallDecks(_playerControllers.Length);
-        decks.ForEach(deck => deck.AddWalls(10));
-        for (int i = 0; i < _playerControllers.Length; i++)
-        {
-            _playerControllers[i].SetWallDeck(decks[i]);
-        }
-    }
 
-    private void TrySetVerticalWall(SelectableMonoBehaviour wallPlaceHolder)
-    {
-        if (_players.FirstOrDefault(p => p.IsActiveTurn).GetType() != typeof(HotSeatPlayer))
-        {
-            return;
+            _gameModel.OnGameEnded += winner =>
+            {
+                var winnerIndex = 0;
+                for (int i = 0; i < _players.Length; i++)
+                {
+                    if (winner == _players[i])
+                        winnerIndex = i;
+                }
+
+                _cameraRotator.Reset();
+                OnPlayerWins?.Invoke(winnerIndex);
+            };
+            if (playerControllers.All(pc => pc.GetType() == typeof(UnityPlayerController)))
+                _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched(true));
+            else
+                _gameModel.OnTurnSwitched += _ => StartCoroutine(OnTurnSwitched(false));
         }
 
-        var pc = (UnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
-        var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
-        pc.TrySetVerticalWall(wallCell);
-    }
-
-    private void TrySetHorizontalWall(SelectableMonoBehaviour wallPlaceHolder)
-    {
-        if (_players.FirstOrDefault(p => p.IsActiveTurn).GetType() != typeof(HotSeatPlayer))
+        IEnumerator OnTurnSwitched(bool rotateCam)
         {
-            return;
+            yield return new WaitForSeconds(1.7f);
+            if (rotateCam)
+                _cameraRotator.RotateCamera();
+            foreach (var pawn in _playerControllers)
+                pawn.Pawn.SetSelected(false);
+            foreach (var cell in fieldCreatorView._cells)
+                cell.SetSelected(false);
+        }
+        private void SetPlayersOnTheGrid()
+        {
+            _grid.SetPlayersOnTheGridModel(_players);
+            _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(4, 0, 0));
+            _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(4, 8, 1));
         }
 
-        var pc = (UnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
-        var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
-        pc.TrySetHorizontalWall(wallCell);
-    }
-
-
-    private void TryMovePawn(SelectableMonoBehaviour clickedCell)
-    {
-        if (_players.FirstOrDefault(p => p.IsActiveTurn).GetType() != typeof(HotSeatPlayer))
+        private void SetDecks()
         {
-            return;
+            var decks = fieldCreatorView.CreateWallDecks(_playerControllers.Length);
+            decks.ForEach(deck => deck.AddWalls(10));
+            for (int i = 0; i < _playerControllers.Length; i++)
+            {
+                _playerControllers[i].SetWallDeck(decks[i]);
+            }
         }
 
-        var cell = (Quoridorgame.View.Cell) clickedCell;
-        var pc = (UnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
-        pc.TryMovePawn(cell);
+        private void TrySetVerticalWall(SelectableMonoBehaviour wallPlaceHolder)
+        {
+            if (_players.FirstOrDefault(p => p.IsActiveTurn).GetType() != typeof(HotSeatPlayer))
+            {
+                return;
+            }
+
+            var pc = (UnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
+            var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
+            pc.TrySetVerticalWall(wallCell);
+        }
+
+        private void TrySetHorizontalWall(SelectableMonoBehaviour wallPlaceHolder)
+        {
+            if (_players.FirstOrDefault(p => p.IsActiveTurn).GetType() != typeof(HotSeatPlayer))
+            {
+                return;
+            }
+
+            var pc = (UnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
+            var wallCell = ((WallPlaceHolder) wallPlaceHolder).cellParent;
+            pc.TrySetHorizontalWall(wallCell);
+        }
+
+
+        private void TryMovePawn(SelectableMonoBehaviour clickedCell)
+        {
+            if (_players.FirstOrDefault(p => p.IsActiveTurn).GetType() != typeof(HotSeatPlayer))
+            {
+                return;
+            }
+
+            var cell = (Quoridorgame.View.Cell) clickedCell;
+            var pc = (UnityPlayerController) _playerControllers.FirstOrDefault(p => p.IsActiveNow);
+            pc.TryMovePawn(cell);
+        }
     }
 }
