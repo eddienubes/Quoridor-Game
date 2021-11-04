@@ -7,7 +7,7 @@ namespace Quoridorgame.Controllers
     using Grid = Grid;
     using Pawn = View.Pawn;
 
-    public class AiController : PlayerController
+    public class AiPlayerController : PlayerController
     {
         public override void SetModelsGameAndGrid(Game game, Grid grid)
         {

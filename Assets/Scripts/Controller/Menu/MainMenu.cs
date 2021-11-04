@@ -48,7 +48,7 @@ namespace Quoridorgame.View
             players[1] = new DummyAiPlayer(0, false, 2);
 
             gameController.SetPlayers(players);
-            var bot = gameController.gameObject.AddComponent<AiController>();
+            var bot = gameController.gameObject.AddComponent<AiPlayerController>();
             var player = gameController.gameObject.AddComponent<UnityPlayerController>();
             gameController.Init(player, bot);
             gameObject.SetActive(false);
