@@ -1,0 +1,12 @@
+C:\Users\Work\Desktop\QuorridorAI\QuorridorAI\QuorridorAI\obj\Debug\QuorridorAI.csproj.AssemblyReference.cache
+C:\Users\Work\Desktop\QuorridorAI\QuorridorAI\QuorridorAI\obj\Debug\QuorridorAI.csproj.CoreCompileInputs.cache
+C:\Users\Work\Desktop\QuorridorAI\QuorridorAI\QuorridorAI\bin\Debug\QuorridorAI.exe
+C:\Users\Work\Desktop\QuorridorAI\QuorridorAI\QuorridorAI\bin\Debug\QuorridorAI.pdb
+C:\Users\Work\Desktop\QuorridorAI\QuorridorAI\QuorridorAI\obj\Debug\QuorridorAI.exe
+C:\Users\Work\Desktop\QuorridorAI\QuorridorAI\QuorridorAI\obj\Debug\QuorridorAI.pdb
+D:\University\GameDev\Quoridor-Game\QuorridorAI\bin\Debug\QuorridorAI.exe
+D:\University\GameDev\Quoridor-Game\QuorridorAI\bin\Debug\QuorridorAI.pdb
+D:\University\GameDev\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.csproj.AssemblyReference.cache
+D:\University\GameDev\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.csproj.CoreCompileInputs.cache
+D:\University\GameDev\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.exe
+D:\University\GameDev\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.pdb
