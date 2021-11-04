@@ -48,7 +48,6 @@ namespace Quorridor.Model
             if (!_grid.CheckPaths(_players))
             {
                 turnCommand.Undo();
-                return;
                 throw new Exception("Wall can be placed because it will close last path to win for one of the players");
             }
 
