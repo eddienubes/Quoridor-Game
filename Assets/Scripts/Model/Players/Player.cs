@@ -42,7 +42,5 @@ namespace Quorridor.Model
                 .OrderBy(c => c.Item1).ThenByDescending(c => c.Item2).FirstOrDefault();
             OnWallPlaced?.Invoke(isVertical, cellCoords.Item1, cellCoords.Item2);
         }
-
-        public abstract (bool, bool, Cell) MakeDecision(Game gameModel, Grid grid, Pawn pawn);
     }
 }

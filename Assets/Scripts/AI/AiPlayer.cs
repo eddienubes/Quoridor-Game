@@ -8,5 +8,7 @@ namespace Quorridor.AI
             isActiveTurn, playerId, wallsCount)
         {
         }
+        
+        public abstract (bool, bool, Cell) MakeDecision(Game gameModel, Grid grid, Pawn pawn);
     }
 }

@@ -1,3 +1,5 @@
+using Quorridor.AI;
+
 namespace Quoridorgame.Controllers
 {
     using System;
@@ -9,6 +11,7 @@ namespace Quoridorgame.Controllers
 
     public class AiPlayerController : PlayerController
     {
+        private AiPlayer _aiPlayerModel;
         public override void SetModelsGameAndGrid(Game game, Grid grid)
         {
             _gameModel = game;
@@ -17,6 +20,7 @@ namespace Quoridorgame.Controllers
 
         public override void SubscribeToModel(Player playerModel)
         {
+            _aiPlayerModel = playerModel as AiPlayer;
             _playerModel = playerModel;
             _playerModel.Pawn.OnMove += MakeStep;
             _playerModel.OnWallPlaced += PlaceWall;
@@ -29,7 +33,7 @@ namespace Quoridorgame.Controllers
         {
             IsActiveNow = true;
             _pawn.Interactable = true;
-            var turn = _playerModel.MakeDecision(_gameModel, _grid, _playerModel.Pawn);
+            var turn = _aiPlayerModel.MakeDecision(_gameModel, _grid, _playerModel.Pawn);
 
             MakeTurn(turn);
         }
@@ -104,7 +108,6 @@ namespace Quoridorgame.Controllers
         {
             _wallDeck = deck;
         }
-
         public override bool IsActiveNow { get; set; }
     }
 }
