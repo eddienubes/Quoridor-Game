@@ -23,9 +23,8 @@ public class GameController : MonoBehaviour, IGameController
     private int xSize = 9, ySize = 9;
 
     private Player[] _players = new Player[2];
-    private Game _gameModel;
-    private Grid _grid;
-
+    public Game _gameModel { get; private set; }
+    public Grid _grid { get; private set; }
     public void Init(params IPlayerController[] playerControllers)
     {
         _playerControllers = (PlayerController[]) playerControllers;
@@ -87,7 +86,7 @@ public class GameController : MonoBehaviour, IGameController
     {
         _players = players;
     }
-
+    
     private void SetPlayersOnTheGrid()
     {
         _grid.SetPlayersOnTheGridModel(_players);
