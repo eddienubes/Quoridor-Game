@@ -23,6 +23,8 @@ public class Cell
         PlayerId = 0;
     }
 
+    public override string ToString() => $"Cell {GridX},{GridY}";
+
     public int FScore => GScore + HScore;
 
     public void SetId(int pawnPlayerId)
