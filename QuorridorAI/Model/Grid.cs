@@ -15,11 +15,7 @@ namespace Quorridor.Model
         private List<Wall> _notAvailableWallMoves;
 
         public List<Wall> GetAvailableWallMoves => _availableWallMoves;
-
-        public Grid(int cellsAmount) : this((int)Math.Sqrt(cellsAmount), (int)Math.Sqrt(cellsAmount))
-        {
-        }
-
+        
         public Grid(int width, int height)
         {
             _rowCapacity = width;
