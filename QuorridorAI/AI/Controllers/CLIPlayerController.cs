@@ -10,15 +10,9 @@ namespace Quorridor.AI
         protected Grid _grid;
         protected Game _gameModel;
         
-        public void SetModelsGameAndGrid(Game game, Grid grid)
+        public void Init(Game game, Grid grid,Player playerModel)
         {
-            _gameModel = game;
-            _grid = grid;
-        }
-
-        public void SubscribeToModel(Player playerModel)
-        {
-            _playerModel = playerModel;
+            (_gameModel, _grid, _playerModel) = (game, grid, playerModel);
             _playerModel.OnTurnStarted += MakeTurn;
         }
 

@@ -31,8 +31,7 @@ namespace Quorridor.AI
             _gameModel = new Game(_grid, players);
             for (var i = 0; i < _playerControllers.Length; i++)
             {
-                _playerControllers[i].SubscribeToModel(_players[i]);
-                _playerControllers[i].SetModelsGameAndGrid(_gameModel, _grid);
+                _playerControllers[i].Init(_gameModel, _grid , _players[i]);
             }
         }
     }

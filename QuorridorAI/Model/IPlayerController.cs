@@ -2,8 +2,7 @@ namespace Quorridor.Model
 {
     public interface IPlayerController
     {
-        public void SetModelsGameAndGrid(Game game, Grid grid);
-        public void SubscribeToModel(Player playerModel);
+        public void Init(Game game, Grid grid,Player playerModel);
         public bool IsActiveNow { get; set; }
     }
 }
