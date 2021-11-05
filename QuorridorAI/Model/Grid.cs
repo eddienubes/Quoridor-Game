@@ -85,7 +85,7 @@ namespace Quorridor.Model
         {
             return _grid[_grid.GetLength(0) - 1 - y, x];
         }
-
+        
         private List<Cell> RetrievePath(Cell sourceCell, Cell destinationCell)
         {
             List<Cell> path = new List<Cell>();
@@ -387,7 +387,7 @@ namespace Quorridor.Model
             foreach (var playerAndCell in players)
             {
                 var cell = playerAndCell.Value;
-                _grid[cell.GridX, cell.GridY].Pawn = playerAndCell.Key.Pawn;
+                GetCellByCoordinates(cell.GridX, cell.GridY).Pawn = playerAndCell.Key.Pawn;
             }
         }
 
