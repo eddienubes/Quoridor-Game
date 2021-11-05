@@ -24,10 +24,10 @@ namespace Quorridor.AI
             return $"{'S' + maxX - 1}{maxY}";
         }
 
-        public static string Parse(MovePawnCommand command) =>
+        public static string Convert(MovePawnCommand command) =>
             $"{outputCommandIdentificator} {(command.IsJump ? "jump" : "move")} {GetCellCoord(command._targetCell)}";
 
-        public static string Parse(PlaceWallCommand command) =>
+        public static string Convert(PlaceWallCommand command) =>
             $"{outputCommandIdentificator} wall {GetWallCoord(command)}{(command._isWallVertical ? 'v' : 'h')}";
 
         public static ICommand Parse(string command, Grid grid, Pawn playerPawn)

@@ -19,10 +19,10 @@ namespace QuorridorAI
 
             var players = new Player[]
             {
-                new HotSeatPlayer(GetWinLine(true), !isPlayerFirstTurn, GetPlayerId(true), WALLS_COUNT),
-                new DummyAiPlayer(GetWinLine(false), isPlayerFirstTurn, GetPlayerId(false), WALLS_COUNT),
+                new HotSeatPlayer(GetWinLine(true),  isPlayerFirstTurn, GetPlayerId(true), WALLS_COUNT),
+                new DummyAiPlayer(GetWinLine(false), !isPlayerFirstTurn, GetPlayerId(false), WALLS_COUNT),
             };
-
+            
             var playerControllers = new IPlayerController[]
             {
                 new CLIPlayerController(),
@@ -38,7 +38,7 @@ namespace QuorridorAI
             gameController.Init(playerControllers, players);
             players.First().StartTurn();
             
-            int GetPlayerId(bool isPlayer) => isPlayerFirstTurn == isPlayer ? 0 : 1;
+            int GetPlayerId(bool isPlayer) => isPlayerFirstTurn == isPlayer ? 1 : 2;
             int GetWinLine(bool isPlayer) => isPlayerFirstTurn == isPlayer ? FIELD_SIZE_Y : 0;
         }
     }
