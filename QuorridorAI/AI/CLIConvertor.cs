@@ -24,6 +24,12 @@ namespace Quorridor.AI
             return $"{'S' + maxX - 1}{maxY}";
         }
 
+        public static bool IsFirstTurn(string message)
+        {
+            if (message != "white" && message != "black")
+                throw new ArgumentException($"Invalid argument {message}");
+            return message == "white";
+        }
         public static string Convert(MovePawnCommand command) =>
             $"{outputCommandIdentificator} {(command.IsJump ? "jump" : "move")} {GetCellCoord(command._targetCell)}";
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Quorridor.AI;
 using Quorridor.Model;
 
@@ -8,7 +9,7 @@ namespace QuorridorAI
     {
         public static void Main(string[] args)
         {
-            InitGame(true);
+            InitGame(CLIConvertor.IsFirstTurn(Console.ReadLine()));
         }
 
         public static void InitGame(bool isPlayerFirstTurn)
