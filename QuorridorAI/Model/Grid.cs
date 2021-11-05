@@ -2,8 +2,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Quorridor.Model;
-
- 
 public class Grid
 {
     private Cell[,] _grid;
@@ -412,7 +410,7 @@ public class Grid
         for (var i = 0; i < result.Count; i++)
         {
             var cell = result[i];
-            if (cell.PlayerId != 0)
+            if (cell.Pawn != null)
             {
                 var nextCell = GetOverCell(startCell, cell);
                 if (nextCell != null)
@@ -470,24 +468,19 @@ public class Grid
     public void MovePlayer(Cell startCell, Cell targetCell, Pawn playerPawn)
     {
         //Debug.Log($"<color=yellow> {startCell.GridX}:{startCell.GridY} has {startCell.PlayerId} id </color>");
-        if (startCell.PlayerId == 0)
-        {
+        if (startCell.Pawn == null)
             throw new Exception("There is no player on this cell");
-        }
 
-        if (targetCell.PlayerId == playerPawn.PlayerId)
-        {
+        if (targetCell.Pawn == playerPawn)
             throw new Exception("This player is already on this cell");
-        }
+        
 
         if (!GetPossibleMovesFromCell(startCell).Contains(targetCell))
-        {
-            throw new Exception(
-                $"Player can't move from cell {startCell.GridX}:{startCell.GridY} to {targetCell.GridX}:{targetCell.GridY}");
-        }
+            throw new Exception($"Player can't move from cell {startCell} to {targetCell}");
+        
 
-        targetCell.PlayerId = startCell.PlayerId;
-        startCell.PlayerId = 0;
+        targetCell.Pawn = startCell.Pawn;
+        startCell.Pawn = null;
 
         playerPawn.MoveTo(targetCell.GridX, targetCell.GridY);
     }
@@ -500,7 +493,7 @@ public class Grid
         foreach (var playerAndCell in players)
         {
             var cell = playerAndCell.Value;
-            _grid[cell.GridX, cell.GridY].PlayerId =  playerAndCell.Key.Pawn.PlayerId;
+            _grid[cell.GridX, cell.GridY].Pawn =  playerAndCell.Key.Pawn;
         }
     }
 
@@ -590,7 +583,7 @@ public class Grid
 
         for (int i = 0; i < _grid.GetLength(1); i++)
         {
-            if (_grid[_grid.GetLength(0) - pawn.WinLineY - 1, i].PlayerId == pawn.PlayerId)
+            if (_grid[_grid.GetLength(0) - pawn.WinLineY - 1, i].Pawn == pawn)
             {
                 return true;
             }
@@ -605,7 +598,7 @@ public class Grid
         {
             for (int j = 0; j < _rowCapacity; j++)
             {
-                if (_grid[i, j].PlayerId == pawn.PlayerId)
+                if (_grid[i, j].Pawn == pawn)
                 {
                     return _grid[i, j];
                 }

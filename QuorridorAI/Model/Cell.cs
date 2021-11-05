@@ -1,10 +1,13 @@
+using System;
+using Quorridor.Model;
+
 public class Cell
 {
     public Cell Parent { get; set; }
     public int GScore { get; set; }
     public int HScore { get; set; }
 
-    public int PlayerId { get; set; }
+    public Pawn Pawn { get; set; }
 
     public int GridX { get; }
     public int GridY { get; }
@@ -16,11 +19,12 @@ public class Cell
     /// </summary>
     /// <param name="gridX">Row</param>
     /// <param name="gridY">Column</param>
-    public Cell(int gridX, int gridY)
+    /// <param name="pawn">Pawn on it</param>
+    public Cell(int gridX, int gridY, Pawn pawn = null)
     {
         GridX = gridX;
         GridY = gridY;
-        PlayerId = 0;
+        Pawn = pawn;
     }
 
     public override string ToString() => $"Cell {GridX},{GridY}";
