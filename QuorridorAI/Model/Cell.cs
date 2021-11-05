@@ -4,7 +4,7 @@ public class Cell
     public int GScore { get; set; }
     public int HScore { get; set; }
 
-    public int PlayerId { get; private set; }
+    public int PlayerId { get; set; }
 
     public int GridX { get; }
     public int GridY { get; }
@@ -31,9 +31,5 @@ public class Cell
     }
     public override int GetHashCode() => (GridX, GridY).GetHashCode();
     public int FScore => GScore + HScore;
-
-    public void SetId(int pawnPlayerId)
-    {
-        PlayerId = pawnPlayerId;
-    }
+    
 }

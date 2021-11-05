@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Quorridor.Model;
 
@@ -21,7 +22,11 @@ namespace Quorridor.AI
             _playerControllers = playerControllers;
 
             _grid = new Grid(9, 9);
-            _grid.SetPlayersOnTheGridModel(players);
+            _grid.SetPlayersOnTheGridModel(new Dictionary<Player, Cell>
+            {
+                {players[0], new Cell(0,0)},
+                {players[1], new Cell(0,0)},
+            });
 
             _gameModel = new Game(_grid, players);
             for (var i = 0; i < _playerControllers.Length; i++)

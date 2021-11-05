@@ -486,31 +486,22 @@ public class Grid
                 $"Player can't move from cell {startCell.GridX}:{startCell.GridY} to {targetCell.GridX}:{targetCell.GridY}");
         }
 
-        targetCell.SetId(startCell.PlayerId);
-        startCell.SetId(0);
+        targetCell.PlayerId = startCell.PlayerId;
+        startCell.PlayerId = 0;
 
         playerPawn.MoveTo(targetCell.GridX, targetCell.GridY);
     }
 
-    public void SetPlayersOnTheGridModel(Player[] players)
+    public void SetPlayersOnTheGridModel(Dictionary<Player, Cell> players)
     {
-        if (players.Length != 2)
+        if(players.Any(x=>x.Key.Pawn.PlayerId == 0))
+            throw new Exception("Player pawn has 0 id");
+
+        foreach (var playerAndCell in players)
         {
-            throw new Exception("Game is for 2 players only now.");
+            var cell = playerAndCell.Value;
+            _grid[cell.GridX, cell.GridY].PlayerId =  playerAndCell.Key.Pawn.PlayerId;
         }
-
-        // players[0].Spawn(0, _rowCapacity / 2);
-        _grid[_rowsAmount - 1, _rowCapacity / 2].SetId(players[0].Pawn.PlayerId);
-
-        if (players[0].Pawn.PlayerId == 0)
-            throw new Exception("Player pawn has 0 id");
-
-        // players[1].Spawn(_rowsAmount - 1, _rowCapacity / 2);
-
-        _grid[0, _rowCapacity / 2].SetId(players[1].Pawn.PlayerId);
-
-        if (players[1].Pawn.PlayerId == 0)
-            throw new Exception("Player pawn has 0 id");
     }
 
     public override string ToString()
