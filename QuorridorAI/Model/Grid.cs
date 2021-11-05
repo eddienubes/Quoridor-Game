@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Quorridor.Model;
 
 namespace Quorridor.Model
 {
@@ -130,53 +129,6 @@ namespace Quorridor.Model
                    cell.GridY < _rowsAmount;
         }
 
-// private bool CheckNeighborsForNull(List<Cell> neighbors)
-//     => neighbors.Exists(neighbor => neighbor is null);
-//
-// private bool CheckNeighborsForNotNull(List<Cell> neighbors)
-//     => neighbors.Exists(neighbor => !(neighbor is null));
-//
-//
-// private List<Cell> GetNeighbors(
-//     Cell gridCell1Pair1,
-//     Cell gridCell2Pair1,
-//     Cell gridCell1Pair2,
-//     Cell gridCell2Pair2,
-//     bool isVertical
-// )      //
-
-//      c1p1  c2p1
-//      c1p2  c2p2
-
-// {
-//     if (isVertical)
-//     {
-//         return new List<Cell>
-//         {
-//             gridCell1Pair1.Neighbors[3],
-//             gridCell1Pair2.Neighbors[3],
-//             gridCell1Pair1.Neighbors[2],
-//             gridCell2Pair1.Neighbors[2],
-//             gridCell2Pair1.Neighbors[1],
-//             gridCell2Pair2.Neighbors[1],
-//             gridCell1Pair2.Neighbors[0],
-//             gridCell2Pair2.Neighbors[0]
-//         };
-//     }
-//
-//     return new List<Cell>
-//     {
-//         gridCell1Pair1.Neighbors[3],
-//         gridCell2Pair1.Neighbors[3],
-//         gridCell1Pair1.Neighbors[2],
-//         gridCell1Pair2.Neighbors[2],
-//         gridCell1Pair2.Neighbors[1],
-//         gridCell2Pair2.Neighbors[1],
-//         gridCell2Pair1.Neighbors[0],
-//         gridCell2Pair2.Neighbors[0]
-//     };
-// }
-
         private bool CheckVerticalAlignment(
             Cell cell1Pair1,
             Cell cell2Pair1,
@@ -254,13 +206,7 @@ namespace Quorridor.Model
                 if (wall.CollidesWith(newWall))
                     throw new Exception("This wall will collide another wall");
             }
-
-            //
-            // List<Cell> neighborsToCheck = GetNeighbors(gridCell1Pair1, gridCell1Pair1, gridCell1Pair2,
-            //     gridCell2Pair2, isVertical);
-            //
-            // if (CheckNeighborsForNull(neighborsToCheck))
-            //     return false;
+            
             if (isVertical)
             {
                 // * | * 
@@ -350,59 +296,7 @@ namespace Quorridor.Model
             cell2Pair1.Neighbors[1] = cell2Pair2;
             cell2Pair2.Neighbors[3] = cell2Pair1;
         }
-
-
-        // public (List<Cell> path, bool passable) FindPathWithAStar(int sourceX, int sourceY, int destinationX,
-        //     int destinationY)
-        // {
-        //     List<Cell> openCells = new List<Cell>();
-        //     List<Cell> closedCells = new List<Cell>();
-        //
-        //     // y = columns
-        //     // x = rows
-        //     Cell sourceCell = _grid[sourceX, sourceY];
-        //     Cell destinationCell = _grid[destinationX, destinationY];
-        //
-        //     openCells.Add(sourceCell);
-        //
-        //     while (openCells.Count > 0)
-        //     {
-        //         int lowestCost = openCells.Min(cell => cell.GScore + cell.HScore);
-        //         Cell current = openCells.First(cell => cell.FScore == lowestCost);
-        //
-        //         openCells.Remove(current);
-        //         closedCells.Add(current);
-        //
-        //         if (CompareCells(current, destinationCell))
-        //             return (RetrievePath(sourceCell, destinationCell), true);
-        //
-        //         foreach (Cell posMove in GetPossibleMovesFromCell(current))
-        //         {
-        //             if (posMove == null)
-        //                 continue;
-        //
-        //             if (closedCells.Exists(cell => CompareCells(cell, posMove)))
-        //                 continue;
-        //
-        //             if (!openCells.Exists(cell => CompareCells(cell, posMove)))
-        //             {
-        //                 posMove.HScore = CalculateHCost(posMove, destinationCell);
-        //                 posMove.GScore = current.GScore + 1;
-        //                 posMove.Parent = current;
-        //
-        //                 openCells.Add(posMove);
-        //             }
-        //             else if (current.GScore + 1 + posMove.HScore < posMove.FScore)
-        //             {
-        //                 posMove.GScore = current.GScore + 1;
-        //                 posMove.Parent = current;
-        //             }
-        //         }
-        //     }
-        //
-        //     return (null, false);
-        // }
-
+        
         public List<Cell> GetPossibleMovesFromCell(Cell startCell)
         {
             if (startCell == null)
@@ -520,63 +414,7 @@ namespace Quorridor.Model
 
             return result;
         }
-
-// public (string[], bool) FindShortestPathDijkstra(int[,] graph, int src, int destination)
-// {
-//     int[] distances = new int[_verticesAmount];
-//     
-//     bool[] visitedNodes = new bool[_verticesAmount];
-//     
-//     for (int i = 0; i < _verticesAmount; ++i)
-//     {
-//         distances[i] = int.MaxValue;
-//         visitedNodes[i] = false;
-//     }
-//     
-//     distances[src] = 0;
-//
-//     for (int count = 0; count < _verticesAmount - 1; ++count)
-//     {
-//         int currentMinNode = _FindMinDistance(distances, visitedNodes);
-//
-//         visitedNodes[currentMinNode] = true;
-//         
-//         for (int neighbor = 0; neighbor < graph.GetLength(1); ++neighbor)
-//         {
-//             int distanceFromCurrentToNeighbor = graph[currentMinNode, neighbor];
-//             int completeDistanceToNeighbor = distances[currentMinNode] + distanceFromCurrentToNeighbor;
-//             
-//             // has edge?
-//             // is new distance suitable?
-//             // has this neighbor been already visited?
-//             if (distanceFromCurrentToNeighbor != 0 
-//                 && completeDistanceToNeighbor < distances[neighbor] 
-//                 && !visitedNodes[neighbor])
-//             {
-//                 distances[neighbor] = completeDistanceToNeighbor;
-//             }
-//         }
-//     }
-//     
-//     return distances;
-// }
-
-// private int _FindMinDistance(int[] distances, bool[] visitedNodes)
-// {
-//     int currentMinDistance = int.MaxValue, minIndex = -1;
-//
-//     for (int v = 0; v < _verticesAmount; ++v)
-//     {
-//         if (!visitedNodes[v] && distances[v] < currentMinDistance)
-//         {
-//             currentMinDistance = distances[v];
-//             minIndex = v;
-//         }
-//     }
-//
-//     return minIndex;
-// }
-
+        
         public bool CheckIsPawnOnTheWinLine(Pawn pawn)
         {
             if (pawn.WinLineY > _grid.GetLength(1) || pawn.WinLineY < 0)
