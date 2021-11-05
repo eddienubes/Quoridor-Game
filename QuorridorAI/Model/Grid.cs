@@ -189,7 +189,7 @@ public class Grid
                                    Math.Abs(cell1Pair2.GridX - cell2Pair2.GridX) == 1 &&
                                    cell1Pair1.GridY == cell2Pair1.GridY &&
                                    cell1Pair2.GridY == cell2Pair2.GridY &&
-                                   cell1Pair1.GridY - cell1Pair2.GridY == 1;
+                                   Math.Abs(cell1Pair1.GridY - cell1Pair2.GridY) == 1;
 
         // pair cells aligned horizontally close to each other
         // are couple placed close to each other

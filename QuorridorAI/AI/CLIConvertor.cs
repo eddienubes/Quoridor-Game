@@ -30,7 +30,7 @@ namespace Quorridor.AI
         public static string Convert(PlaceWallCommand command) =>
             $"{outputCommandIdentificator} wall {GetWallCoord(command)}{(command._isWallVertical ? 'v' : 'h')}";
 
-        public static ICommand Parse(string command, Grid grid, Pawn playerPawn)
+        public static IMakeTurnCommand Parse(string command, Grid grid, Pawn playerPawn)
         {
             var commandParts = command.Split(' ');
             var inputOutput = commandParts[0];
@@ -59,7 +59,11 @@ namespace Quorridor.AI
                 var cell4 = new Cell(wallCoords.x + 1, wallCoords.y + 1);
 
                 var isVertical = inputArgs[2] == 'V';
-                return new PlaceWallCommand(grid, cell1, cell2, cell3, cell4, isVertical);
+                if (isVertical)
+                    return new PlaceWallCommand(grid, cell1, cell2, cell3, cell4, isVertical);
+                else 
+                    return new PlaceWallCommand(grid, cell1, cell3, cell2, cell4, isVertical);
+
             }
             else
                 throw new ArgumentException($"command type \"{commandType}\"is not valid");

@@ -24,7 +24,12 @@ public class Cell
     }
 
     public override string ToString() => $"Cell {GridX},{GridY}";
-
+    public override bool Equals(object obj)
+    {
+        if(!(obj is Cell  cell)) return false;
+        return (cell.GridX, cell.GridY) == (GridX, GridY);
+    }
+    public override int GetHashCode() => (GridX, GridY).GetHashCode();
     public int FScore => GScore + HScore;
 
     public void SetId(int pawnPlayerId)
