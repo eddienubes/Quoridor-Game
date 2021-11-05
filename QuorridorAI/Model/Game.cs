@@ -4,7 +4,6 @@ namespace Quorridor.Model
     using System.Collections.Generic;
     using System.Linq;
     using Commands;
-    using Grid = Grid;
 
     public class Game
     {
