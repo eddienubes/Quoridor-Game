@@ -49,7 +49,7 @@ namespace Quorridor.AI
 
             if (commandType == "jump" || commandType == "move")
             {
-                var targetCell = new Cell(inputArgs[0] - 'A', inputArgs[1] - '1');
+                var targetCell = grid.GetCellByCoordinates(inputArgs[0] - 'A', inputArgs[1] - '1');
                 return new MovePawnCommand(playerPawn, grid, grid.GetPawnCell(playerPawn), targetCell);
             }
             else if (commandType == "wall")
@@ -59,17 +59,16 @@ namespace Quorridor.AI
 
                 (int x, int y) wallCoords = (inputArgs[0] - 'S', inputArgs[1] - '1');
 
-                var cell1 = new Cell(wallCoords.x, wallCoords.y);
-                var cell2 = new Cell(wallCoords.x + 1, wallCoords.y);
-                var cell3 = new Cell(wallCoords.x, wallCoords.y + 1);
-                var cell4 = new Cell(wallCoords.x + 1, wallCoords.y + 1);
+                var cell1 =  grid.GetCellByCoordinates(wallCoords.x, wallCoords.y);
+                var cell2 =  grid.GetCellByCoordinates(wallCoords.x + 1, wallCoords.y);
+                var cell3 =  grid.GetCellByCoordinates(wallCoords.x, wallCoords.y + 1);
+                var cell4 =  grid.GetCellByCoordinates(wallCoords.x + 1, wallCoords.y + 1);
 
                 var isVertical = inputArgs[2] == 'V';
                 if (isVertical)
                     return new PlaceWallCommand(grid, cell1, cell2, cell3, cell4, isVertical);
-                else 
+                else
                     return new PlaceWallCommand(grid, cell1, cell3, cell2, cell4, isVertical);
-
             }
             else
                 throw new ArgumentException($"command type \"{commandType}\"is not valid");

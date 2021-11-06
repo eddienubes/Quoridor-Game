@@ -24,8 +24,8 @@ namespace Quorridor.AI
             _grid = new Grid(9, 9);
             _grid.SetPlayersOnTheGridModel(new Dictionary<Player, Cell>
             {
-                {players[0], new Cell(4,8)},
-                {players[1], new Cell(4,0)},
+                {players[0],  _grid.GetCellByCoordinates(4,8)},
+                {players[1],  _grid.GetCellByCoordinates(4,0)},
             });
 
             _gameModel = new Game(_grid, players);
