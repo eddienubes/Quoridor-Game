@@ -45,6 +45,7 @@
         <Compile Include="AI\Controllers\CLIPlayerController.cs" />
         <Compile Include="AI\DummyAiPlayer.cs" />
         <Compile Include="AI\Evaluator.cs" />
+        <Compile Include="AI\MinimaxAiPlayer.cs" />
         <Compile Include="Miscellaneous\LoopedList.cs" />
         <Compile Include="Model\Cell.cs" />
         <Compile Include="Model\Commands\ICommand.cs" />
