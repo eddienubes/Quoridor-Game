@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{F6DED007-FD78-43CF-B80A-D1D39D813664}</ProjectGuid>
+        <OutputType>Exe</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>QuorridorAI</RootNamespace>
+        <AssemblyName>QuorridorAI</AssemblyName>
+        <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="AI\CLIConvertor.cs" />
+        <Compile Include="AI\Controllers\AiPlayer.cs" />
+        <Compile Include="AI\Controllers\CliGameController.cs" />
+        <Compile Include="AI\Controllers\CLIPlayerController.cs" />
+        <Compile Include="AI\DummyAiPlayer.cs" />
+        <Compile Include="AI\Evaluator.cs" />
+        <Compile Include="Miscellaneous\LoopedList.cs" />
+        <Compile Include="Model\Cell.cs" />
+        <Compile Include="Model\Commands\ICommand.cs" />
+        <Compile Include="Model\Commands\IMakeTurnCommand.cs" />
+        <Compile Include="Model\Commands\MovePawnCommand.cs" />
+        <Compile Include="Model\Commands\PlaceWallCommand.cs" />
+        <Compile Include="Model\Game.cs" />
+        <Compile Include="Model\Grid.cs" />
+        <Compile Include="Model\IGameController.cs" />
+        <Compile Include="Model\IPlayerController.cs" />
+        <Compile Include="Model\Pawn.cs" />
+        <Compile Include="Model\Players\HotSeatPlayer.cs" />
+        <Compile Include="Model\Players\Player.cs" />
+        <Compile Include="Model\Wall.cs" />
+        <Compile Include="Program.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+
+</Project>
