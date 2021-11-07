@@ -33,6 +33,13 @@ namespace Quorridor.AI
             {
                 _playerControllers[i].Init(_gameModel, _grid, _players[i]);
             }
+
+            _gameModel.OnGameEnded += EndGame;
+        }
+
+        private void EndGame(Player p)
+        {
+            Console.WriteLine(p.Pawn.PlayerId +" WON");
         }
     }
 }
