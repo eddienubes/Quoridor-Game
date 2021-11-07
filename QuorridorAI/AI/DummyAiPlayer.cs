@@ -1,5 +1,6 @@
 namespace Quorridor.AI
 {
+    using Model.Commands;
     using Quorridor.Model;
 
     public class DummyAiPlayer : AiPlayer
@@ -9,13 +10,14 @@ namespace Quorridor.AI
         {
         }
 
-        public override (bool, bool, Cell) MakeDecision(Game gameModel, Grid grid, Pawn pawn)
+        public override IMakeTurnCommand MakeDecision(Game gameModel, Grid grid, Pawn pawn)
         {
             var allPossiblePawnMoves = grid.GetPossibleMovesFromCell(grid.GetPawnCell(pawn));
             var r = new System.Random();
             if (WallsCount == 0)
             {
-                return (true, false, allPossiblePawnMoves[r.Next(allPossiblePawnMoves.Count)]);
+                return new MovePawnCommand(pawn, grid, grid.GetPawnCell(pawn),
+                    allPossiblePawnMoves[r.Next(allPossiblePawnMoves.Count)]);
             }
 
             var allPossibleWallMovesMoves = grid.GetAvailableWallMoves;
@@ -24,13 +26,18 @@ namespace Quorridor.AI
 
             if (randMoveIndex < allPossiblePawnMoves.Count)
             {
-                return (true, false, allPossiblePawnMoves[randMoveIndex]);
+                return new MovePawnCommand(pawn, grid, grid.GetPawnCell(pawn),
+                    allPossiblePawnMoves[randMoveIndex]);
             }
             else
             {
                 randMoveIndex -= allPossiblePawnMoves.Count;
-                return (false, allPossibleWallMovesMoves[randMoveIndex].isVertical,
-                    allPossibleWallMovesMoves[randMoveIndex].Cell1Pair1);
+                return new PlaceWallCommand(grid,
+                    allPossibleWallMovesMoves[randMoveIndex].Cell1Pair1,
+                    allPossibleWallMovesMoves[randMoveIndex].Cell2Pair1,
+                    allPossibleWallMovesMoves[randMoveIndex].Cell1Pair2,
+                    allPossibleWallMovesMoves[randMoveIndex].Cell2Pair2,
+                    allPossibleWallMovesMoves[randMoveIndex].isVertical);
             }
         }
     }

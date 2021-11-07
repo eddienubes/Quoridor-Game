@@ -10,3 +10,9 @@ D:\University\GameDev\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.csproj.Ass
 D:\University\GameDev\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.csproj.CoreCompileInputs.cache
 D:\University\GameDev\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.exe
 D:\University\GameDev\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.pdb
+D:\Reps\KPI_5\Korotenko\Quoridor-Game\QuorridorAI\bin\Debug\QuorridorAI.exe
+D:\Reps\KPI_5\Korotenko\Quoridor-Game\QuorridorAI\bin\Debug\QuorridorAI.pdb
+D:\Reps\KPI_5\Korotenko\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.csprojAssemblyReference.cache
+D:\Reps\KPI_5\Korotenko\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.csproj.CoreCompileInputs.cache
+D:\Reps\KPI_5\Korotenko\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.exe
+D:\Reps\KPI_5\Korotenko\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.pdb

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 namespace Quorridor.Model
 {
+    using System.Xml.Schema;
+
     public class Grid
     {
         private Cell[,] _grid;
@@ -15,7 +17,7 @@ namespace Quorridor.Model
         private List<Wall> _notAvailableWallMoves;
 
         public List<Wall> GetAvailableWallMoves => _availableWallMoves;
-        
+
         public Grid(int width, int height)
         {
             _rowCapacity = width;
@@ -43,19 +45,19 @@ namespace Quorridor.Model
                     int leftNodeIndex = cell - 1;
                     int rightNodeIndex = cell + 1;
 
-                    int upperRowConnectedNodeIndex = row + 1;
-                    int bottomRowConnectedNodeIndex = row - 1;
+                    int upperRowConnectedNodeIndex = row - 1;
+                    int bottomRowConnectedNodeIndex = row + 1;
 
                     if (leftNodeIndex >= 0)
                         _grid[row, cell].Neighbors[0] = _grid[row, leftNodeIndex];
 
-                    if (upperRowConnectedNodeIndex < _rowsAmount)
+                    if (upperRowConnectedNodeIndex >= 0)
                         _grid[row, cell].Neighbors[1] = _grid[upperRowConnectedNodeIndex, cell];
 
                     if (rightNodeIndex < _rowCapacity)
                         _grid[row, cell].Neighbors[2] = _grid[row, rightNodeIndex];
 
-                    if (bottomRowConnectedNodeIndex >= 0)
+                    if (bottomRowConnectedNodeIndex < _rowsAmount)
                         _grid[row, cell].Neighbors[3] = _grid[bottomRowConnectedNodeIndex, cell];
                 }
             }
@@ -85,7 +87,7 @@ namespace Quorridor.Model
         {
             return _grid[_grid.GetLength(0) - 1 - y, x];
         }
-        
+
         private List<Cell> RetrievePath(Cell sourceCell, Cell destinationCell)
         {
             List<Cell> path = new List<Cell>();
@@ -202,7 +204,7 @@ namespace Quorridor.Model
                 if (wall.CollidesWith(newWall))
                     throw new Exception("This wall will collide another wall");
             }
-            
+
             if (isVertical)
             {
                 // * | * 
@@ -212,12 +214,13 @@ namespace Quorridor.Model
 
                 cell1Pair2.Neighbors[2] = null;
                 cell2Pair2.Neighbors[0] = null;
-
                 _walls.Add(newWall);
 
-                var topLeftCell = new List<Cell> { cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2 }
+                var topLeftCell = new List<Cell> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}
                     .OrderBy(c => c.GridX)
                     .ThenByDescending(c => c.GridY).FirstOrDefault();
+
+
                 _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w => w.CollidesWith(newWall)));
                 _availableWallMoves.RemoveAll(w => w.CollidesWith(newWall));
                 return;
@@ -227,11 +230,13 @@ namespace Quorridor.Model
             // * *
             // ---
             // * *
-            cell1Pair1.Neighbors[1] = null;
-            cell2Pair1.Neighbors[3] = null;
+            cell1Pair1.Neighbors[3] = null;
+            cell2Pair1.Neighbors[1] = null;
 
-            cell1Pair2.Neighbors[1] = null;
-            cell2Pair2.Neighbors[3] = null;
+            cell1Pair2.Neighbors[3] = null;
+            cell2Pair2.Neighbors[1] = null;
+
+
             _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w => w.CollidesWith(newWall)));
             _availableWallMoves.RemoveAll(w => w.CollidesWith(newWall));
 
@@ -247,7 +252,7 @@ namespace Quorridor.Model
 
             bool isVerticallyAligned = CheckVerticalAlignment(cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
 
-            if (!(isVertical && isVertical || !isVertical && !isVerticallyAligned))
+            if (isVertical != isVerticallyAligned)
                 throw new Exception("Cells are not aligned!");
 
 
@@ -259,26 +264,27 @@ namespace Quorridor.Model
             _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w => w.CollidesWith(newWall)));
             _availableWallMoves.RemoveAll(w => w.CollidesWith(newWall));
 
-            var topLeftCell = new List<Cell> { cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2 }.OrderBy(c => c.GridX)
-                .ThenByDescending(c => c.GridY).FirstOrDefault();
+            var cells = new List<Cell> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}.OrderBy(c => c.GridX)
+                .ThenByDescending(c => c.GridY).ToList();
 
 
             _walls.RemoveAll(w =>
-                w.Cell1Pair1 == cell1Pair1 &&
-                w.Cell1Pair2 == cell1Pair2 &&
-                w.Cell2Pair1 == cell2Pair1 &&
-                w.Cell2Pair2 == cell2Pair2);
+                Equals(w.Cell1Pair1, cell1Pair1) &&
+                Equals(w.Cell1Pair2, cell1Pair2) &&
+                Equals(w.Cell2Pair1, cell2Pair1) &&
+                Equals(w.Cell2Pair2, cell2Pair2));
 
             if (isVertical && isVerticallyAligned)
             {
                 // * | * 
                 // * | *
+
+
                 cell1Pair1.Neighbors[2] = cell2Pair1;
                 cell2Pair1.Neighbors[0] = cell1Pair1;
 
-                cell2Pair1.Neighbors[2] = cell2Pair2;
-                cell2Pair2.Neighbors[0] = cell2Pair1;
-
+                cell1Pair2.Neighbors[2] = cell2Pair2;
+                cell2Pair2.Neighbors[0] = cell1Pair2;
 
                 return;
             }
@@ -286,13 +292,13 @@ namespace Quorridor.Model
             // * *
             // ---
             // * *
-            cell1Pair1.Neighbors[1] = cell2Pair1;
-            cell2Pair1.Neighbors[3] = cell1Pair1;
+            cell1Pair1.Neighbors[3] = cell2Pair1;
+            cell2Pair1.Neighbors[1] = cell1Pair1;
 
-            cell2Pair1.Neighbors[1] = cell2Pair2;
-            cell2Pair2.Neighbors[3] = cell2Pair1;
+            cell1Pair2.Neighbors[3] = cell2Pair2;
+            cell2Pair2.Neighbors[1] = cell1Pair2;
         }
-        
+
         public List<Cell> GetPossibleMovesFromCell(Cell startCell)
         {
             if (startCell == null)
@@ -410,7 +416,7 @@ namespace Quorridor.Model
 
             return result;
         }
-        
+
         public bool CheckIsPawnOnTheWinLine(Pawn pawn)
         {
             if (pawn.WinLineY > _grid.GetLength(1) || pawn.WinLineY < 0)
@@ -464,7 +470,7 @@ namespace Quorridor.Model
 
         private bool BfsCheck(Cell playerCell, int pawnWinLineY)
         {
-            var available = new List<Cell>() { playerCell };
+            var available = new List<Cell>() {playerCell};
             var visited = new List<Cell>();
 
             while (available.Count > 0)
@@ -490,7 +496,7 @@ namespace Quorridor.Model
 
         private int DijkstraToWinLine(Cell currentCell, int pawnWinLineY)
         {
-            var availableList = new List<Cell>() { currentCell };
+            var availableList = new List<Cell>() {currentCell};
             var visitedList = new List<Cell>();
 
             currentCell.GScore = 0;
@@ -502,7 +508,7 @@ namespace Quorridor.Model
                     neighbour.GScore = availableList[0].GScore + 1;
                 }
 
-                availableList.AddRange(neighbours);
+                availableList.AddRange(neighbours.Where(c=>!availableList.Contains(c) && !visitedList.Contains(c)));
                 visitedList.Add(availableList[0]);
                 availableList.RemoveAt(0);
             }

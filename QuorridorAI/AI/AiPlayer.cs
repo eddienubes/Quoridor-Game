@@ -1,6 +1,7 @@
 namespace Quorridor.AI
 {
     using Model;
+    using Model.Commands;
 
     public abstract class AiPlayer : Player
     {
@@ -8,7 +9,7 @@ namespace Quorridor.AI
             isActiveTurn, playerId, wallsCount)
         {
         }
-        
-        public abstract (bool, bool, Cell) MakeDecision(Game gameModel, Grid grid, Pawn pawn);
+
+        public abstract IMakeTurnCommand MakeDecision(Game gameModel, Grid grid, Pawn pawn);
     }
 }

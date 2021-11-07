@@ -56,6 +56,36 @@ namespace Quorridor.Model
             SwitchTurn(player);
         }
 
+        public void PlacingWall(PlaceWallCommand turn, Player player)
+        {
+            if (!player.IsActiveTurn)
+            {
+                throw new Exception("Player isn't active");
+            }
+
+            if (player.WallsCount <= 0)
+            {
+                throw new Exception("Walldeck is empty");
+            }
+
+            turn.Execute();
+
+            if (!_grid.CheckPaths(_players))
+            {
+                turn.Undo();
+                throw new Exception("Wall can be placed because it will close last path to win for one of the players");
+            }
+
+            _gameLog.Push(turn);
+
+            player.OnWallPlacedInvoke(turn._isWallVertical,
+                (turn._cell1Pair1.GridX, turn._cell1Pair1.GridY),
+                (turn._cell2Pair1.GridX, turn._cell2Pair1.GridY),
+                (turn._cell1Pair2.GridX, turn._cell1Pair2.GridY),
+                (turn._cell2Pair2.GridX, turn._cell2Pair2.GridY));
+            SwitchTurn(player);
+        }
+
         public void MovingPlayer(Pawn playerPawn, int startX, int startY, int targetX, int targetY)
         {
             var player = _players.FirstOrDefault(p => p.Pawn == playerPawn);
@@ -103,7 +133,19 @@ namespace Quorridor.Model
 
             SwitchTurn(player);
         }
-        
+
+        public void MovingPlayer(MovePawnCommand turn, Player player)
+        {
+            turn.Execute();
+            _gameLog.Push(turn);
+            CheckGameForFinishing(player);
+
+            OnPlayerMoved?.Invoke(player, (turn._startCell.GridX, turn._startCell.GridY),
+                (turn._targetCell.GridX, turn._targetCell.GridY));
+
+            SwitchTurn(player);
+        }
+
         private void SwitchTurn(Player player)
         {
             var nextPlayerIndex = (Array.IndexOf(_players, player) + 1) % _players.Length;

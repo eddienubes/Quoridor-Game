@@ -1,16 +1,21 @@
 namespace Quorridor.AI
 {
     using Model;
+    using Model.Commands;
 
     public class MinimaxAiPlayer : AiPlayer
     {
-        public MinimaxAiPlayer(int winLineY, bool isActiveTurn, int playerId, int wallsCount = 10) : base(winLineY, isActiveTurn, playerId, wallsCount)
+        private Minimax _minimax;
+
+        public MinimaxAiPlayer(int winLineY, bool isActiveTurn, int playerId, int wallsCount = 10) : base(winLineY,
+            isActiveTurn, playerId, wallsCount)
         {
+            _minimax = new Minimax(6, this);
         }
 
-        public override (bool, bool, Cell) MakeDecision(Game gameModel, Grid grid, Pawn pawn)
+        public override IMakeTurnCommand MakeDecision(Game gameModel, Grid grid, Pawn pawn)
         {
-            throw new System.NotImplementedException();
+            return _minimax.FindBestMove(gameModel, grid);
         }
     }
 }

@@ -13,12 +13,12 @@ namespace Quorridor.AI
     {
         private const string inputCommandIdentificator = "<-";
         private const string outputCommandIdentificator = "->";
-        private static string GetCellCoord(Cell cell) => $"{'A' + cell.GridX}{cell.GridY + 1}";
+        private static string GetCellCoord(Cell cell) => $"{(char) ('A' + cell.GridX)}{9 - cell.GridY}";
 
         private static string GetWallCoord(PlaceWallCommand command)
         {
             var allCells = new List<Cell>
-                { command._cell1Pair1, command._cell1Pair2, command._cell2Pair1, command._cell2Pair2 };
+                {command._cell1Pair1, command._cell1Pair2, command._cell2Pair1, command._cell2Pair2};
             var maxX = allCells.Max(x => x.GridX);
             var maxY = allCells.Max(x => x.GridY);
             return $"{'S' + maxX - 1}{maxY}";
@@ -28,8 +28,9 @@ namespace Quorridor.AI
         {
             if (message != "white" && message != "black")
                 throw new ArgumentException($"Invalid argument {message}");
-            return message == "white";
+            return message == "black";
         }
+
         public static string Convert(MovePawnCommand command) =>
             $"{outputCommandIdentificator} {(command.IsJump ? "jump" : "move")} {GetCellCoord(command._targetCell)}";
 
@@ -59,10 +60,10 @@ namespace Quorridor.AI
 
                 (int x, int y) wallCoords = (inputArgs[0] - 'S', inputArgs[1] - '1');
 
-                var cell1 =  grid.GetCellByCoordinates(wallCoords.x, wallCoords.y);
-                var cell2 =  grid.GetCellByCoordinates(wallCoords.x + 1, wallCoords.y);
-                var cell3 =  grid.GetCellByCoordinates(wallCoords.x, wallCoords.y + 1);
-                var cell4 =  grid.GetCellByCoordinates(wallCoords.x + 1, wallCoords.y + 1);
+                var cell1 = grid.GetCellByCoordinates(wallCoords.x, wallCoords.y);
+                var cell2 = grid.GetCellByCoordinates(wallCoords.x + 1, wallCoords.y);
+                var cell3 = grid.GetCellByCoordinates(wallCoords.x, wallCoords.y + 1);
+                var cell4 = grid.GetCellByCoordinates(wallCoords.x + 1, wallCoords.y + 1);
 
                 var isVertical = inputArgs[2] == 'V';
                 if (isVertical)

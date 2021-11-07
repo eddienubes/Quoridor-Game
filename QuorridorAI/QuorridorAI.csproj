@@ -39,10 +39,11 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AI\AiPlayer.cs" />
         <Compile Include="AI\CLIConvertor.cs" />
-        <Compile Include="AI\Controllers\AiPlayer.cs" />
         <Compile Include="AI\Controllers\CliGameController.cs" />
         <Compile Include="AI\Controllers\CLIPlayerController.cs" />
+        <Compile Include="AI\Controllers\MinimaxPlayerController.cs" />
         <Compile Include="AI\DummyAiPlayer.cs" />
         <Compile Include="AI\Evaluator.cs" />
         <Compile Include="AI\Minimax.cs" />
