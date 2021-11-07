@@ -18,11 +18,10 @@ namespace QuorridorAI
             const int FIELD_SIZE_Y = 9;
             var gameController = new CliGameController();
 
-            var players = new Player[]
-            {
-                new HotSeatPlayer(GetWinLine(true), !isPlayerFirstTurn, GetPlayerId(true), WALLS_COUNT),
-                new MinimaxAiPlayer(GetWinLine(false), isPlayerFirstTurn, GetPlayerId(false), WALLS_COUNT),
-            };
+            var players = new Player[2];
+            players[0] = new HotSeatPlayer(GetWinLine(true), !isPlayerFirstTurn, GetPlayerId(true), WALLS_COUNT);
+            players[1] = new MinimaxAiPlayer(GetWinLine(false), isPlayerFirstTurn, GetPlayerId(false), players[0],
+                WALLS_COUNT);
 
             var playerControllers = new IPlayerController[]
             {

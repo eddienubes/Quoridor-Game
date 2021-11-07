@@ -8,12 +8,14 @@ namespace Quorridor.AI
     public class Minimax
     {
         private readonly int _maximumDepth;
-        private readonly Player _player;
+        private readonly Player _maxPlayer;
+        private readonly Player _minPlayer;
 
-        public Minimax(int maximumDepth, Player player)
+        public Minimax(int maximumDepth, Player player, Player opponent)
         {
             _maximumDepth = maximumDepth;
-            _player = player;
+            _maxPlayer = player;
+            _minPlayer = opponent;
         }
 
         private (IMakeTurnCommand move, int eval) ExecuteMinimax(
@@ -26,11 +28,11 @@ namespace Quorridor.AI
 
             if (depth == 0)
             {
-                return (null, Evaluator.HeuristicCost(_player, game, grid));
+                return (null, Evaluator.HeuristicCost(_maxPlayer, game, grid));
             }
 
-
-            List<Cell> allPossiblePawnMoves = grid.GetPossibleMovesFromCell(grid.GetPawnCell(_player.Pawn));
+            var player = isMaximizingPlayer ? _maxPlayer : _minPlayer;
+            List<Cell> allPossiblePawnMoves = grid.GetPossibleMovesFromCell(grid.GetPawnCell(player.Pawn));
             List<Wall> allPossibleWallMoves = grid.GetAvailableWallMoves;
 
 
@@ -40,7 +42,7 @@ namespace Quorridor.AI
                 foreach (Cell pawnMove in allPossiblePawnMoves)
                 {
                     MovePawnCommand currentPawnMove =
-                        new MovePawnCommand(_player.Pawn, grid, grid.GetPawnCell(_player.Pawn),
+                        new MovePawnCommand(player.Pawn, grid, grid.GetPawnCell(player.Pawn),
                             grid.GetCellByCoordinates(pawnMove.GridX, pawnMove.GridY));
 
                     currentPawnMove.Execute();
@@ -83,7 +85,7 @@ namespace Quorridor.AI
                 foreach (Cell pawnMove in allPossiblePawnMoves)
                 {
                     MovePawnCommand currentPawnMove =
-                        new MovePawnCommand(_player.Pawn, grid, grid.GetPawnCell(_player.Pawn), pawnMove);
+                        new MovePawnCommand(player.Pawn, grid, grid.GetPawnCell(player.Pawn), pawnMove);
 
                     currentPawnMove.Execute();
                     (IMakeTurnCommand evaluatedMove, int eval) = ExecuteMinimax(game, grid, depth - 1, true);

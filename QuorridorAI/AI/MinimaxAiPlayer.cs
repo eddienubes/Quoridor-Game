@@ -7,10 +7,11 @@ namespace Quorridor.AI
     {
         private Minimax _minimax;
 
-        public MinimaxAiPlayer(int winLineY, bool isActiveTurn, int playerId, int wallsCount = 10) : base(winLineY,
-            isActiveTurn, playerId, wallsCount)
+        public MinimaxAiPlayer(int winLineY, bool isActiveTurn, int playerId, Player opponent, int wallsCount = 10) :
+            base(winLineY,
+                isActiveTurn, playerId, wallsCount)
         {
-            _minimax = new Minimax(6, this);
+            _minimax = new Minimax(6, this, opponent);
         }
 
         public override IMakeTurnCommand MakeDecision(Game gameModel, Grid grid, Pawn pawn)

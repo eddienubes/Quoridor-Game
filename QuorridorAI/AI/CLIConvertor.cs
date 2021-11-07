@@ -13,7 +13,7 @@ namespace Quorridor.AI
     {
         private const string inputCommandIdentificator = "<-";
         private const string outputCommandIdentificator = "->";
-        private static string GetCellCoord(Cell cell) => $"{'A' + cell.GridX}{cell.GridY + 1}";
+        private static string GetCellCoord(Cell cell) => $"{(char)('A' + cell.GridX)}{cell.GridY + 1}";
 
         private static string GetWallCoord(PlaceWallCommand command)
         {
