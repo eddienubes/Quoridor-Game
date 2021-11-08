@@ -18,29 +18,34 @@ namespace Quorridor.AI
 
                 if (gamePlayer == player)
                 {
-                    result += gamePlayer.WallsCount * 2;
-                    if (grid.CheckIsPawnOnTheWinLine(pawn))
-                    {
-                        return int.MaxValue;
-                    }
+                    // result += gamePlayer.WallsCount * 2;
+                    // if (grid.CheckIsPawnOnTheWinLine(pawn))
+                    // {
+                    //     return int.MaxValue;
+                    // }
 
                     shortestPathPlayer = grid.GetShortestPath(currentCell, pawn.WinLineY);
-                    continue;
+                    // continue;
                 }
+                //
+                // if (grid.CheckIsPawnOnTheWinLine(pawn))
+                // {
+                //     return int.MinValue;
+                // }
 
-                if (grid.CheckIsPawnOnTheWinLine(pawn))
-                {
-                    return int.MinValue;
-                }
-
-                result -= gamePlayer.WallsCount * 2;
+                // result -= gamePlayer.WallsCount * 2;
                 opponentsShortestPaths.Add(grid.GetShortestPath(currentCell, pawn.WinLineY));
             }
 
             foreach (var pathLenght in opponentsShortestPaths)
             {
-                result += (pathLenght - shortestPathPlayer) * 15;
+                result += (pathLenght - shortestPathPlayer);
             }
+
+            if (player.IsActiveTurn)
+                result += 1;
+            else
+                result -= 1;
 
             return result;
         }

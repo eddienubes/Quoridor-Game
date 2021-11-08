@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Quorridor.Model
 {
+    using System.Collections;
     using System.Xml.Schema;
 
     public class Grid
@@ -17,6 +18,7 @@ namespace Quorridor.Model
         private List<Wall> _notAvailableWallMoves;
 
         public List<Wall> GetAvailableWallMoves => _availableWallMoves;
+        public Wall[] Walls => _walls.ToArray();
 
         public Grid(int width, int height)
         {
@@ -215,11 +217,6 @@ namespace Quorridor.Model
                 cell1Pair2.Neighbors[2] = null;
                 cell2Pair2.Neighbors[0] = null;
                 _walls.Add(newWall);
-
-                var topLeftCell = new List<Cell> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}
-                    .OrderBy(c => c.GridX)
-                    .ThenByDescending(c => c.GridY).FirstOrDefault();
-
 
                 _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w =>
                     w.CollidesWith(newWall) && !_notAvailableWallMoves.Contains(w)));
@@ -528,43 +525,38 @@ namespace Quorridor.Model
 
         public int GetShortestPath(Cell currentCell, int pawnWinLineY)
         {
-            return DijkstraToWinLine(currentCell, pawnWinLineY);
+            return BfsToWinLine(currentCell, pawnWinLineY);
         }
 
-        private int DijkstraToWinLine(Cell startCell, int pawnWinLineY)
+        private int BfsToWinLine(Cell startCell, int pawnWinLineY)
         {
-            var availableList = new List<Cell>() {startCell};
+            var availableList = new Queue<Cell>();
             var visitedList = new List<Cell>();
 
+            availableList.Enqueue(startCell);
             startCell.GScore = 0;
             while (!visitedList.Exists(c => c.GridY == pawnWinLineY))
             {
-                var curCell = availableList.FirstOrDefault();
+                var curCell = availableList.Dequeue();
                 if (curCell == null)
                 {
-                    break;
+                    Console.WriteLine("Dijksta failed");
                 }
 
                 var neighbours = curCell.Neighbors.Where(c => c != null);
                 foreach (var neighbour in neighbours)
                 {
                     neighbour.GScore = curCell.GScore + 1;
+                    if (!visitedList.Contains(neighbour))
+                    {
+                        availableList.Enqueue(neighbour);
+                    }
                 }
 
-                availableList.AddRange(neighbours.Where(c => !availableList.Contains(c) && !visitedList.Contains(c)));
                 visitedList.Add(curCell);
-                availableList.Remove(curCell);
             }
 
-            foreach (var c in visitedList)
-            {
-                if (c.GridY == pawnWinLineY)
-                {
-                    return c.GScore;
-                }
-            }
-
-            throw new Exception($"Path doesn't exists. WinLine : {pawnWinLineY}");
+            return visitedList.Where(c => c.GridY == pawnWinLineY).Min(c => c.GScore);
         }
     }
 }
