@@ -19,18 +19,18 @@ namespace Quorridor.AI
 
                 if (gamePlayer == player)
                 {
-                    result += gamePlayer.WallsCount * 2;
+                    // result += gamePlayer.WallsCount * 2;
                     shortestPathPlayer = grid.GetShortestPath(currentCell, pawn.WinLineY);
                     continue;
                 }
 
-                result -= gamePlayer.WallsCount * 2;
+                // result -= gamePlayer.WallsCount * 2;
                 opponentsShortestPaths.Add(grid.GetShortestPath(currentCell, pawn.WinLineY));
             }
 
             foreach (var pathLenght in opponentsShortestPaths)
             {
-                result += (pathLenght - shortestPathPlayer) * 5;
+                result += (pathLenght - shortestPathPlayer) * 15;
             }
 
             return result;

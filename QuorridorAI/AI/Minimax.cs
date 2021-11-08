@@ -31,6 +31,16 @@ namespace Quorridor.AI
                 return (null, Evaluator.HeuristicCost(_maxPlayer, game, grid));
             }
 
+            if (grid.CheckIsPawnOnTheWinLine(_maxPlayer.Pawn))
+            {
+                return (null, int.MaxValue);
+            }
+
+            if (grid.CheckIsPawnOnTheWinLine(_minPlayer.Pawn))
+            {
+                return (null, int.MinValue);
+            }
+
             var player = isMaximizingPlayer ? _maxPlayer : _minPlayer;
             List<Cell> allPossiblePawnMoves = grid.GetPossibleMovesFromCell(grid.GetPawnCell(player.Pawn));
             List<Wall> allPossibleWallMoves = grid.GetAvailableWallMoves;

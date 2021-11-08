@@ -323,6 +323,8 @@ namespace Quorridor.Model
                         result.AddRange(GetDiagonalNeighbours(startCell, cell)
                             .Where(move => move != null && !result.Contains(move)));
                     }
+
+                    result.Remove(cell);
                 }
             }
 
@@ -365,9 +367,20 @@ namespace Quorridor.Model
             return cell.Neighbors[indexOfDirection];
         }
 
-        public void MovePlayer(Cell startCell, Cell targetCell, Pawn playerPawn)
+        public void MovePlayer(Cell startCell, Cell targetCell, Pawn playerPawn, bool isUndo)
         {
             //Debug.Log($"<color=yellow> {startCell.GridX}:{startCell.GridY} has {startCell.PlayerId} id </color>");
+            if (!IsCellOnGrid(targetCell))
+            {
+                throw new Exception("Target cell is not on the grid");
+            }
+
+            if (!IsCellOnGrid(startCell))
+            {
+                throw new Exception("Start cell is not on the grid");
+            }
+
+
             if (startCell.Pawn == null)
                 throw new Exception("There is no player on this cell");
 
@@ -375,14 +388,31 @@ namespace Quorridor.Model
                 throw new Exception("This player is already on this cell");
 
 
-            if (!GetPossibleMovesFromCell(startCell).Contains(targetCell))
+            if (targetCell.Pawn != null)
+                throw new Exception($"This cell is occupied by {targetCell.Pawn.PlayerId} player");
+
+
+            if (!GetPossibleMovesFromCell(startCell).Contains(targetCell) && !isUndo)
                 throw new Exception($"Player can't move from cell {startCell} to {targetCell}");
 
 
-            targetCell.Pawn = startCell.Pawn;
+            targetCell.Pawn = playerPawn;
             startCell.Pawn = null;
-
             playerPawn.MoveTo(targetCell.GridX, targetCell.GridY);
+
+            var a = 0;
+            foreach (var cell in _grid)
+            {
+                if (cell.Pawn != null)
+                {
+                    a++;
+                }
+            }
+
+            if (a < 2)
+            {
+                throw new Exception("Lost");
+            }
         }
 
         public void SetPlayersOnTheGridModel(Dictionary<Player, Cell> players)
@@ -438,15 +468,19 @@ namespace Quorridor.Model
 
         public Cell GetPawnCell(Pawn pawn)
         {
-            for (int i = 0; i < _rowsAmount; i++)
+            var a = 0;
+            foreach (var cell in _grid)
             {
-                for (int j = 0; j < _rowCapacity; j++)
+                if (cell.Pawn != null)
                 {
-                    if (_grid[i, j].Pawn == pawn)
-                    {
-                        return _grid[i, j];
-                    }
+                    a++;
                 }
+            }
+
+            foreach (var cell in _grid)
+            {
+                if (cell.Pawn == pawn)
+                    return cell;
             }
 
             throw new Exception($"There is no cell under this pawn. Pawn id is {pawn.PlayerId}");
@@ -508,7 +542,7 @@ namespace Quorridor.Model
                     neighbour.GScore = availableList[0].GScore + 1;
                 }
 
-                availableList.AddRange(neighbours.Where(c=>!availableList.Contains(c) && !visitedList.Contains(c)));
+                availableList.AddRange(neighbours.Where(c => !availableList.Contains(c) && !visitedList.Contains(c)));
                 visitedList.Add(availableList[0]);
                 availableList.RemoveAt(0);
             }
@@ -522,6 +556,31 @@ namespace Quorridor.Model
             }
 
             throw new Exception($"Path doesn't exists. WinLine : {pawnWinLineY}");
+        }
+
+        public void Print()
+        {
+            for (int i = 0; i < _grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < _grid.GetLength(1); j++)
+                {
+                    if (_grid[i, j].Pawn == null)
+                        if (_grid[i, j].Neighbors[3] == null || _grid[i, j].Neighbors[1] == null)
+                            Console.Write(" - ");
+                        else
+                            Console.Write(" + ");
+                    else if (_grid[i, j].Pawn.PlayerId == 1)
+                    {
+                        Console.Write(" w ");
+                    }
+                    else
+                    {
+                        Console.Write(" b ");
+                    }
+                }
+
+                Console.WriteLine();
+            }
         }
     }
 }
