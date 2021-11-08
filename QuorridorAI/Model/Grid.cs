@@ -531,23 +531,29 @@ namespace Quorridor.Model
             return DijkstraToWinLine(currentCell, pawnWinLineY);
         }
 
-        private int DijkstraToWinLine(Cell currentCell, int pawnWinLineY)
+        private int DijkstraToWinLine(Cell startCell, int pawnWinLineY)
         {
-            var availableList = new List<Cell>() {currentCell};
+            var availableList = new List<Cell>() {startCell};
             var visitedList = new List<Cell>();
 
-            currentCell.GScore = 0;
+            startCell.GScore = 0;
             while (!visitedList.Exists(c => c.GridY == pawnWinLineY))
             {
-                var neighbours = availableList[0].Neighbors.Where(c => c != null);
+                var curCell = availableList.FirstOrDefault();
+                if (curCell == null)
+                {
+                    break;
+                }
+
+                var neighbours = curCell.Neighbors.Where(c => c != null);
                 foreach (var neighbour in neighbours)
                 {
-                    neighbour.GScore = availableList[0].GScore + 1;
+                    neighbour.GScore = curCell.GScore + 1;
                 }
 
                 availableList.AddRange(neighbours.Where(c => !availableList.Contains(c) && !visitedList.Contains(c)));
-                visitedList.Add(availableList[0]);
-                availableList.RemoveAt(0);
+                visitedList.Add(curCell);
+                availableList.Remove(curCell);
             }
 
             foreach (var c in visitedList)

@@ -5,6 +5,8 @@ using Quorridor.Model.Commands;
 
 namespace Quorridor.AI
 {
+    using System.Linq;
+
     public class Minimax
     {
         private readonly int _maximumDepth;
@@ -23,7 +25,8 @@ namespace Quorridor.AI
             Grid grid,
             int depth,
             bool isMaximizingPlayer)
-        { IMakeTurnCommand bestMove = null;
+        {
+            IMakeTurnCommand bestMove = null;
 
             if (depth == 0)
             {
@@ -33,7 +36,11 @@ namespace Quorridor.AI
 
             var player = isMaximizingPlayer ? _maxPlayer : _minPlayer;
             List<Cell> allPossiblePawnMoves = grid.GetPossibleMovesFromCell(grid.GetPawnCell(player.Pawn));
-            List<Wall> allPossibleWallMoves = grid.GetAvailableWallMoves;
+            List<Wall> allPossibleWallMoves = grid.GetAvailableWallMoves.Where(w => (
+                Math.Abs(w.Cell1Pair1.GridX - grid.GetPawnCell(_maxPlayer.Pawn).GridX) +
+                Math.Abs(w.Cell1Pair1.GridY - grid.GetPawnCell(_maxPlayer.Pawn).GridY) < 3) || (
+                Math.Abs(w.Cell1Pair1.GridX - grid.GetPawnCell(_minPlayer.Pawn).GridX) +
+                Math.Abs(w.Cell1Pair1.GridY - grid.GetPawnCell(_minPlayer.Pawn).GridY) < 3)).ToList();
 
 
             if (isMaximizingPlayer)

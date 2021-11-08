@@ -11,8 +11,8 @@ namespace Quorridor.AI
     /// </summary>
     public static class CLIConvertor
     {
-        private const string inputCommandIdentificator = "<-";
-        private const string outputCommandIdentificator = "->";
+        private const string inputCommandIdentificator = "->";
+        private const string outputCommandIdentificator = "<-";
         private static string GetCellCoord(Cell cell) => $"{(char) ('A' + cell.GridX)}{9 - cell.GridY}";
 
         private static string GetWallCoord(PlaceWallCommand command)
@@ -21,7 +21,7 @@ namespace Quorridor.AI
                 {command._cell1Pair1, command._cell1Pair2, command._cell2Pair1, command._cell2Pair2};
             var maxX = allCells.Max(x => x.GridX);
             var maxY = allCells.Max(x => x.GridY);
-            return $"{(char) ('S' + maxX - 1)}{8 - maxY}";
+            return $"{(char) ('S' + maxX - 1)}{9 - maxY}";
         }
 
         public static bool IsFirstTurn(string message)
@@ -32,21 +32,17 @@ namespace Quorridor.AI
         }
 
         public static string Convert(MovePawnCommand command) =>
-            $"{outputCommandIdentificator} {(command.IsJump ? "jump" : "move")} {GetCellCoord(command._targetCell)}";
+            $"{(command.IsJump ? "jump" : "move")} {GetCellCoord(command._targetCell)}";
 
         public static string Convert(PlaceWallCommand command) =>
-            $"{outputCommandIdentificator} wall {GetWallCoord(command)}{(command._isWallVertical ? 'v' : 'h')}";
+            $"wall {GetWallCoord(command)}{(command._isWallVertical ? 'v' : 'h')}";
 
         public static IMakeTurnCommand Parse(string command, Grid grid, Pawn playerPawn)
         {
             var commandParts = command.Split(' ');
-            var inputOutput = commandParts[0];
-            var commandType = commandParts[1];
-            var inputArgs = commandParts[2].ToUpper();
+            var commandType = commandParts[0];
+            var inputArgs = commandParts[1].ToUpper();
 
-            if (inputOutput != inputCommandIdentificator)
-                throw new ArgumentException(
-                    $"command input arf \"{inputOutput}\"is not valid, must be  \"{inputCommandIdentificator}\"");
 
             if (commandType == "jump" || commandType == "move")
             {

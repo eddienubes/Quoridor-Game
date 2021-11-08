@@ -18,7 +18,7 @@ namespace Quorridor.AI
 
                 if (gamePlayer == player)
                 {
-                    // result += gamePlayer.WallsCount * 2;
+                    result += gamePlayer.WallsCount * 2;
                     if (grid.CheckIsPawnOnTheWinLine(pawn))
                     {
                         return int.MaxValue;
@@ -33,7 +33,7 @@ namespace Quorridor.AI
                     return int.MinValue;
                 }
 
-                // result -= gamePlayer.WallsCount * 2;
+                result -= gamePlayer.WallsCount * 2;
                 opponentsShortestPaths.Add(grid.GetShortestPath(currentCell, pawn.WinLineY));
             }
 
