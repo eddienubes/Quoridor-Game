@@ -13,15 +13,15 @@ namespace Quorridor.AI
     {
         private const string inputCommandIdentificator = "<-";
         private const string outputCommandIdentificator = "->";
-        private static string GetCellCoord(Cell cell) => $"{(char)('A' + cell.GridX)}{cell.GridY + 1}";
+        private static string GetCellCoord(Cell cell) => $"{(char) ('A' + cell.GridX)}{9 - cell.GridY}";
 
         private static string GetWallCoord(PlaceWallCommand command)
         {
             var allCells = new List<Cell>
-                { command._cell1Pair1, command._cell1Pair2, command._cell2Pair1, command._cell2Pair2 };
+                {command._cell1Pair1, command._cell1Pair2, command._cell2Pair1, command._cell2Pair2};
             var maxX = allCells.Max(x => x.GridX);
             var maxY = allCells.Max(x => x.GridY);
-            return $"{'S' + maxX - 1}{maxY}";
+            return $"{(char) ('S' + maxX - 1)}{8 - maxY}";
         }
 
         public static bool IsFirstTurn(string message)
@@ -50,7 +50,7 @@ namespace Quorridor.AI
 
             if (commandType == "jump" || commandType == "move")
             {
-                var targetCell = grid.GetCellByCoordinates(inputArgs[0] - 'A', inputArgs[1] - '1');
+                var targetCell = grid.GetCellByCoordinates(inputArgs[0] - 'A', '9' - inputArgs[1]);
                 return new MovePawnCommand(playerPawn, grid, grid.GetPawnCell(playerPawn), targetCell);
             }
             else if (commandType == "wall")
@@ -58,7 +58,7 @@ namespace Quorridor.AI
                 if (inputArgs[2] != 'V' && inputArgs[2] != 'H')
                     throw new ArgumentException($"wall is neither horizontal nor vertical. command args: {inputArgs}");
 
-                (int x, int y) wallCoords = (inputArgs[0] - 'S', inputArgs[1] - '1');
+                (int x, int y) wallCoords = (inputArgs[0] - 'S', '8' - inputArgs[1]);
 
                 var cell1 = grid.GetCellByCoordinates(wallCoords.x, wallCoords.y);
                 var cell2 = grid.GetCellByCoordinates(wallCoords.x + 1, wallCoords.y);

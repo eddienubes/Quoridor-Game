@@ -18,8 +18,6 @@ namespace Quorridor.AI
 
         private void MakeTurn()
         {
-            _grid.Print();
-
             var str = Console.ReadLine();
             var command = CLIConvertor.Parse(str, _grid, _playerModel.Pawn);
 

@@ -560,30 +560,5 @@ namespace Quorridor.Model
 
             throw new Exception($"Path doesn't exists. WinLine : {pawnWinLineY}");
         }
-
-        public void Print()
-        {
-            for (int i = 0; i < _grid.GetLength(0); i++)
-            {
-                for (int j = 0; j < _grid.GetLength(1); j++)
-                {
-                    if (_grid[i, j].Pawn == null)
-                        if (_grid[i, j].Neighbors[3] == null || _grid[i, j].Neighbors[1] == null)
-                            Console.Write(" - ");
-                        else
-                            Console.Write(" + ");
-                    else if (_grid[i, j].Pawn.PlayerId == 1)
-                    {
-                        Console.Write(" w ");
-                    }
-                    else
-                    {
-                        Console.Write(" b ");
-                    }
-                }
-
-                Console.WriteLine();
-            }
-        }
     }
 }
