@@ -11,7 +11,6 @@ namespace Quorridor.AI
             int shortestPathPlayer = 0;
 
             var opponentsShortestPaths = new List<int>();
-
             foreach (var gamePlayer in game.Players)
             {
                 var pawn = gamePlayer.Pawn;
@@ -20,8 +19,18 @@ namespace Quorridor.AI
                 if (gamePlayer == player)
                 {
                     // result += gamePlayer.WallsCount * 2;
+                    if (grid.CheckIsPawnOnTheWinLine(pawn))
+                    {
+                        return int.MaxValue;
+                    }
+
                     shortestPathPlayer = grid.GetShortestPath(currentCell, pawn.WinLineY);
                     continue;
+                }
+
+                if (grid.CheckIsPawnOnTheWinLine(pawn))
+                {
+                    return int.MinValue;
                 }
 
                 // result -= gamePlayer.WallsCount * 2;

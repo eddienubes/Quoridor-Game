@@ -23,23 +23,13 @@ namespace Quorridor.AI
             Grid grid,
             int depth,
             bool isMaximizingPlayer)
-        {
-            IMakeTurnCommand bestMove = null;
+        { IMakeTurnCommand bestMove = null;
 
             if (depth == 0)
             {
                 return (null, Evaluator.HeuristicCost(_maxPlayer, game, grid));
             }
 
-            if (grid.CheckIsPawnOnTheWinLine(_maxPlayer.Pawn))
-            {
-                return (null, int.MaxValue);
-            }
-
-            if (grid.CheckIsPawnOnTheWinLine(_minPlayer.Pawn))
-            {
-                return (null, int.MinValue);
-            }
 
             var player = isMaximizingPlayer ? _maxPlayer : _minPlayer;
             List<Cell> allPossiblePawnMoves = grid.GetPossibleMovesFromCell(grid.GetPawnCell(player.Pawn));
@@ -59,7 +49,7 @@ namespace Quorridor.AI
                     (IMakeTurnCommand evaluatedMove, int eval) = ExecuteMinimax(game, grid, depth - 1, false);
                     currentPawnMove.Undo();
 
-                    if (eval <= maxEval) continue;
+                    if (eval < maxEval) continue;
 
                     bestMove = currentPawnMove;
                     maxEval = eval;
@@ -79,7 +69,7 @@ namespace Quorridor.AI
                     (IMakeTurnCommand evaluatedMove, int eval) = ExecuteMinimax(game, grid, depth - 1, false);
                     currentWallMove.Undo();
 
-                    if (eval <= maxEval) continue;
+                    if (eval < maxEval) continue;
 
                     bestMove = currentWallMove;
                     maxEval = eval;
@@ -101,7 +91,7 @@ namespace Quorridor.AI
                     (IMakeTurnCommand evaluatedMove, int eval) = ExecuteMinimax(game, grid, depth - 1, true);
                     currentPawnMove.Undo();
 
-                    if (eval >= minEval) continue;
+                    if (eval > minEval) continue;
 
                     bestMove = currentPawnMove;
                     minEval = eval;
@@ -117,7 +107,7 @@ namespace Quorridor.AI
                     (IMakeTurnCommand evaluatedMove, int eval) = ExecuteMinimax(game, grid, depth - 1, true);
                     currentWallMove.Undo();
 
-                    if (eval >= minEval) continue;
+                    if (eval > minEval) continue;
 
                     bestMove = currentWallMove;
                     minEval = eval;

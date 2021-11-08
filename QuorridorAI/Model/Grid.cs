@@ -221,8 +221,10 @@ namespace Quorridor.Model
                     .ThenByDescending(c => c.GridY).FirstOrDefault();
 
 
-                _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w => w.CollidesWith(newWall)));
+                _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w =>
+                    w.CollidesWith(newWall) && !_notAvailableWallMoves.Contains(w)));
                 _availableWallMoves.RemoveAll(w => w.CollidesWith(newWall));
+
                 return;
             }
 
@@ -237,7 +239,8 @@ namespace Quorridor.Model
             cell2Pair2.Neighbors[1] = null;
 
 
-            _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w => w.CollidesWith(newWall)));
+            _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w =>
+                w.CollidesWith(newWall) && !_notAvailableWallMoves.Contains(w)));
             _availableWallMoves.RemoveAll(w => w.CollidesWith(newWall));
 
 
@@ -257,12 +260,12 @@ namespace Quorridor.Model
 
 
             var newWall = new Wall(isVertical, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2);
+            _walls.RemoveAll(w => w.Equals(newWall));
 
             var wallMovesToReturn = _notAvailableWallMoves.Where(w => w.CollidesWith(newWall)).ToList();
 
             wallMovesToReturn.RemoveAll(w => _walls.Exists(settedWall => settedWall.CollidesWith(w)));
-            _notAvailableWallMoves.AddRange(_availableWallMoves.Where(w => w.CollidesWith(newWall)));
-            _availableWallMoves.RemoveAll(w => w.CollidesWith(newWall));
+            _availableWallMoves.AddRange(wallMovesToReturn);
 
             var cells = new List<Cell> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}.OrderBy(c => c.GridX)
                 .ThenByDescending(c => c.GridY).ToList();

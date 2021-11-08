@@ -20,6 +20,18 @@ namespace Quorridor.Model
         public Cell Cell1Pair2 { get; }
         public Cell Cell2Pair2 { get; }
 
+        public bool Equals(Wall wall)
+        {
+            var a = new List<Cell>() {wall.Cell1Pair1, wall.Cell1Pair2, wall.Cell2Pair1, wall.Cell2Pair2};
+            var b = new List<Cell>() {Cell1Pair1, Cell1Pair2, Cell2Pair1, Cell2Pair2};
+            if (a.TrueForAll(b.Contains) && isVertical == wall.isVertical)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public bool CollidesWith(Wall wall)
         {
             if (Cell1Pair1 == wall.Cell1Pair2 && Cell2Pair1 == wall.Cell2Pair2)
@@ -32,9 +44,8 @@ namespace Quorridor.Model
                 return true;
             }
 
-            var aList = new List<Cell>() { Cell1Pair1, Cell1Pair2, Cell2Pair1, Cell2Pair2 };
-            var bList = new List<Cell>() { wall.Cell1Pair1, wall.Cell1Pair2, wall.Cell2Pair1, wall.Cell2Pair2 };
-
+            var aList = new List<Cell>() {Cell1Pair1, Cell1Pair2, Cell2Pair1, Cell2Pair2};
+            var bList = new List<Cell>() {wall.Cell1Pair1, wall.Cell1Pair2, wall.Cell2Pair1, wall.Cell2Pair2};
             if (aList.All(c => bList.Contains(c)) && bList.All(c => aList.Contains(c)))
             {
                 if (wall != this)
