@@ -35,9 +35,11 @@ namespace Quorridor.AI
                 return (null, Evaluator.HeuristicCost(_maxPlayer, game, grid));
             }
 
-
             var player = isMaximizingPlayer ? _maxPlayer : _minPlayer;
-            List<Cell> allPossiblePawnMoves = grid.GetPossibleMovesFromCell(grid.GetPawnCell(player.Pawn));
+            var radius = isMaximizingPlayer ? 3 : 2;
+            var playerPawnCell = grid.GetPawnCell(player.Pawn);
+
+            List<Cell> allPossiblePawnMoves = grid.GetPossibleMovesFromCell(playerPawnCell);
 
             if (player.Pawn.WinLineY == 0)
             {
@@ -48,11 +50,10 @@ namespace Quorridor.AI
                 allPossiblePawnMoves = allPossiblePawnMoves.OrderByDescending(move => move.GridY).ToList();
             }
 
-            List<Wall> allPossibleWallMoves = grid.GetAvailableWallMoves.Where(w => (
-                Math.Abs(w.Cell1Pair1.GridX - grid.GetPawnCell(_maxPlayer.Pawn).GridX) +
-                Math.Abs(w.Cell1Pair1.GridY - grid.GetPawnCell(_maxPlayer.Pawn).GridY) < 3) || (
-                Math.Abs(w.Cell1Pair1.GridX - grid.GetPawnCell(_minPlayer.Pawn).GridX) +
-                Math.Abs(w.Cell1Pair1.GridY - grid.GetPawnCell(_minPlayer.Pawn).GridY) < 3)).ToList();
+            List<Wall> allPossibleWallMoves = grid.GetAvailableWallMoves.Where(w => w.Cells.Exists(c =>
+                    Math.Abs(c.GridX - playerPawnCell.GridX) < radius &&
+                    Math.Abs(c.GridY - playerPawnCell.GridY) < radius))
+                .ToList();
             if (player.WallsCount == 0)
                 allPossibleWallMoves = new List<Wall>();
 
@@ -63,10 +64,11 @@ namespace Quorridor.AI
                 foreach (Cell pawnMove in allPossiblePawnMoves)
                 {
                     MovePawnCommand currentPawnMove =
-                        new MovePawnCommand(player.Pawn, grid, grid.GetPawnCell(player.Pawn),
+                        new MovePawnCommand(player.Pawn, grid, playerPawnCell,
                             grid.GetCellByCoordinates(pawnMove.GridX, pawnMove.GridY));
 
                     currentPawnMove.Execute();
+                    grid.CheckPaths(new Player[] {player});
                     (IMakeTurnCommand evaluatedMove, int eval) =
                         ExecuteMinimax(game, grid, depth - 1, false, alpha, beta);
                     currentPawnMove.Undo();
@@ -120,9 +122,10 @@ namespace Quorridor.AI
                 foreach (Cell pawnMove in allPossiblePawnMoves)
                 {
                     MovePawnCommand currentPawnMove =
-                        new MovePawnCommand(player.Pawn, grid, grid.GetPawnCell(player.Pawn), pawnMove);
+                        new MovePawnCommand(player.Pawn, grid, playerPawnCell, pawnMove);
 
                     currentPawnMove.Execute();
+                    grid.CheckPaths(new Player[] {player});
                     (IMakeTurnCommand evaluatedMove, int eval) =
                         ExecuteMinimax(game, grid, depth - 1, true, alpha, beta);
                     currentPawnMove.Undo();

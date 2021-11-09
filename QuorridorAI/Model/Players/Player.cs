@@ -11,7 +11,7 @@ namespace Quorridor.Model
         public event Action OnTurnStarted;
         public event Action OnTurnEnded;
         public event Action<bool, int, int> OnWallPlaced;
-
+        public int ShortestPath { get; set; }
         public Pawn Pawn { get; private set; }
 
         public Player(int winLineY, bool isActiveTurn, int playerId, int wallsCount = 10)

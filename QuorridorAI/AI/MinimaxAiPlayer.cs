@@ -11,7 +11,7 @@ namespace Quorridor.AI
             base(winLineY,
                 isActiveTurn, playerId, wallsCount)
         {
-            _minimax = new Minimax(2, this, opponent);
+            _minimax = new Minimax(4, this, opponent);
         }
 
         public override IMakeTurnCommand MakeDecision(Game gameModel, Grid grid, Pawn pawn)

@@ -493,7 +493,8 @@ namespace Quorridor.Model
                 var goals = new List<Cell>();
                 var playerCell = GetPawnCell(player.Pawn);
 
-                if (!BfsCheck(playerCell, player.Pawn.WinLineY))
+                player.ShortestPath = BfsCheck(playerCell, player.Pawn.WinLineY);
+                if (player.ShortestPath == -1)
                 {
                     return false;
                 }
@@ -502,25 +503,32 @@ namespace Quorridor.Model
             return true;
         }
 
-        private bool BfsCheck(Cell playerCell, int pawnWinLineY)
+        private int BfsCheck(Cell playerCell, int pawnWinLineY)
         {
             var available = new List<Cell>() {playerCell};
             var visited = new List<Cell>();
-
+            playerCell.GScore = 0;
             while (available.Count > 0)
             {
                 visited.Add(available[0]);
-                available.AddRange(available[0].Neighbors
-                    .Where(n => n != null && !visited.Contains(n) && !available.Contains(n)));
+                var newAvailable = available[0].Neighbors
+                    .Where(n => n != null && !visited.Contains(n) && !available.Contains(n)).ToList();
+                foreach (var cell in newAvailable)
+                {
+                    cell.GScore = available[0].GScore + 1;
+                }
+
+                available.AddRange(newAvailable);
                 available.RemoveAt(0);
             }
 
-            if (visited.Exists(v => v.GridY == pawnWinLineY))
+            var finish = visited.FirstOrDefault(v => v.GridY == pawnWinLineY);
+            if (finish != null)
             {
-                return true;
+                return finish.GScore;
             }
 
-            return false;
+            return -1;
         }
 
         public int GetShortestPath(Cell currentCell, int pawnWinLineY)

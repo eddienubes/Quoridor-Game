@@ -19,12 +19,11 @@ namespace Quorridor.Model
         public Cell Cell2Pair1 { get; }
         public Cell Cell1Pair2 { get; }
         public Cell Cell2Pair2 { get; }
+        public List<Cell> Cells => new List<Cell>() {Cell1Pair1, Cell1Pair2, Cell2Pair1, Cell2Pair2};
 
         public bool Equals(Wall wall)
         {
-            var a = new List<Cell>() {wall.Cell1Pair1, wall.Cell1Pair2, wall.Cell2Pair1, wall.Cell2Pair2};
-            var b = new List<Cell>() {Cell1Pair1, Cell1Pair2, Cell2Pair1, Cell2Pair2};
-            if (a.TrueForAll(b.Contains) && isVertical == wall.isVertical)
+            if (Cells.TrueForAll(wall.Cells.Contains) && isVertical == wall.isVertical)
             {
                 return true;
             }
