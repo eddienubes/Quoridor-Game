@@ -70,7 +70,7 @@ namespace Quorridor.AI
                             grid.GetCellByCoordinates(pawnMove.GridX, pawnMove.GridY));
 
                     currentPawnMove.Execute();
-                    grid.CheckPaths(new Player[] {player});
+                    grid.CheckPaths(new[] {_maxPlayer, _minPlayer});
                     (IMakeTurnCommand evaluatedMove, float eval) =
                         ExecuteMinimax(game, grid, depth - 1, false, alpha, beta);
                     currentPawnMove.Undo();
@@ -127,7 +127,7 @@ namespace Quorridor.AI
                         new MovePawnCommand(player.Pawn, grid, playerPawnCell, pawnMove);
 
                     currentPawnMove.Execute();
-                    grid.CheckPaths(new Player[] {player});
+                    grid.CheckPaths(new[] {_maxPlayer, _minPlayer});
                     (IMakeTurnCommand evaluatedMove, float eval) =
                         ExecuteMinimax(game, grid, depth - 1, true, alpha, beta);
                     currentPawnMove.Undo();
@@ -149,7 +149,7 @@ namespace Quorridor.AI
                         wallMove.Cell2Pair1, wallMove.Cell1Pair2, wallMove.Cell2Pair2, wallMove.isVertical);
 
                     currentWallMove.Execute();
-                    if (!grid.CheckPaths(new Player[] {_maxPlayer, _minPlayer}))
+                    if (!grid.CheckPaths(new[] {_maxPlayer, _minPlayer}))
                     {
                         currentWallMove.Undo();
                         continue;
