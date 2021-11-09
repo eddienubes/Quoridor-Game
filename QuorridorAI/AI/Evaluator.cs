@@ -6,9 +6,9 @@ namespace Quorridor.AI
 
     public static class Evaluator
     {
-        public static float HeuristicCost(Player player, Game game, Grid grid)
+        public static int HeuristicCost(Player player, Game game, Grid grid)
         {
-            var result = 10000f;
+            var result = 10000;
             int shortestPathPlayer = 0;
 
             var opponentsShortestPaths = new List<int>();
@@ -22,7 +22,7 @@ namespace Quorridor.AI
                     shortestPathPlayer = player.ShortestPath;
                     if (player.ShortestPath == 0)
                     {
-                        return float.MaxValue;
+                        return int.MaxValue;
                     }
 
                     continue;
@@ -35,16 +35,16 @@ namespace Quorridor.AI
                 opponentsShortestPaths.Add(gamePlayer.ShortestPath);
                 if (gamePlayer.ShortestPath == 0)
                 {
-                    return float.MinValue;
+                    return int.MinValue;
                 }
             }
 
             foreach (var pathLenght in opponentsShortestPaths)
             {
-                result += (float) Math.Pow(pathLenght, 5);
+                result += (int) Math.Pow(pathLenght, 5);
             }
 
-            result -= (float) Math.Pow(shortestPathPlayer, 5);
+            result -= (int) Math.Pow(shortestPathPlayer, 5);
 
             return result;
         }

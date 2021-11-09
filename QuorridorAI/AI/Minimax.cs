@@ -20,13 +20,13 @@ namespace Quorridor.AI
             _minPlayer = opponent;
         }
 
-        private (IMakeTurnCommand move, float eval) ExecuteMinimax(
+        private (IMakeTurnCommand move, int eval) ExecuteMinimax(
             Game game,
             Grid grid,
             int depth,
             bool isMaximizingPlayer,
-            float alpha = float.MinValue,
-            float beta = float.MaxValue)
+            int alpha = int.MinValue,
+            int beta = int.MaxValue)
         {
             IMakeTurnCommand bestMove = null;
 
@@ -62,7 +62,7 @@ namespace Quorridor.AI
 
             if (isMaximizingPlayer)
             {
-                float maxEval = float.MinValue;
+                int maxEval = int.MinValue;
                 foreach (Cell pawnMove in allPossiblePawnMoves)
                 {
                     MovePawnCommand currentPawnMove =
@@ -71,7 +71,7 @@ namespace Quorridor.AI
 
                     currentPawnMove.Execute();
                     grid.CheckPaths(new[] {_maxPlayer, _minPlayer});
-                    (IMakeTurnCommand evaluatedMove, float eval) =
+                    (IMakeTurnCommand evaluatedMove, int eval) =
                         ExecuteMinimax(game, grid, depth - 1, false, alpha, beta);
                     currentPawnMove.Undo();
 
@@ -101,7 +101,7 @@ namespace Quorridor.AI
                         continue;
                     }
 
-                    (IMakeTurnCommand evaluatedMove, float eval) =
+                    (IMakeTurnCommand evaluatedMove, int eval) =
                         ExecuteMinimax(game, grid, depth - 1, false, alpha, beta);
                     currentWallMove.Undo();
 
@@ -118,7 +118,7 @@ namespace Quorridor.AI
             }
             else
             {
-                float minEval = float.MaxValue;
+                int minEval = int.MaxValue;
 
 
                 foreach (Cell pawnMove in allPossiblePawnMoves)
@@ -128,7 +128,7 @@ namespace Quorridor.AI
 
                     currentPawnMove.Execute();
                     grid.CheckPaths(new[] {_maxPlayer, _minPlayer});
-                    (IMakeTurnCommand evaluatedMove, float eval) =
+                    (IMakeTurnCommand evaluatedMove, int eval) =
                         ExecuteMinimax(game, grid, depth - 1, true, alpha, beta);
                     currentPawnMove.Undo();
 
@@ -155,7 +155,7 @@ namespace Quorridor.AI
                         continue;
                     }
 
-                    (IMakeTurnCommand evaluatedMove, float eval) =
+                    (IMakeTurnCommand evaluatedMove, int eval) =
                         ExecuteMinimax(game, grid, depth - 1, true, alpha, beta);
                     currentWallMove.Undo();
 
@@ -175,7 +175,7 @@ namespace Quorridor.AI
 
         public IMakeTurnCommand FindBestMove(Game game, Grid grid)
         {
-            (IMakeTurnCommand move, float eval) = ExecuteMinimax(game, grid, _maximumDepth, true);
+            (IMakeTurnCommand move, int eval) = ExecuteMinimax(game, grid, _maximumDepth, true);
             return move;
         }
     }
