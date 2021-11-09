@@ -5,47 +5,44 @@ namespace Quorridor.AI
 
     public static class Evaluator
     {
-        public static int HeuristicCost(Player player, Game game, Grid grid)
+        public static float HeuristicCost(Player player, Game game, Grid grid)
         {
-            var result = 0;
+            var result = 0f;
             int shortestPathPlayer = 0;
 
             var opponentsShortestPaths = new List<int>();
             foreach (var gamePlayer in game.Players)
             {
-                var pawn = gamePlayer.Pawn;
-                var currentCell = grid.GetPawnCell(pawn);
-
                 if (gamePlayer == player)
                 {
-                    // result += gamePlayer.WallsCount * 2;
-                    // if (grid.CheckIsPawnOnTheWinLine(pawn))
-                    // {
-                    //     return int.MaxValue;
-                    // }
+                    // result += gamePlayer.WallsCount * 6;
 
-                    shortestPathPlayer = grid.GetShortestPath(currentCell, pawn.WinLineY);
-                    // continue;
+
+                    shortestPathPlayer = player.ShortestPath;
+                    if (player.ShortestPath == 0)
+                    {
+                        return int.MaxValue;
+                    }
+
+                    continue;
                 }
-                //
-                // if (grid.CheckIsPawnOnTheWinLine(pawn))
-                // {
-                //     return int.MinValue;
-                // }
 
-                // result -= gamePlayer.WallsCount * 2;
-                opponentsShortestPaths.Add(grid.GetShortestPath(currentCell, pawn.WinLineY));
+                //
+                //
+                //
+                // result -= gamePlayer.WallsCount * 6;
+                opponentsShortestPaths.Add(gamePlayer.ShortestPath);
+                if (gamePlayer.ShortestPath == 0)
+                {
+                    return int.MinValue;
+                }
             }
 
             foreach (var pathLenght in opponentsShortestPaths)
             {
-                result += (pathLenght - shortestPathPlayer);
+                result += 1f / shortestPathPlayer - 1f / pathLenght;
             }
 
-            if (player.IsActiveTurn)
-                result += 1;
-            else
-                result -= 1;
 
             return result;
         }
