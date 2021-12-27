@@ -2,6 +2,7 @@
 using System.Linq;
 using Quorridor.AI;
 using Quorridor.Model;
+using QuorridorAI.UDP;
 
 namespace QuorridorAI
 {
@@ -44,7 +45,11 @@ namespace QuorridorAI
 
         public static void InitServer()
         {
+
+            var server = new UDPServer();
             
+            server.Start();
+
         }
     }
 }
