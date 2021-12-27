@@ -5,51 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1e2ce70-9d3e-4f86-846f-4a336cc46935" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Scripts/AI/Controllers/CLIPlayerController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/AI/Controllers/CLIPlayerController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/AI/Controllers/CliGameController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/AI/Controllers/CliGameController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/Controller/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Controller/GameController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/Controller/PlayerControllers/UnityAIUnityPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Controller/PlayerControllers/UnityAIUnityPlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Cell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Cell.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Commands/MovePawnCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Commands/MovePawnCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Commands/PlaceWallCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Commands/PlaceWallCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Game.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Grid.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Grid.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/Model/IPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/IPlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Players/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Players/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Wall.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Wall.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.QuorridorAI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.QuorridorAI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quoridor-Game.sln.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/CLIPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/CLIPlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Cell.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Cell.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/ICommand.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/ICommand.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/IMakeTurnCommand.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/IMakeTurnCommand.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/MovePawnCommand.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/MovePawnCommand.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/PlaceWallCommand.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/PlaceWallCommand.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Game.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Game.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Grid.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Grid.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/IGameController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/IGameController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/IPlayerController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/IPlayerController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Pawn.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Pawn.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Players.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Players/HotSeatPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Players/HotSeatPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Players/Player.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Players/Player.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Wall.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Wall.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../AI.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Assembly-CSharp.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Controller.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Controller.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DOTween.Modules.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../DOTween.Modules.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Miscellaneous.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Miscellaneous.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Model.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Model.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../View.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../View.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +24,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
+  </component>
   <component name="ProjectId" id="22qYviW25WaIliG500dVe8aIYox" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -71,8 +36,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="rider.run.widget.enabled.cache" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RiderProblemsViewState">
+    <option name="contextShortcutLearned" value="true" />
   </component>
   <component name="RunManager" selected=".NET Project.QuorridorAI">
     <configuration name="QuorridorAI" type="DotNetProject" factoryName=".NET Project">
@@ -115,6 +85,7 @@
       <workItem from="1640566825881" duration="400000" />
       <workItem from="1640568967523" duration="134000" />
       <workItem from="1640569411205" duration="251000" />
+      <workItem from="1640607057296" duration="234000" />
     </task>
     <servers />
   </component>

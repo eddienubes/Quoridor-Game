@@ -16,3 +16,12 @@ D:\Reps\KPI_5\Korotenko\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.csprojAs
 D:\Reps\KPI_5\Korotenko\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.csproj.CoreCompileInputs.cache
 D:\Reps\KPI_5\Korotenko\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.exe
 D:\Reps\KPI_5\Korotenko\Quoridor-Game\QuorridorAI\obj\Debug\QuorridorAI.pdb
+D:\CODE\C#\Quoridor-Game\Assets\Server\QuorridorAI\bin\Debug\QuorridorAI.exe
+D:\CODE\C#\Quoridor-Game\Assets\Server\QuorridorAI\bin\Debug\QuorridorAI.pdb
+D:\CODE\C#\Quoridor-Game\Assets\Server\QuorridorAI\bin\Debug\Model.dll
+D:\CODE\C#\Quoridor-Game\Assets\Server\QuorridorAI\bin\Debug\Model.pdb
+D:\CODE\C#\Quoridor-Game\Assets\Server\QuorridorAI\obj\Debug\QuorridorAI.csproj.AssemblyReference.cache
+D:\CODE\C#\Quoridor-Game\Assets\Server\QuorridorAI\obj\Debug\QuorridorAI.csproj.CoreCompileInputs.cache
+D:\CODE\C#\Quoridor-Game\Assets\Server\QuorridorAI\obj\Debug\QuorridorAI.csproj.CopyComplete
+D:\CODE\C#\Quoridor-Game\Assets\Server\QuorridorAI\obj\Debug\QuorridorAI.exe
+D:\CODE\C#\Quoridor-Game\Assets\Server\QuorridorAI\obj\Debug\QuorridorAI.pdb
