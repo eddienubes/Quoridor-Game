@@ -23,61 +23,35 @@ public class TCPServer
         
         _socket.Bind(_ipEndPoint);
         _socket.Listen(128);
+
+        Console.WriteLine($"Server is up and running on port: {port}");
         
-        // _ = Task.Run(() => )
+        Task.Run(DoEcho).Wait();
     }
 
 
 
     // listening for socket connection    
-    private void Listen()
+    private async Task DoEcho()
     {
-        try
-        {
-            _ipEndPoint = new IPEndPoint(IPAddress.Loopback, _port);
-            _socket.Bind(_ipEndPoint);
+        do {
+            var clientSocket = await Task.Factory.FromAsync(
+                new Func<AsyncCallback, object, IAsyncResult>(_socket.BeginAccept),
+                new Func<IAsyncResult, Socket>(_socket.EndAccept),
+                null).ConfigureAwait(false);
 
-            
-            while (true)
-            {
-                var builder = new StringBuilder();
-                var bytes = 0; 
-                var data = new byte[256]; 
- 
-                EndPoint remoteIp = new IPEndPoint(IPAddress.Any, 0);
+            Console.WriteLine( "ECHO SERVER :: CLIENT CONNECTED" );
 
-                Console.WriteLine(remoteIp.AddressFamily);
-                
-                do
-                {
-                    bytes = _socket.ReceiveFrom(data, ref remoteIp);
-                    Console.WriteLine(bytes);
-                    builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
-                }
-                while (_socket.Available > 0);
-                
-                var remoteFullIp = remoteIp as IPEndPoint;
+            using var stream = new NetworkStream( clientSocket, true );
+            var buffer = new byte[1024];
+            do {
+                var bytesRead = await stream.ReadAsync(buffer,0,buffer.Length).ConfigureAwait(false);
 
-                Console.WriteLine($"{remoteFullIp?.Address}:{remoteFullIp?.Port} - {builder.ToString()}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-        finally
-        {
-            Close();
-        }
-        
-    }
+                if( bytesRead == 0 )
+                    break;
 
-    private void Close()
-    {
-        if (_socket == null) return;
-        
-        _socket.Shutdown(SocketShutdown.Both);
-        _socket.Close();
-        _socket = null;
+                await stream.WriteAsync( buffer, 0, bytesRead ).ConfigureAwait( false );
+            } while( true );
+        } while( true );
     }
 }

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Linq;
-using QuorridorAI.UDP;
 
-namespace QuorridorAI
+namespace Server
 {
     internal class Program
     {
         public static void Main(string[] args)
         {
-            // InitGame(CLIConvertor.IsFirstTurn(Console.ReadLine()));
             InitServer();
         }
 
@@ -16,9 +14,7 @@ namespace QuorridorAI
         {
 
             var server = new TCPServer();
-            
             server.Start();
-
         }
     }
 }

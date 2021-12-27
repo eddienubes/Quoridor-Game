@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.Mime;
 using System.Net.Sockets;
 using System.Text;
 
@@ -11,39 +12,31 @@ namespace TestClient
 
         public static void Main(string[] args)
         {
-            EndPoint remoteEndpoint = new IPEndPoint(IPAddress.Loopback, 9000);
+            Console.WriteLine("Press ENTER to connect");
+            Console.ReadLine();
+            
+            var endpoint = new IPEndPoint(IPAddress.Loopback, 9000);
 
-            try
-            {
-                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            var socket = new Socket(endpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
-                while (true)
-                {
-                    var message = Console.ReadLine();
+            socket.Connect(endpoint);
 
-                    var data = Encoding.Unicode.GetBytes(message);
+            var networkStream = new NetworkStream(socket, true);
 
-                    _socket.SendTo(data, remoteEndpoint);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                Close();
-            }
-        }
+            var msg = "Hello world";
 
-        private static void Close()
-        {
-            if (_socket != null)
-            {
-                _socket.Shutdown(SocketShutdown.Both);
-                _socket.Close();
-                _socket = null;
-            }
+            var buffer = Encoding.UTF8.GetBytes(msg);
+            
+            networkStream.Write(buffer, 0, buffer.Length);
+
+            var response = new byte[1024];
+
+            var bytesRead = networkStream.Read(response, 0, response.Length);
+
+            var responseStr = Encoding.UTF8.GetString(response);
+
+            Console.WriteLine($"Received string: {responseStr}");
+            Console.ReadLine();
         }
     }
 }
