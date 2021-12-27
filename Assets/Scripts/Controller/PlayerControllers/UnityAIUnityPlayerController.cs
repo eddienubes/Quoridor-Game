@@ -5,13 +5,12 @@ namespace Quoridorgame.Controllers
     using Quorridor.Model;
     using UnityEngine;
     using View;
-    using Grid = Grid;
     using Pawn = View.Pawn;
 
     public class UnityAIUnityPlayerController : UnityPlayerControllerBase
     {
         private AiPlayer _aiPlayerModel;
-        public override void SetModelsGameAndGrid(Game game, Grid grid)
+        public override void SetModelsGameAndGrid(Game game, Quorridor.Model.Grid grid)
         {
             _gameModel = game;
             _grid = grid;
@@ -37,7 +36,7 @@ namespace Quoridorgame.Controllers
             MakeTurn(turn);
         }
 
-        private void MakeTurn((bool isWalking, bool isWallVertical, global::Cell cell) turn)
+        private void MakeTurn((bool isWalking, bool isWallVertical, Quorridor.Model.Cell cell) turn)
         {
             if (turn.isWalking)
             {
