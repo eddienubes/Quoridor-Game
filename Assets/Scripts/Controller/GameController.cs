@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Quoridorgame.Controllers;
 using Quoridorgame.View;
 using Quorridor.Model;
 using UnityEngine;
+using Cell = Quorridor.Model.Cell;
 using Grid = Quorridor.Model.Grid;
 
 namespace Controller
@@ -88,7 +90,12 @@ namespace Controller
         }
         private void SetPlayersOnTheGrid()
         {
-            _grid.SetPlayersOnTheGridModel(_players);
+            var dict = new Dictionary<Player, Cell>()
+            {
+                {_players[0] , _grid.GetCellByCoordinates(4,0)},
+                {_players[1] , _grid.GetCellByCoordinates(4,8)},
+            };
+            _grid.SetPlayersOnTheGridModel(dict);
             _playerControllers[0].SetPawnView(fieldCreatorView.SpawnPawn(4, 0, 0));
             _playerControllers[1].SetPawnView(fieldCreatorView.SpawnPawn(4, 8, 1));
         }
