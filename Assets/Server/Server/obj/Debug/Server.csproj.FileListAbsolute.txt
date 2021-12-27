@@ -1,0 +1,9 @@
+D:\CODE\C#\Quoridor-Game\Assets\Server\Server\bin\Debug\Server.exe
+D:\CODE\C#\Quoridor-Game\Assets\Server\Server\bin\Debug\Server.pdb
+D:\CODE\C#\Quoridor-Game\Assets\Server\Server\bin\Debug\Model.dll
+D:\CODE\C#\Quoridor-Game\Assets\Server\Server\bin\Debug\Model.pdb
+D:\CODE\C#\Quoridor-Game\Assets\Server\Server\obj\Debug\Server.csproj.AssemblyReference.cache
+D:\CODE\C#\Quoridor-Game\Assets\Server\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+D:\CODE\C#\Quoridor-Game\Assets\Server\Server\obj\Debug\Server.csproj.CopyComplete
+D:\CODE\C#\Quoridor-Game\Assets\Server\Server\obj\Debug\Server.exe
+D:\CODE\C#\Quoridor-Game\Assets\Server\Server\obj\Debug\Server.pdb

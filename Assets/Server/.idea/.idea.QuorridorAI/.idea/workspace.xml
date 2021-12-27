@@ -4,14 +4,123 @@
     <projectFile>QuorridorAI/QuorridorAI.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1e2ce70-9d3e-4f86-846f-4a336cc46935" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../AI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../AI.csproj" afterDir="false" />
+    <list default="true" id="f1e2ce70-9d3e-4f86-846f-4a336cc46935" name="Changes" comment="initial setup with multiple solutions">
+      <change afterPath="$PROJECT_DIR$/Server/.idea/.idea.QuorridorAI.dir/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/.idea/.idea.QuorridorAI.dir/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/.idea/.idea.QuorridorAI.dir/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/.idea/.idea.QuorridorAI.dir/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/.idea/.idea.QuorridorAI.dir/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/AiPlayer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/AiPlayer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/CLIConvertor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/CLIConvertor.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Controllers.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Controllers/CLIPlayerController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Controllers/CLIPlayerController.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Controllers/CliGameController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Controllers/CliGameController.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Controllers/MinimaxPlayerController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Controllers/MinimaxPlayerController.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/DummyAiPlayer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/DummyAiPlayer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Evaluator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Evaluator.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Minimax.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/Minimax.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/MinimaxAiPlayer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/AI/MinimaxAiPlayer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Miscellaneous.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Miscellaneous/LoopedList.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Miscellaneous/LoopedList.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Model.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Program.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Program.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Properties.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Properties/AssemblyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Properties/AssemblyInfo.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/QuorridorAI.csproj.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Release.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Release/QuorridorAI.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Release/QuorridorAI.exe.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Server.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Server/UDPServer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/bin.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/bin/Debug.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/bin/Debug/Model.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/.NETFramework,Version=v4.7.1.AssemblyAttributes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/QuorridorAI.csproj.AssemblyReference.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/QuorridorAI.csproj.AssemblyReference.cache.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/QuorridorAI.csproj.CopyComplete" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/QuorridorAI.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/QuorridorAI.csproj.CoreCompileInputs.cache.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/QuorridorAI.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/QuorridorAI.csproj.FileListAbsolute.txt.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/QuorridorAI.csprojAssemblyReference.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/QuorridorAI.csprojAssemblyReference.cache.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/obj/Debug/QuorridorAI.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Assembly-CSharp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Controller.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Controller.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../DOTween.Modules.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../DOTween.Modules.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Miscellaneous.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Miscellaneous.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Model.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Model.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../View.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../View.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.QuorridorAI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.QuorridorAI/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI.sln" beforeDir="false" afterPath="$PROJECT_DIR$/QuorridorAI.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/.idea/.idea.QuorridorAI.dir/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/.idea/.idea.QuorridorAI.dir/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/.idea/.idea.QuorridorAI.dir/.idea/projectSettingsUpdater.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/.idea/.idea.QuorridorAI.dir/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/.idea/.idea.QuorridorAI.dir/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/AiPlayer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/AiPlayer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/CLIConvertor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/CLIConvertor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Controllers.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/CLIPlayerController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/CLIPlayerController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/CliGameController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/CliGameController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/MinimaxPlayerController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/MinimaxPlayerController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/DummyAiPlayer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/DummyAiPlayer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Evaluator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Evaluator.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Minimax.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Minimax.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/MinimaxAiPlayer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/MinimaxAiPlayer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Miscellaneous.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Miscellaneous/LoopedList.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Miscellaneous/LoopedList.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Program.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Properties.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Properties/AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Properties/AssemblyInfo.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/QuorridorAI.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/QuorridorAI.csproj.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Release.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Release/QuorridorAI.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Release/QuorridorAI.exe.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/bin.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/bin/Debug.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/bin/Debug/Model.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/bin/Debug/QuorridorAI.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/.NETFramework,Version=v4.7.1.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/QuorridorAI.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/QuorridorAI.csproj.AssemblyReference.cache.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/QuorridorAI.csproj.CopyComplete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/QuorridorAI.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/QuorridorAI.csproj.CoreCompileInputs.cache.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/QuorridorAI.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/QuorridorAI.csproj.FileListAbsolute.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/QuorridorAI.csprojAssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/QuorridorAI.csprojAssemblyReference.cache.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/obj/Debug/QuorridorAI.exe" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +129,10 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Server/Server/UDPServer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Server/Program.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -44,21 +157,21 @@
   <component name="RiderProblemsViewState">
     <option name="contextShortcutLearned" value="true" />
   </component>
-  <component name="RunManager" selected=".NET Project.QuorridorAI">
-    <configuration name="QuorridorAI" type="DotNetProject" factoryName=".NET Project">
-      <option name="EXE_PATH" value="" />
+  <component name="RunManager" selected=".NET Project.Server">
+    <configuration name="Server" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/Server/bin/Debug/Server.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Server/bin/Debug" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="PROJECT_PATH" value="$PROJECT_DIR$/QuorridorAI/QuorridorAI.csproj" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/Server/Server.csproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
       <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
       <option name="PROJECT_KIND" value="Console" />
-      <option name="PROJECT_TFM" value="" />
+      <option name="PROJECT_TFM" value=".NETFramework,Version=v4.7.1" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -73,6 +186,10 @@
       </option>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue=".NET Project.Server" />
+      <item itemvalue="Attach to Unity Editor.Attach to Unity Editor" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -86,7 +203,16 @@
       <workItem from="1640568967523" duration="134000" />
       <workItem from="1640569411205" duration="251000" />
       <workItem from="1640607057296" duration="234000" />
+      <workItem from="1640607327868" duration="792000" />
     </task>
+    <task id="LOCAL-00001" summary="initial setup with multiple solutions">
+      <created>1640607538085</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1640607538085</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -108,5 +234,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="initial setup with multiple solutions" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial setup with multiple solutions" />
   </component>
 </project>

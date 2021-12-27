@@ -41,5 +41,10 @@ namespace QuorridorAI
             int GetPlayerId(bool isPlayer) => isPlayerFirstTurn == isPlayer ? 1 : 2;
             int GetWinLine(bool isPlayer) => isPlayerFirstTurn == isPlayer ? FIELD_SIZE_Y - 1 : 0;
         }
+
+        public static void InitServer()
+        {
+            
+        }
     }
 }

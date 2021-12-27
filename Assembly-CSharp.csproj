@@ -52,19 +52,19 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Server\QuorridorAI\AI\Controllers\CLIPlayerController.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\AI\Minimax.cs" />
+     <Compile Include="Assets\Server\Server\AI\Controllers\CLIPlayerController.cs" />
+     <Compile Include="Assets\Server\Server\AI\Minimax.cs" />
      <Compile Include="Assets\Server\Assets\Scripts\Controller\GameController.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\AI\MinimaxAiPlayer.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\Properties\AssemblyInfo.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\AI\CLIConvertor.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\AI\DummyAiPlayer.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\AI\Controllers\MinimaxPlayerController.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\AI\Evaluator.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\AI\AiPlayer.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\AI\Controllers\CliGameController.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\Program.cs" />
-     <Compile Include="Assets\Server\QuorridorAI\Miscellaneous\LoopedList.cs" />
+     <Compile Include="Assets\Server\Server\AI\MinimaxAiPlayer.cs" />
+     <Compile Include="Assets\Server\Server\Properties\AssemblyInfo.cs" />
+     <Compile Include="Assets\Server\Server\AI\CLIConvertor.cs" />
+     <Compile Include="Assets\Server\Server\AI\DummyAiPlayer.cs" />
+     <Compile Include="Assets\Server\Server\AI\Controllers\MinimaxPlayerController.cs" />
+     <Compile Include="Assets\Server\Server\AI\Evaluator.cs" />
+     <Compile Include="Assets\Server\Server\AI\AiPlayer.cs" />
+     <Compile Include="Assets\Server\Server\AI\Controllers\CliGameController.cs" />
+     <Compile Include="Assets\Server\Server\Program.cs" />
+     <Compile Include="Assets\Server\Server\Miscellaneous\LoopedList.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Shaders\SelectableShader.shader" />
@@ -79,7 +79,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
-     <None Include="Assets\Server\QuorridorAI\obj\Debug\QuorridorAI.csproj.FileListAbsolute.txt" />
+     <None Include="Assets\Server\Server\obj\Debug\Server.csproj.FileListAbsolute.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
