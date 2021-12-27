@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuorridorAI", "QuorridorAI\QuorridorAI.csproj", "{F6DED007-FD78-43CF-B80A-D1D39D813664}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "..\..\Model.csproj", "{ECAE8730-8A0D-4FD0-FB9D-8A99F09692D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6DED007-FD78-43CF-B80A-D1D39D813664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6DED007-FD78-43CF-B80A-D1D39D813664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6DED007-FD78-43CF-B80A-D1D39D813664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6DED007-FD78-43CF-B80A-D1D39D813664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECAE8730-8A0D-4FD0-FB9D-8A99F09692D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECAE8730-8A0D-4FD0-FB9D-8A99F09692D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECAE8730-8A0D-4FD0-FB9D-8A99F09692D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECAE8730-8A0D-4FD0-FB9D-8A99F09692D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
