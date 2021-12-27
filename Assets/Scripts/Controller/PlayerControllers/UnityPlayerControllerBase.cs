@@ -1,3 +1,5 @@
+using Grid = Quorridor.Model.Grid;
+
 namespace Quoridorgame.Controllers
 {
     using Quorridor.Model;
@@ -8,8 +10,7 @@ namespace Quoridorgame.Controllers
 
     public abstract class UnityPlayerControllerBase : MonoBehaviour, IPlayerController
     {
-        [SerializeField]
-        protected Pawn _pawn;
+        [SerializeField] protected Pawn _pawn;
 
         protected WallDeck _wallDeck;
 
@@ -22,6 +23,10 @@ namespace Quoridorgame.Controllers
         public abstract void SubscribeToModel(Player playerModel);
         public abstract void SetPawnView(Pawn pawn);
         public abstract void SetWallDeck(WallDeck deck);
+
+        public void Init(Game game, Grid grid, Player playerModel)
+            => (_grid, _gameModel, _playerModel) = (grid, game, playerModel);
+
         public abstract bool IsActiveNow { get; set; }
     }
 }
