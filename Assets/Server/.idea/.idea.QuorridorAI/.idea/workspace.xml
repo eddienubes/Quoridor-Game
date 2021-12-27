@@ -5,7 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1e2ce70-9d3e-4f86-846f-4a336cc46935" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/Minimax.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/AI/Controllers/CLIPlayerController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/AI/Controllers/CLIPlayerController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/AI/Controllers/CliGameController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/AI/Controllers/CliGameController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/Controller/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Controller/GameController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/Controller/PlayerControllers/UnityAIUnityPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Controller/PlayerControllers/UnityAIUnityPlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Cell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Cell.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Commands/MovePawnCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Commands/MovePawnCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Commands/PlaceWallCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Commands/PlaceWallCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Game.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Grid.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Grid.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/Model/IPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/IPlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Players/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Players/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scripts/Model/Wall.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Scripts/Model/Wall.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.QuorridorAI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.QuorridorAI/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Quoridor-Game.sln.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/CLIPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QuorridorAI/AI/Controllers/CLIPlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Cell.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Cell.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/ICommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/ICommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/IMakeTurnCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/IMakeTurnCommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/MovePawnCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/MovePawnCommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/PlaceWallCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Commands/PlaceWallCommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Game.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Game.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Grid.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Grid.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/IGameController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/IGameController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/IPlayerController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/IPlayerController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Pawn.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Pawn.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Players.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Players/HotSeatPlayer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Players/HotSeatPlayer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Players/Player.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Players/Player.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Wall.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuorridorAI/Model/Wall.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,12 +57,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="22qYviW25WaIliG500dVe8aIYox" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -26,9 +71,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="rider.run.widget.enabled.cache" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected=".NET Project.QuorridorAI">
     <configuration name="QuorridorAI" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -47,6 +93,16 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -57,6 +113,8 @@
       <option name="presentableId" value="Default" />
       <updated>1640566820171</updated>
       <workItem from="1640566825881" duration="400000" />
+      <workItem from="1640568967523" duration="134000" />
+      <workItem from="1640569411205" duration="251000" />
     </task>
     <servers />
   </component>
@@ -64,8 +122,19 @@
     <option name="version" value="3" />
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

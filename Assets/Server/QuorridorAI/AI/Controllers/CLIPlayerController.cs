@@ -15,10 +15,6 @@ namespace Quorridor.AI
             (_gameModel, _grid, _playerModel) = (game, grid, playerModel);
             _playerModel.OnTurnStarted += MakeTurn;
         }
-        public void Init(Game game, Model.Grid grid, Player playerModel)
-        {
-            throw new NotImplementedException();
-        }
         private void MakeTurn()
         {
             var str = Console.ReadLine();

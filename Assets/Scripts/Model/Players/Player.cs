@@ -11,7 +11,7 @@ namespace Quorridor.Model
         public event Action OnTurnStarted;
         public event Action OnTurnEnded;
         public event Action<bool, int, int> OnWallPlaced;
-
+        public int ShortestPath { get; set; }
         public Pawn Pawn { get; private set; }
 
         public Player(int winLineY, bool isActiveTurn, int playerId, int wallsCount = 10)
@@ -38,9 +38,9 @@ namespace Quorridor.Model
             (int, int) cell1Pair2, (int, int) cell2Pair2)
         {
             WallsCount--;
-            var cellCoords = new List<(int, int)> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}
-                .OrderBy(c => c.Item1).ThenByDescending(c => c.Item2).FirstOrDefault();
-            OnWallPlaced?.Invoke(isVertical, cellCoords.Item1, cellCoords.Item2);
+            var cellCoords = new List<(int x, int y)> {cell1Pair1, cell1Pair2, cell2Pair1, cell2Pair2}
+                .OrderBy(c => c.x).ThenByDescending(c => c.y).FirstOrDefault();
+            OnWallPlaced?.Invoke(isVertical, cellCoords.x, cellCoords.y);
         }
     }
 }

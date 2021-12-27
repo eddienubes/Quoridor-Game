@@ -5,6 +5,7 @@ using Quoridorgame.Controllers;
 using Quoridorgame.View;
 using Quorridor.Model;
 using UnityEngine;
+using Grid = Quorridor.Model.Grid;
 
 namespace Controller
 {
