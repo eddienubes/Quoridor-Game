@@ -28,8 +28,6 @@ namespace Controller
         [SerializeField]
         private int xSize = 9, ySize = 9;
 
-        private TCPClient _tcpClient = new TCPClient();
-        
         private Player[] _players = new Player[2];
         public Game _gameModel { get; private set; }
         public Grid _grid { get; private set; }

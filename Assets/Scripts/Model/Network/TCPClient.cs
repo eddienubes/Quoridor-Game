@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 using Quorridor.Model.Commands;
 using UnityEngine;
 
@@ -23,16 +22,16 @@ namespace Quorridor.Model.Network
             _networkStream = new NetworkStream(socket, true);
         }
 
-        public async void Send(IMakeTurnCommand command)
+        public void Send(IMakeTurnCommand command)
         {
-            await _tcpOperator.SendAsync(_networkStream, command);
+            _tcpOperator.Send(_networkStream, command);
             var response = new byte[1024];
 
             var bytesRead = _networkStream.Read(response, 0, response.Length);
 
-            // var responseStr = Encoding.UTF8.GetString(response);
+            var responseStr = Encoding.UTF8.GetString(response);
 
-            Debug.Log($"Received bytes: {bytesRead}");
+            Debug.Log($"Received bytes: {responseStr}");
         }
         
     }

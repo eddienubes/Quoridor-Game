@@ -43,6 +43,7 @@ namespace Quorridor.Model
                 new PlaceWallCommand(Grid, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2, isVertical);
             turnCommand.Execute();
 
+            // TODO Remove
             _tcpClient.Send(turnCommand);
 
             if (!Grid.CheckPaths(Players))

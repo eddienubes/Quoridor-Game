@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
 using Codice.Client.Common;
 using Quorridor.Model.Commands;
@@ -9,20 +10,20 @@ namespace Quorridor.Model.Network
 {
     public class TCPOperator
     {
-        public async Task<IMakeTurnCommand> Receive(NetworkStream networkStream, Game game)
+        public IMakeTurnCommand Receive(NetworkStream networkStream, Game game)
         {
             // header has size of 4 bytes
-            var headerBytes = await ReadAsync(networkStream, 4);    
+            var headerBytes = Read(networkStream, 4);    
             
             // 32 bit integer needs 4 bytes
             var bodyLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(headerBytes, 0));
             
-            var bodyBytes = await ReadAsync(networkStream, bodyLength);
+            var bodyBytes = Read(networkStream, bodyLength);
 
             return CommandsSerializer.Deserialize(game, bodyBytes);
         }
 
-        public async Task<byte[]> ReadAsync(NetworkStream networkStream, int bytesToRead)
+        public byte[] Read(NetworkStream networkStream, int bytesToRead)
         {
             var buffer = new byte[bytesToRead];
 
@@ -30,8 +31,7 @@ namespace Quorridor.Model.Network
 
             while (bytesRead < bytesToRead)
             {
-                var bytesReceived = await networkStream.ReadAsync(buffer, bytesRead, (bytesToRead - bytesRead))
-                    .ConfigureAwait(false);
+                var bytesReceived = networkStream.Read(buffer, bytesRead, (bytesToRead - bytesRead));
 
                 if (bytesReceived == 0)
                     throw new Exception("Socket closed!");
@@ -42,10 +42,13 @@ namespace Quorridor.Model.Network
             return buffer;
         }
 
-        public async Task SendAsync(NetworkStream networkStream, IMakeTurnCommand command)
+        public void Send(NetworkStream networkStream, IMakeTurnCommand command)
         {
             var bytesToSend = CommandsSerializer.Serialize(command);
-            await networkStream.WriteAsync(bytesToSend, 0, bytesToSend.Length).ConfigureAwait(false);
+
+            var bytes = System.Text.Encoding.UTF8.GetBytes("Hello world");
+            
+            networkStream.Write(bytes, 0, bytes.Length);
         }
     }
 }
