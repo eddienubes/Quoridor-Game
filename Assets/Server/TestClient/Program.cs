@@ -7,14 +7,43 @@ namespace TestClient
 {
     internal class Program
     {
+        private static Socket _socket;
+
         public static void Main(string[] args)
         {
-            
             EndPoint remoteEndpoint = new IPEndPoint(IPAddress.Loopback, 9000);
 
-            var message = "Response message";
+            try
+            {
+                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-            var data = Encoding.Unicode.GetBytes(message);
+                while (true)
+                {
+                    var message = Console.ReadLine();
+
+                    var data = Encoding.Unicode.GetBytes(message);
+
+                    _socket.SendTo(data, remoteEndpoint);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Close();
+            }
+        }
+
+        private static void Close()
+        {
+            if (_socket != null)
+            {
+                _socket.Shutdown(SocketShutdown.Both);
+                _socket.Close();
+                _socket = null;
+            }
         }
     }
 }

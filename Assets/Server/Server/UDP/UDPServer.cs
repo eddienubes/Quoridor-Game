@@ -25,6 +25,8 @@ public class UDPServer : IDisposable
         
         _listeningTask = new Task(Listen);
         _listeningTask.Start();
+
+        _listeningTask.Wait();
     }
 
 
@@ -49,10 +51,13 @@ public class UDPServer : IDisposable
                 var data = new byte[256]; 
  
                 EndPoint remoteIp = new IPEndPoint(IPAddress.Any, 0);
+
+                Console.WriteLine(remoteIp.AddressFamily);
                 
                 do
                 {
                     bytes = _socket.ReceiveFrom(data, ref remoteIp);
+                    Console.WriteLine(bytes);
                     builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
                 }
                 while (_socket.Available > 0);

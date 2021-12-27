@@ -5,14 +5,14 @@
     <projectFile>TestClient/TestClient.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1e2ce70-9d3e-4f86-846f-4a336cc46935" name="Changes" comment="server initial setup">
-      <change afterPath="$PROJECT_DIR$/Server/UDP/IncomingSocketData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/UDP/UDPServer.cs" afterDir="false" />
+    <list default="true" id="f1e2ce70-9d3e-4f86-846f-4a336cc46935" name="Changes" comment="Added server with test client">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.QuorridorAI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.QuorridorAI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuorridorAI.sln" beforeDir="false" afterPath="$PROJECT_DIR$/QuorridorAI.sln" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Server.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Server/UDPServer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/UDP/UDPServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/UDP/UDPServer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Server/bin/Debug/Server.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/Server.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Server/obj/Debug/Server.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/obj/Debug/Server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Server/obj/Debug/Server.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestClient/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TestClient/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +34,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/645666a8cea44bf5905e0ef193655174365630/73/f0262582/Socket.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d82962cd623d4d1fa1793ead3990e36756abe8/31/424b982e/AsyncCallback.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Server/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TestClient/obj/Debug/.NETFramework,Version=v4.7.1.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -123,7 +124,7 @@
       <workItem from="1640568967523" duration="134000" />
       <workItem from="1640569411205" duration="251000" />
       <workItem from="1640607057296" duration="234000" />
-      <workItem from="1640607327868" duration="8841000" />
+      <workItem from="1640607327868" duration="10552000" />
     </task>
     <task id="LOCAL-00001" summary="initial setup with multiple solutions">
       <created>1640607538085</created>
@@ -139,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640608180425</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added server with test client">
+      <created>1640620633550</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1640620633550</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +171,39 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="initial setup with multiple solutions" />
     <MESSAGE value="server initial setup" />
-    <option name="LAST_COMMIT_MESSAGE" value="server initial setup" />
+    <MESSAGE value="Added server with test client" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added server with test client" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Server/Program.cs</url>
+          <line>51</line>
+          <properties documentPath="D:\CODE\C#\Quoridor-Game\Assets\Server\Server\Program.cs" initialLine="51" containingFunctionPresentation="method 'InitServer'">
+            <startOffsets>
+              <option value="1623" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1638" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TestClient/Program.cs</url>
+          <line>30</line>
+          <properties documentPath="D:\CODE\C#\Quoridor-Game\Assets\Server\TestClient\Program.cs" initialLine="30" containingFunctionPresentation="method 'Main'">
+            <startOffsets>
+              <option value="768" />
+            </startOffsets>
+            <endOffsets>
+              <option value="798" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

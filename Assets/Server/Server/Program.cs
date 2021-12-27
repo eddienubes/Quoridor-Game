@@ -10,7 +10,8 @@ namespace QuorridorAI
     {
         public static void Main(string[] args)
         {
-            InitGame(CLIConvertor.IsFirstTurn(Console.ReadLine()));
+            // InitGame(CLIConvertor.IsFirstTurn(Console.ReadLine()));
+            InitServer();
         }
 
         public static void InitGame(bool isPlayerFirstTurn)
