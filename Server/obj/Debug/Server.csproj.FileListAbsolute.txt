@@ -1,0 +1,6 @@
+D:\CODE\C#\Quoridor-Game\Server\bin\Debug\Server.exe
+D:\CODE\C#\Quoridor-Game\Server\bin\Debug\Server.pdb
+D:\CODE\C#\Quoridor-Game\Server\obj\Debug\Server.csproj.AssemblyReference.cache
+D:\CODE\C#\Quoridor-Game\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+D:\CODE\C#\Quoridor-Game\Server\obj\Debug\Server.exe
+D:\CODE\C#\Quoridor-Game\Server\obj\Debug\Server.pdb
