@@ -1,3 +1,5 @@
+using Quorridor.Model.Network;
+
 namespace Quorridor.Model
 {
     using System;
@@ -7,6 +9,7 @@ namespace Quorridor.Model
 
     public class Game
     {
+        private readonly TCPClient _tcpClient = new TCPClient();
         public Grid Grid { get; private set; }
         public Player[] Players { get; private set; }
 
@@ -39,6 +42,8 @@ namespace Quorridor.Model
             IMakeTurnCommand turnCommand =
                 new PlaceWallCommand(Grid, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2, isVertical);
             turnCommand.Execute();
+
+            _tcpClient.Send(turnCommand);
 
             if (!Grid.CheckPaths(Players))
             {

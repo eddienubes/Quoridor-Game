@@ -5,6 +5,7 @@ using System.Linq;
 using Quoridorgame.Controllers;
 using Quoridorgame.View;
 using Quorridor.Model;
+using Quorridor.Model.Network;
 using UnityEngine;
 using Cell = Quorridor.Model.Cell;
 using Grid = Quorridor.Model.Grid;
@@ -27,6 +28,8 @@ namespace Controller
         [SerializeField]
         private int xSize = 9, ySize = 9;
 
+        private TCPClient _tcpClient = new TCPClient();
+        
         private Player[] _players = new Player[2];
         public Game _gameModel { get; private set; }
         public Grid _grid { get; private set; }
@@ -137,6 +140,9 @@ namespace Controller
 
         private void TryMovePawn(SelectableMonoBehaviour clickedCell)
         {
+            // TODO Remove
+            
+            
             if (_players.FirstOrDefault(p => p.IsActiveTurn).GetType() != typeof(HotSeatPlayer))
             {
                 return;

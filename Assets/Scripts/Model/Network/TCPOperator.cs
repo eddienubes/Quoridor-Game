@@ -17,11 +17,8 @@ namespace Quorridor.Model.Network
             // 32 bit integer needs 4 bytes
             var bodyLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(headerBytes, 0));
             
-            
-            
             var bodyBytes = await ReadAsync(networkStream, bodyLength);
 
-            
             return CommandsSerializer.Deserialize(game, bodyBytes);
         }
 
@@ -45,7 +42,7 @@ namespace Quorridor.Model.Network
             return buffer;
         }
 
-        public async Task SendAsync<T>(NetworkStream networkStream, IMakeTurnCommand command)
+        public async Task SendAsync(NetworkStream networkStream, IMakeTurnCommand command)
         {
             var bytesToSend = CommandsSerializer.Serialize(command);
             await networkStream.WriteAsync(bytesToSend, 0, bytesToSend.Length).ConfigureAwait(false);

@@ -42,7 +42,7 @@ public class TCPServer
 
             Console.WriteLine( "ECHO SERVER :: CLIENT CONNECTED" );
 
-            using var stream = new NetworkStream( clientSocket, true );
+            using var stream = new NetworkStream(clientSocket, true);
             var buffer = new byte[1024];
             do {
                 var bytesRead = await stream.ReadAsync(buffer,0,buffer.Length).ConfigureAwait(false);
