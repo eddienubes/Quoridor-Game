@@ -6,12 +6,11 @@ namespace Quorridor.Model.Commands
     {
         public Cell _startCell { get; private set; }
         public Cell _targetCell { get; private set; }
-
+        public Pawn playerPawn { get; private set; }
         public bool IsJump =>
             Math.Abs(_startCell.GridX - _targetCell.GridX) + Math.Abs(_startCell.GridY - _targetCell.GridY) > 1;
 
         private Grid _grid;
-        private Pawn playerPawn;
 
         public MovePawnCommand(Pawn p, Grid grid, Cell startCell, Cell targetCell)
         {

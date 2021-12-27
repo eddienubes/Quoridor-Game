@@ -7,22 +7,18 @@ namespace Quorridor.Model
 
     public class Game
     {
-        private Grid _grid;
-
-        private Player[] _players;
+        public Grid Grid { get; private set; }
+        public Player[] Players { get; private set; }
 
         private Stack<IMakeTurnCommand> _gameLog;
-
         public event Action<Player> OnGameEnded;
         public event Action<Player> OnTurnSwitched;
         public event Action<Player, (int, int), (int, int)> OnPlayerMoved;
-
-        public Player[] Players => _players;
-
+        
         public Game(Grid grid, params Player[] players)
         {
-            _grid = grid;
-            _players = players;
+            Grid = grid;
+            Players = players;
             _gameLog = new Stack<IMakeTurnCommand>();
         }
 
@@ -41,10 +37,10 @@ namespace Quorridor.Model
             }
 
             IMakeTurnCommand turnCommand =
-                new PlaceWallCommand(_grid, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2, isVertical);
+                new PlaceWallCommand(Grid, cell1Pair1, cell2Pair1, cell1Pair2, cell2Pair2, isVertical);
             turnCommand.Execute();
 
-            if (!_grid.CheckPaths(_players))
+            if (!Grid.CheckPaths(Players))
             {
                 turnCommand.Undo();
                 throw new Exception("Wall can be placed because it will close last path to win for one of the players");
@@ -70,7 +66,7 @@ namespace Quorridor.Model
 
             turn.Execute();
 
-            if (!_grid.CheckPaths(_players))
+            if (!Grid.CheckPaths(Players))
             {
                 turn.Undo();
                 throw new Exception("Wall can be placed because it will close last path to win for one of the players");
@@ -88,7 +84,7 @@ namespace Quorridor.Model
 
         public void MovingPlayer(Pawn playerPawn, int startX, int startY, int targetX, int targetY)
         {
-            var player = _players.FirstOrDefault(p => p.Pawn == playerPawn);
+            var player = Players.FirstOrDefault(p => p.Pawn == playerPawn);
             if (player == null)
             {
                 throw new Exception($"There is no player for this pawn. Id: {playerPawn.PlayerId}");
@@ -99,7 +95,7 @@ namespace Quorridor.Model
                 throw new Exception($"This player is inactive. Id: {playerPawn.PlayerId}");
             }
 
-            IMakeTurnCommand turnCommand = new MovePawnCommand(player.Pawn, _grid, startX, startY, targetX, targetY);
+            IMakeTurnCommand turnCommand = new MovePawnCommand(player.Pawn, Grid, startX, startY, targetX, targetY);
 
             turnCommand.Execute();
             _gameLog.Push(turnCommand);
@@ -112,7 +108,7 @@ namespace Quorridor.Model
 
         public void MovingPlayer(Pawn playerPawn, Cell start, Cell target)
         {
-            var player = _players.FirstOrDefault(p => p.Pawn == playerPawn);
+            var player = Players.FirstOrDefault(p => p.Pawn == playerPawn);
             if (player == null)
             {
                 throw new Exception($"There is no player for this pawn. Id: {playerPawn.PlayerId}");
@@ -123,7 +119,7 @@ namespace Quorridor.Model
                 throw new Exception($"This player is inactive. Id: {playerPawn.PlayerId}");
             }
 
-            IMakeTurnCommand turnCommand = new MovePawnCommand(player.Pawn, _grid, start, target);
+            IMakeTurnCommand turnCommand = new MovePawnCommand(player.Pawn, Grid, start, target);
 
             turnCommand.Execute();
             _gameLog.Push(turnCommand);
@@ -148,15 +144,15 @@ namespace Quorridor.Model
 
         private void SwitchTurn(Player player)
         {
-            var nextPlayerIndex = (Array.IndexOf(_players, player) + 1) % _players.Length;
+            var nextPlayerIndex = (Array.IndexOf(Players, player) + 1) % Players.Length;
             player.EndTurn();
             OnTurnSwitched?.Invoke(player);
-            _players[nextPlayerIndex].StartTurn();
+            Players[nextPlayerIndex].StartTurn();
         }
 
         private void CheckGameForFinishing(Player p)
         {
-            if (_grid.CheckIsPawnOnTheWinLine(p.Pawn))
+            if (Grid.CheckIsPawnOnTheWinLine(p.Pawn))
             {
                 OnGameEnded?.Invoke(p);
             }
