@@ -44,11 +44,11 @@ namespace Quorridor.Model.Network
 
         public void Send(NetworkStream networkStream, IMakeTurnCommand command)
         {
-            var bytesToSend = CommandsSerializer.Serialize(command);
-
-            var bytes = System.Text.Encoding.UTF8.GetBytes("Hello world");
-            
-            networkStream.Write(bytes, 0, bytes.Length);
+            // var bytesToSend = CommandsSerializer.Serialize(command);
+            //
+            // var bytes = System.Text.Encoding.UTF8.GetBytes("Hello world");
+            //
+            // networkStream.Write(bytes, 0, bytes.Length);
         }
     }
 }
