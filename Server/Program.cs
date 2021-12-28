@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Controller;
+using Quorridor.AI;
+using Quorridor.Model;
 
 namespace Server
 {
@@ -12,8 +15,10 @@ namespace Server
 
         public static void InitServer()
         {
-
-            var server = new TCPServer();
+            var gameController = new CliGameController();
+            
+            
+            var server = new TCPServer(gameController._gameModel);
             server.Start();
         }
     }

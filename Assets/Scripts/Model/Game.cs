@@ -9,7 +9,7 @@ namespace Quorridor.Model
 
     public class Game
     {
-        private readonly TCPClient _tcpClient = new TCPClient();
+        // private readonly TCPClient _tcpClient = new TCPClient();
         public Grid Grid { get; private set; }
         public Player[] Players { get; private set; }
 
@@ -44,7 +44,7 @@ namespace Quorridor.Model
             turnCommand.Execute();
 
             // TODO Remove
-            _tcpClient.Send(turnCommand);
+            // _tcpClient.Send(turnCommand);
 
             if (!Grid.CheckPaths(Players))
             {

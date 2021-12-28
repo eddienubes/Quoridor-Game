@@ -1,57 +1,48 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
+using Quorridor.Model;
 
-namespace Server;
 
-public class TCPServer
+namespace Server
 {
-    private int _port = 9000;
-    private Socket _socket;
-    private IPEndPoint _ipEndPoint;
-    
-    private IncomingSocketData _state = new();
-    private Task _listeningTask;
-    
-    public void Start(int port = 9000)
+    class TCPServer
     {
-        _port = port;
-        _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        _ipEndPoint = new IPEndPoint(IPAddress.Loopback, _port);
+        private Game _game;
         
-        _socket.Bind(_ipEndPoint);
-        _socket.Listen(128);
-
-        Console.WriteLine($"Server is up and running on port: {port}");
+        public TCPServer(Game game)
+        {
+            _game = game;
+        }
         
-        Task.Run(DoEcho).Wait();
+        public void Start()
+        {
+            var serverSocket = new TcpListener(IPAddress.Loopback, 8888);
+            var clientSocket = default(TcpClient);
+            var counter = 0;
+
+            serverSocket.Start();
+            Console.WriteLine(" >> " + "Server Started");
+
+            counter = 0;
+            while (true)
+            {
+                counter += 1;
+                clientSocket = serverSocket.AcceptTcpClient();
+                Console.WriteLine(" >> " + "Client No:" + Convert.ToString(counter) + " started!");
+                var client = new ConnectedClient();
+                client.StartClient(clientSocket, Convert.ToString(counter), _game);
+            }
+
+            clientSocket.Close();
+            serverSocket.Stop();
+            Console.WriteLine(" >> " + "exit");
+            Console.ReadLine();
+        }
     }
+};
 
 
 
-    // listening for socket connection    
-    private async Task DoEcho()
-    {
-        do {
-            var clientSocket = await Task.Factory.FromAsync(
-                new Func<AsyncCallback, object, IAsyncResult>(_socket.BeginAccept),
-                new Func<IAsyncResult, Socket>(_socket.EndAccept),
-                null).ConfigureAwait(false);
 
-            Console.WriteLine( "ECHO SERVER :: CLIENT CONNECTED" );
 
-            using var stream = new NetworkStream( clientSocket, true );
-            var buffer = new byte[1024];
-            do {
-                int bytesRead = await stream.ReadAsync(buffer,0,buffer.Length).ConfigureAwait(false);
-
-                if( bytesRead == 0 )
-                    break;
-
-                await stream.WriteAsync( buffer, 0, bytesRead ).ConfigureAwait( false );
-            } while( true );
-        } while( true );
-    }
-}

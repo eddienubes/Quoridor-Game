@@ -4,14 +4,14 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{F6DED007-FD78-43CF-B80A-D1D39D813664}</ProjectGuid>
+        <ProjectGuid>{4DB8BCA6-EA00-49DD-A7CA-C38DC6BCE930}</ProjectGuid>
         <OutputType>Exe</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>QuorridorAI</RootNamespace>
+        <RootNamespace>Server</RootNamespace>
         <AssemblyName>Server</AssemblyName>
         <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
-        <LangVersion>latest</LangVersion>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,17 +41,12 @@
     <ItemGroup>
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="TCP\IncomingSocketData.cs" />
+        <Compile Include="TCP\TCPConnectedClient.cs" />
         <Compile Include="TCP\TCPServer.cs" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Model.csproj">
-        <Project>{ecae8730-8a0d-4fd0-fb9d-8a99f09692d0}</Project>
-        <Name>Model</Name>
-      </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include=".gitignore" />
+      <Content Include="TCP\TCPConnectedClient.cs.meta" />
+      <Content Include="TCP\TCPServer.cs.meta" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

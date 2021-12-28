@@ -13,11 +13,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0bbec2fe-cba3-feff-1661-d0ec9c6ab677}</ProjectGuid>
+    <ProjectGuid>{7e9784b4-75e0-8e06-3173-30582642987e}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Controller</AssemblyName>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -52,13 +52,30 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Controller\PlayerControllers\UnityAIUnityPlayerController.cs" />
-     <Compile Include="Assets\Scripts\Controller\PlayerControllers\UnityPlayerControllerBase.cs" />
-     <Compile Include="Assets\Scripts\Controller\GameController.cs" />
-     <Compile Include="Assets\Scripts\Controller\PlayerControllers\UnityHotSeatUnityPlayerController.cs" />
-     <Compile Include="Assets\Scripts\Controller\Menu\MainMenu.cs" />
-     <Compile Include="Assets\Scripts\Controller\CliGameController.cs" />
-     <None Include="Assets\Scripts\Controller\Controller.asmdef" />
+     <Compile Include="Assets\TestClient\Program.cs" />
+     <Compile Include="Assets\TestClient\TCP\TCPClient.cs" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\Shaders\SelectableShader.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -281,29 +298,11 @@
  <Reference Include="UnityEditor.UnityConnectModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.Graphs">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.WindowsStandalone.Extensions">
- <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Plastic.Antlr3.Runtime">
- <HintPath>D:/CODE/C#/Quoridor-Game/Library/PackageCache/com.unity.collab-proxy@1.5.7/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="DOTweenEditor">
- <HintPath>D:/CODE/C#/Quoridor-Game/Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
- </Reference>
- <Reference Include="log4netPlastic">
- <HintPath>D:/CODE/C#/Quoridor-Game/Library/PackageCache/com.unity.collab-proxy@1.5.7/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
- </Reference>
  <Reference Include="DOTween">
  <HintPath>D:/CODE/C#/Quoridor-Game/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
  <HintPath>D:/CODE/C#/Quoridor-Game/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
- </Reference>
- <Reference Include="unityplastic">
- <HintPath>D:/CODE/C#/Quoridor-Game/Library/PackageCache/com.unity.collab-proxy@1.5.7/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -650,28 +649,65 @@
  <Reference Include="System.Xml.Serialization">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.VSCode.Editor">
+ <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.TextMeshPro.Editor">
+ <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.VisualStudio.Editor">
+ <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Timeline.Editor">
+ <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Timeline">
+ <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Rider.Editor">
+ <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.PlasticSCM.Editor">
+ <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="DOTween.Modules.csproj">
+      <Project>{d2112088-bf1e-dec2-7afd-a4d11ea55ac5}</Project>
+      <Name>DOTween.Modules</Name>
+    </ProjectReference>
     <ProjectReference Include="Model.csproj">
       <Project>{74cf9bd5-0bfa-95d4-a53c-e8bdd049c811}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="AI.csproj">
+      <Project>{81e1c4a4-3adf-185c-12fb-aa929ab6d53f}</Project>
+      <Name>AI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Miscellaneous.csproj">
+      <Project>{8592f3d7-0b2d-054d-39c6-e1d338b15ab0}</Project>
+      <Name>Miscellaneous</Name>
     </ProjectReference>
     <ProjectReference Include="View.csproj">
       <Project>{a37d84e3-bdf7-b149-41e2-268f358dd751}</Project>
       <Name>View</Name>
     </ProjectReference>
-    <ProjectReference Include="AI.csproj">
-      <Project>{81e1c4a4-3adf-185c-12fb-aa929ab6d53f}</Project>
-      <Name>AI</Name>
+    <ProjectReference Include="Controller.csproj">
+      <Project>{0bbec2fe-cba3-feff-1661-d0ec9c6ab677}</Project>
+      <Name>Controller</Name>
+    </ProjectReference>
+    <ProjectReference Include="Server.csproj">
+      <Project>{2537ba66-0120-f5b0-bf3b-c0d8f9e66eb2}</Project>
+      <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

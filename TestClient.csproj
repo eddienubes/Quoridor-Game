@@ -13,11 +13,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0bbec2fe-cba3-feff-1661-d0ec9c6ab677}</ProjectGuid>
+    <ProjectGuid>{7f0b2df1-e99e-6d4c-d02c-07cfaa5c108f}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Controller</AssemblyName>
+    <AssemblyName>TestClient</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -52,13 +52,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Controller\PlayerControllers\UnityAIUnityPlayerController.cs" />
-     <Compile Include="Assets\Scripts\Controller\PlayerControllers\UnityPlayerControllerBase.cs" />
-     <Compile Include="Assets\Scripts\Controller\GameController.cs" />
-     <Compile Include="Assets\Scripts\Controller\PlayerControllers\UnityHotSeatUnityPlayerController.cs" />
-     <Compile Include="Assets\Scripts\Controller\Menu\MainMenu.cs" />
-     <Compile Include="Assets\Scripts\Controller\CliGameController.cs" />
-     <None Include="Assets\Scripts\Controller\Controller.asmdef" />
+     <Compile Include="Assets\TestClient\Program.cs" />
+     <Compile Include="Assets\TestClient\TCP\TCPClient.cs" />
+     <None Include="Assets\TestClient\TestClient.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -650,9 +646,6 @@
  <Reference Include="System.Xml.Serialization">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
  </Reference>
- <Reference Include="Unity.TextMeshPro">
- <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>D:/CODE/C#/Quoridor-Game/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
@@ -661,18 +654,6 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Model.csproj">
-      <Project>{74cf9bd5-0bfa-95d4-a53c-e8bdd049c811}</Project>
-      <Name>Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="View.csproj">
-      <Project>{a37d84e3-bdf7-b149-41e2-268f358dd751}</Project>
-      <Name>View</Name>
-    </ProjectReference>
-    <ProjectReference Include="AI.csproj">
-      <Project>{81e1c4a4-3adf-185c-12fb-aa929ab6d53f}</Project>
-      <Name>AI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
